@@ -1,0 +1,20 @@
+# Build files
+*.bin
+*.o
+*.x
+*.elf
+*.sym
+*.d
+*.map
+newcodeinfo.h
+build/
+hooks/
+bak/
+/source/Version.cmake
+
+# IDA
+*.id*
+*.nam
+*.til
+
+release/
