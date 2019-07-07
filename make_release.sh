@@ -37,6 +37,7 @@ build () {
   # Copy build output
   mkdir $RELEASE_DIR/$TARGET_VERSION
   flips -i $RST_ROOT/bak/code.bin $RST_ROOT/code.bin $RELEASE_DIR/$TARGET_VERSION/code.ips
+  cp $RST_ROOT/code.bin $RST_ROOT/source/build/patched_code.bin
   cp $RST_ROOT/exheader*.bin $RELEASE_DIR/$TARGET_VERSION/
 
   # Clean up
