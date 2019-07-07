@@ -361,8 +361,11 @@ struct SaveData {
 static_assert(sizeof(SaveData) == 0x1A88);
 
 struct CommonDataSub1 {
-  int field_0;
-  int field_4;
+  int entrance;
+  u8 field_4;
+  u8 field_5;
+  u8 field_6;
+  u8 field_7;
   int field_8;
   int field_C;
   int field_10;
