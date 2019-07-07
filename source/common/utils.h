@@ -8,7 +8,6 @@
 
 namespace rst::util {
 
-namespace detail {
 #if defined(RST_VER)
 constexpr u32 Version = RST_VER;
 #else
@@ -16,6 +15,7 @@ constexpr u32 Version = 0;
 #endif
 static_assert(Version == 0 || Version == 1, "Unknown version");
 
+namespace detail {
 template <class... Ts, typename std::enable_if_t<(Version < sizeof...(Ts))>* = nullptr>
 constexpr uintptr_t GetAddr(Ts... addresses) {
   return std::get<Version>(std::forward_as_tuple(addresses...));
@@ -30,7 +30,7 @@ constexpr uintptr_t GetAddr(Ts...) {
 /// Returns a version-specific address from a list of addresses and casts it to Type*.
 template <typename Type, class... Ts>
 constexpr auto GetPointer(Ts... addresses) {
-  static_assert(detail::Version < sizeof...(Ts), "Missing address!");
+  static_assert(Version < sizeof...(Ts), "Missing address!");
   return reinterpret_cast<Type*>(detail::GetAddr(addresses...));
 }
 

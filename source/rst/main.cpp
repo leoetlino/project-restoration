@@ -23,7 +23,7 @@ void Init(Context& context) {
 
   link::Init();
 
-  util::Print("Project Restoration initialised");
+  util::Print("Project Restoration initialised (target version %lu)", util::Version);
   context.has_initialised = true;
 }
 
