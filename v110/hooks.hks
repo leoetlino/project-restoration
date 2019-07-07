@@ -75,6 +75,11 @@ decouple_trigger_btns:
   data: 12 00 00 EA # skips over the ZL/ZR checks
   addr: 0x1167C8
 
+ice_arrows:
+  type: patch
+  data: 00 F0 20 E3 # nop
+  addr: 0x318898
+
 main_hook:
   type: softbranch
   opcode: post

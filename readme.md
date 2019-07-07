@@ -30,11 +30,13 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
   * Reduced the number of cycles to make it less repetitive.
   * Red Twinmold no longer resets its hit counter every time it burrows back into the sand. As a result, the battle is much less confusing for new players.
 
+* **Restored Ice Arrows**: Ice arrows that work everywhere
+  * Ice arrows now work in all locations, not just in Gyorg's room. This gives the player the freedom to experiment with ice arrows.
+  * Removed the sparkling water effects as they were an insult to the player's intelligence.
+
 ### Planned changes
 
-In a roughly increasing order of difficulty. Most tasks below require reverse engineering actors.
-
-* **Ice Arrows Everywhere**: There is no reason ice arrows should only work on a few sparkling spots and in Gyorg's boss room. The player should have the freedom to experiment with ice arrows. It's a frankly surprising limitation and worse, an inconsistent one because the water in the GBT boss room isn't even sparkling. I'm also considering removing the sparkling effects.
+In a roughly increasing order of difficulty.
 
 * **More Fluid Bomber's Notebook**: MM3D has annoying long popups and UI animations. It should be possible to decrease the transition durations and reduce pauses.
 

@@ -16,6 +16,10 @@ class Actor;
 enum class Id : u16 {
   Player = 0,
   BossTwinmold = 0xcc,
+  // Ice platform created using ice arrows.
+  BgIcePlatform = 0x013E,
+  // New in MM3D. Actor that shows up as sparkles and spawns an ice platform (actor 0x13E) when hit.
+  BgSeaFreezablePoint = 0x0244,
 };
 
 // https://wiki.cloudmodding.com/oot/Actors#Categories

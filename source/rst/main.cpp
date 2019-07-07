@@ -50,6 +50,7 @@ void Calc(game::GlobalContext* gctx) {
   link::HandleFastOcarina();
   // FixTime();
   FixTwinmold();
+  FixIceArrows();
 }
 
 }  // namespace rst

@@ -104,4 +104,18 @@ void FixTwinmold() {
     state->red_prev_hit_counter = red_twinmold->hit_counter;
 }
 
+void FixIceArrows() {
+  const auto* gctx = GetContext().gctx;
+  game::act::Actor* actor = gctx->actors.lists[u8(game::act::Type::Prop)].first;
+  while (actor) {
+    // Hide the new sparkle actors by moving them.
+    if (actor->id == game::act::Id::BgSeaFreezablePoint) {
+      actor->position.y = -100000.0;
+    }
+    actor = actor->next;
+  }
+
+  // The main fix is a code patch that removes the entrance restriction for ice arrows.
+}
+
 }  // namespace rst
