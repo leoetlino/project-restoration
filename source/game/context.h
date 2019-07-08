@@ -11,6 +11,7 @@ namespace game {
 
 namespace act {
 class Player;
+class BossTwinmold;
 }
 
 // based on a quick experiment - probably wrong
@@ -137,27 +138,50 @@ struct GlobalContext {
   u16 field_86AC;
   __attribute__((aligned(4))) u8 gap_86B0[272];
   u32 field_87C0;
-  u8 gap_87C4[3188];
-  u32 field_9438;
+  u8 gap_87C4[59];
+  u8 field_87FF;
+  u8 gap_8800[58];
+  u8 field_883A;
+  __attribute__((aligned(2))) u8 gap_883C[2];
+  u8 field_883E;
+  __attribute__((aligned(2))) u8 gap_8840[3064];
+  u32 actors_spawn_stuff;
   u8 gap_943C[11204];
   u32 field_C000;
   u8 gap_C004[604];
-  char field_C260;
+  u8 room_number;
   char field_C261;
   char field_C262;
   char field_C263;
-  u8 gap_C264[445];
+  u8 gap_C264[88];
+  u16 field_C2BC;
+  u8 gap_C2BE[355];
   __attribute__((packed)) __attribute__((aligned(1))) u32 field_C421;
   u8 gap_C425[163];
   char field_C4C8[4];
   u16 field_C4CC;
-  u8 gap_C4CE[91];
-  u8 field_C529;
+  u8 gap_C4CE[46];
+  u32 field_C4FC;
+  u8 gap_C500[40];
+  u8 field_C528;
+  u8 field_C529_one_to_clear_input;
   u8 gap_C52A[8];
   char field_C532;
   u8 gap_C533[5];
   int field_C538;
+  u8 gap_C53C[11162];
+  u8 field_F0D6;
+  u8 gap_F0D7;
+  float field_F0D8;
+  act::BossTwinmold* twinmold_actor_maybe;
+  act::BossTwinmold* twinmold_2_actor_maybe;
+  act::Actor* boss_actor_maybe;
+  u8 gap_F0E8[4];
+  act::Actor* blue_warp_actor;
+  act::Actor* some_actor;
+  u8 gap_F0F4[7996];
 };
 static_assert(rst::util::OffsetOf(&GlobalContext::field_C000) == 0xc000);
+static_assert(sizeof(GlobalContext) == 0x11030);
 
 }  // namespace game
