@@ -38,7 +38,9 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
 
 In a roughly increasing order of difficulty.
 
-* **Fixed Deku Palace Platforms**: In the remaster, the moving platforms don't actually... move until you land on them. This should be fixed.
+* **Fixed Deku Palace Platforms**: In the remaster, the moving platforms don't actually... move until the player lands on them. This should be fixed.
+
+* **Less Enthusiastic Bombers**: The Bombers should leave the player alone and not actively chase them, at least during cutscenes.
 
 * **Faster Captain Keeta**: In MM3D, Captain Keeta walks a lot slower and the battle ends a lot faster. This was probably another attempt at making the game more accessible, but IMO it wasn't even that difficult in the first place. I don't particularly care about this but someone has suggested reverting this change.
 
