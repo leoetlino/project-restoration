@@ -38,9 +38,11 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
 
 In a roughly increasing order of difficulty.
 
-* **More Fluid Bomber's Notebook**: MM3D has annoying long popups and UI animations. It should be possible to decrease the transition durations and reduce pauses.
+* **Fixed Deku Palace Platforms**: In the remaster, the moving platforms don't actually... move until you land on them. This should be fixed.
 
 * **Faster Captain Keeta**: In MM3D, Captain Keeta walks a lot slower and the battle ends a lot faster. This was probably another attempt at making the game more accessible, but IMO it wasn't even that difficult in the first place. I don't particularly care about this but someone has suggested reverting this change.
+
+* **More Fluid Bomber's Notebook**: MM3D has annoying long popups and UI animations. It should be possible to decrease the transition durations and reduce pauses.
 
 ### Considered changes
 
