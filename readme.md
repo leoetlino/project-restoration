@@ -30,8 +30,8 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
   * Reduced the number of cycles to make it less repetitive.
   * Red Twinmold no longer resets its hit counter every time it burrows back into the sand. As a result, the battle is much less confusing for new players.
 
-* **Restored Ice Arrows**: Ice arrows that work everywhere
-  * Ice arrows now work in all locations, not just in Gyorg's room. This gives the player the freedom to experiment with ice arrows.
+* **Restored Ice Arrows**: Ice arrows that work in more locations
+  * Ice arrows now work everywhere in Great Bay Temple, not just in Gyorg's room. This gives the player the freedom to experiment with ice arrows. Ice arrows also work in several other areas, just like in the original game.
   * Removed the sparkling water effects as they were an insult to the player's intelligence.
 
 ### Planned changes
