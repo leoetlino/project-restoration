@@ -51,7 +51,7 @@ void Calc(game::GlobalContext* gctx) {
   // FixTime();
   FixTwinmold();
   FixIceArrows();
-  FixDekuMovingPlatforms();
+  // FixDekuMovingPlatforms();
 
 #if 0
   std::string actors_str = "actors:";
