@@ -53,39 +53,30 @@ In a roughly increasing order of difficulty.
 
 ## Setup
 
-Currently, the patch has been tested:
-
-* MM3D 1.0.0 on Citra: works
-* MM3D 1.1.0 on Citra: works
-* MM3D 1.0.0 on console: works
-* MM3D 1.1.0 on console: works
-
-First, download the [latest release](https://github.com/leoetlino/project-restoration/releases) that **corresponds to your game version**. You can determine the version by checking whether "v1.1" is shown on the title screen.
+1. Download the [latest release](https://github.com/leoetlino/project-restoration/releases).
+2. Determine which patch to use.
+    * If you have MM3D 1.0, use v100.
+    * If you have MM3D 1.1, use v110 if your game card came with 1.1 preinstalled, and v101 otherwise. If you're unsure, try v110 first, and follow these instructions again with v101 if the game doesn't work.
+3. Determine what your game's Title ID is:
+    * MM3D EU: 0004000000125600
+    * MM3D US: 0004000000125500
 
 ### Console
 
-On console, [Luma3DS](https://github.com/AuroraWright/Luma3DS) (or a loader that supports IPS patching and exheader replacement)  is required.
+A special version of [Luma3DS](https://github.com/AuroraWright/Luma3DS) that supports IPS and BPS patching is required. Download [this `boot.firm`](https://github.com/leoetlino/Luma3DS/releases) and put it at the root of your SD card.
 
-**Important**: Luma currently crashes because of a critical bug in its loader. I've submitted [a fix](https://github.com/AuroraWright/Luma3DS/pull/1287) to Luma3DS; in the meantime, please copy [my `boot.firm` file](https://github.com/leoetlino/project-restoration/releases) to the root of your SD card.
-
-* Either stay on 1.0 or update your game to v1.1. If your cartridge has the 1.1 version, you **must** update to the other 1.1 version (confusingly enough, the cartridge version and the online version are different, and only the latter works).
-* Determine the title ID to use:
-    * MM3D 1.0 EU: 0004000000125600
-    * MM3D 1.0 US: 0004000000125500
-    * MM3D 1.1 EU: 0004000E00125600
-    * MM3D 1.1 US: 0004000E00125500
-* Open the release archive.
 * Create the /luma/titles/*TITLE_ID*/ directory on your SD card (if it doesn't already exist).
-* Copy **code.ips** to that directory and rename the file to **code.ips**.
+* Copy **code.ips** or **code.bps** (whichever file exists) to that directory.
 * Copy **exheader_legacy.bin** to that directory and rename the file to **exheader.bin**.
 
 ### Citra
+
+**Because Citra does not support BPS patches, only 1.0.0 is supported.** If you have another version, you need to extract the code.bin and apply the patch to code.bin yourself, then put the modified code.bin in exefsdir (see below).
 
 A [**canary build**](https://citra-emu.org/download/) of Citra is required, because I had to add the required code patching functionality myself (PR #4812, #4813, #4817), and those changes haven't all been merged to master yet.
 
 Let *GAME_FILE* be the path to the game file (3ds/cia/app). If you've installed the game, GAME_FILE is "sdmc/Nintendo 3DS/00000000000000000000000000000000/00000000000000000000000000000000/title/00040000/00125x00/content/xxxxxxxx.app" (where xxxxxxxx.app is the largest file in that directory).
 
-* Open the release archive.
 * Create the ***GAME_FILE*.exefsdir** directory (if it doesn't already exist).
 * Copy **code.ips** to that directory and rename the file to **code.ips**.
 * Copy **exheader.bin** to the same folder as the game file, then rename it to ***GAME_FILE*.exheader**.
