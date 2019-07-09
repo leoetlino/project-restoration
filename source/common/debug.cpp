@@ -1,9 +1,5 @@
 #include "common/debug.h"
 
-#include <cstdarg>
-#include <cstdio>
-
-#include "common/types.h"
 #include "game/common_data.h"
 
 namespace rst::util {
