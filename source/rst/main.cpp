@@ -51,6 +51,18 @@ void Calc(game::GlobalContext* gctx) {
   // FixTime();
   FixTwinmold();
   FixIceArrows();
+
+#if 0
+  std::string actors_str = "actors:";
+  for (size_t i = 0; i < gctx->actors.lists.size(); ++i) {
+    game::ActorList& list = gctx->actors.lists[i];
+    actors_str += util::StringFromFormat("\ntype %02zu: ", i);
+    for (auto* actor = list.first; actor; actor = actor->next) {
+      actors_str += util::StringFromFormat("%04x ", u16(actor->id));
+    }
+  }
+  util::Print(actors_str);
+#endif
 }
 
 }  // namespace rst
