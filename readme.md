@@ -53,12 +53,12 @@ In a roughly increasing order of difficulty.
 
 ## Setup
 
-Currently, the patch has been tested with:
+Currently, the patch has been tested:
 
 * MM3D 1.0.0 on Citra: works
 * MM3D 1.1.0 on Citra: works
 * MM3D 1.0.0 on console: works
-* MM3D 1.1.0 on console: **broken** -- probably because the cartridge 1.1 version is different from the eShop 1.1
+* MM3D 1.1.0 on console: works
 
 First, download the [latest release](https://github.com/leoetlino/project-restoration/releases) that **corresponds to your game version**. You can determine the version by checking whether "v1.1" is shown on the title screen.
 
