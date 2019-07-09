@@ -47,9 +47,17 @@ build () {
 }
 
 build v100
-if [ -z ${RST_SKIP_110+x} ]; then
-  build v110
-fi
+
+make_patch_for_secondary_version () {
+  TARGET_VERSION=$1
+  mkdir $RELEASE_DIR/$TARGET_VERSION
+  cp $RELEASE_DIR/v100/exheader*.bin $RELEASE_DIR/$TARGET_VERSION/
+  flips -b $RST_ROOT/$TARGET_VERSION/code.bin $RST_ROOT/source/build/patched_code.bin $RELEASE_DIR/$TARGET_VERSION/code.bps
+}
+
+make_patch_for_secondary_version v101 &
+make_patch_for_secondary_version v110 &
+wait
 
 print_status "packing"
 
