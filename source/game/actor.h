@@ -14,11 +14,15 @@ namespace game::act {
 class Actor;
 
 enum class Id : u16 {
+  // [2] Player actor
   Player = 0,
+  // [1] Deku Palace / Woodfall Temple moving platforms (after player lands on them)
+  ObjRailLift = 0xd8,
+  // [9] Twinmold (Red/Blue)
   BossTwinmold = 0xcc,
   // Ice platform created using ice arrows.
   BgIcePlatform = 0x013E,
-  // New in MM3D. Actor that shows up as sparkles and spawns an ice platform (actor 0x13E) when hit.
+  // [6] New in MM3D. Actor that shows up as sparkles and spawns an ice platform (actor 0x13E) when hit.
   BgSeaFreezablePoint = 0x0244,
 };
 
@@ -151,17 +155,17 @@ struct Actor {
   void (*calc_fn)(Actor*, GlobalContext*);
   void (*draw_fn)(Actor*, GlobalContext*);
   ActorOverlayInfo* overlay_info;
-  int field_14C;
-  int field_150;
-  int field_154;
+  float field_14C;
+  float field_150;
+  float field_154;
   int field_158;
-  int field_15C;
-  int field_160;
-  int field_164;
+  float field_15C;
+  float field_160;
+  float field_164;
   int field_168;
-  int field_16C;
-  int field_170;
-  int field_174;
+  float field_16C;
+  float field_170;
+  float field_174;
   int field_178;
   void* field_17C;
   char field_180[80];

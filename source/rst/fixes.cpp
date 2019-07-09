@@ -118,4 +118,23 @@ void FixIceArrows() {
   // The main fix is a code patch that removes the entrance restriction for ice arrows.
 }
 
+void FixDekuMovingPlatforms() {
+  // The moving platforms in Deku Palace / Woodfall Temple don't actually move
+  // until the player stands on them.
+  // That pretty much negates the point of having moving platforms...
+
+  const auto& type_1_actors = GetContext().gctx->actors.lists[1];
+  for (auto* actor = type_1_actors.first; actor; actor = actor->next) {
+    if (actor->id != game::act::Id::ObjRailLift)
+      continue;
+
+    const auto calc_fn = util::BitCastPtr<uintptr_t>(actor, 0x20C);
+    constexpr uintptr_t waiting_for_player_fn = 0x3113C8;
+    constexpr uintptr_t moving_fn = 0x58F1F4;
+    // Make any paused platform move automatically.
+    if (calc_fn == waiting_for_player_fn)
+      *(uintptr_t*)((u8*)actor + 0x20C) = moving_fn;
+  }
+}
+
 }  // namespace rst

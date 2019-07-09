@@ -34,11 +34,11 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
   * Ice arrows now work everywhere in Great Bay Temple, not just in Gyorg's room. This gives the player the freedom to experiment with ice arrows. Ice arrows also work in several other areas, just like in the original game.
   * Removed the sparkling water effects as they were an insult to the player's intelligence.
 
+* **Moving Platforms That Actually Move**: In the remaster, the moving platforms in Deku Palace and Woodfall Temple don't... move until the player lands on them. That is now fixed.
+
 ### Planned changes
 
 In a roughly increasing order of difficulty.
-
-* **Fixed Deku Palace Platforms**: In the remaster, the moving platforms don't actually... move until the player lands on them. This should be fixed.
 
 * **Less Enthusiastic Bombers**: The Bombers should leave the player alone and not actively chase them, at least during cutscenes.
 

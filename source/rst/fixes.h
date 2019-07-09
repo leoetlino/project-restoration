@@ -8,4 +8,6 @@ void FixTwinmold();
 
 void FixIceArrows();
 
+void FixDekuMovingPlatforms();
+
 }  // namespace rst
