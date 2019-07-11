@@ -526,6 +526,7 @@ struct CommonData {
   u16 field_369C;
   u16 field_369E;
   u16 time_copy_2;
+  // Used for scheduling NPCs?
   u16 time_copy;
   u8 field_36A4[32];
   u32 field_36C4;
@@ -537,7 +538,7 @@ struct CommonData {
 
   u16 save_idx;
   u8 gap_1361A[2];
-  int field_1361C;
+  int setup;
   int field_13620;
   int field_13624;
   CommonDataSub13 sub13s[8];
