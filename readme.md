@@ -37,12 +37,11 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
 * Other minor adjustments to improve the player's experience:
   * The moving platforms in Deku Palace and Woodfall Temple now actually always move.
   * The Bombers will no longer distract the player from a particular cutscene.
+  * Captain Keeta now walks as fast as in the original game, which restores the challenge of the chasing mini-game.
 
 ### Planned changes
 
 In a roughly increasing order of difficulty.
-
-* **Faster Captain Keeta**: In MM3D, Captain Keeta walks a lot slower and the battle ends a lot faster. This was probably another attempt at making the game more accessible, but IMO it wasn't even that difficult in the first place. I don't particularly care about this but someone has suggested reverting this change.
 
 * **More Fluid Bomber's Notebook**: MM3D has annoying long popups and UI animations. It should be possible to decrease the transition durations and reduce pauses.
 
