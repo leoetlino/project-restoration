@@ -31,6 +31,9 @@ build () {
   cp $RST_ROOT/$TARGET_VERSION/*.bin $RST_ROOT/
   cp $RST_ROOT/$TARGET_VERSION/Version.cmake $RST_ROOT/source/
 
+  # Touch main.cpp to get an up-to-date build time
+  touch $RST_ROOT/source/rst/main.cpp
+
   # Run the patcher
   Magikoopa --build --workdir $RST_ROOT/
 
