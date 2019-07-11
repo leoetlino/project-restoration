@@ -34,13 +34,13 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
   * Ice arrows now work everywhere in Great Bay Temple, not just in Gyorg's room. This gives the player the freedom to experiment with ice arrows. Ice arrows also work in several other areas, just like in the original game.
   * Removed the sparkling water effects as they were an insult to the player's intelligence.
 
-* **Moving Platforms That Actually Move**: In the remaster, the moving platforms in Deku Palace and Woodfall Temple don't... move until the player lands on them. That is now fixed.
+* Other minor adjustments to improve the player's experience:
+  * The moving platforms in Deku Palace and Woodfall Temple now actually always move.
+  * The Bombers will no longer distract the player from a particular cutscene.
 
 ### Planned changes
 
 In a roughly increasing order of difficulty.
-
-* **Less Enthusiastic Bombers**: The Bombers should leave the player alone and not actively chase them, at least during cutscenes.
 
 * **Faster Captain Keeta**: In MM3D, Captain Keeta walks a lot slower and the battle ends a lot faster. This was probably another attempt at making the game more accessible, but IMO it wasn't even that difficult in the first place. I don't particularly care about this but someone has suggested reverting this change.
 
