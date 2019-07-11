@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cmath>
 #include <cstdint>
 
 using u8 = std::uint8_t;
@@ -19,4 +20,11 @@ struct Vec3 {
   float x;
   float y;
   float z;
+
+  float Distance(const Vec3& other) const {
+    const float delta_x = x - other.x;
+    const float delta_y = y - other.y;
+    const float delta_z = z - other.z;
+    return std::sqrt(delta_x * delta_x + delta_y * delta_y + delta_z * delta_z);
+  }
 };

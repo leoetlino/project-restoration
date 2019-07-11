@@ -10,4 +10,6 @@ void FixIceArrows();
 
 void FixDekuMovingPlatforms();
 
+void FixBombers();
+
 }  // namespace rst

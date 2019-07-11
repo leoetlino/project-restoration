@@ -22,6 +22,10 @@ enum class Id : u16 {
   BossTwinmold = 0xcc,
   // Ice platform created using ice arrows.
   BgIcePlatform = 0x013E,
+  // [4] Rosa Sisters
+  NpcRosaSisters = 0x020A,
+  // [4] Bombers
+  NpcBombers = 0x020F,
   // [6] New in MM3D. Actor that shows up as sparkles and spawns an ice platform (actor 0x13E) when hit.
   BgSeaFreezablePoint = 0x0244,
 };

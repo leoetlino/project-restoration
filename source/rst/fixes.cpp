@@ -7,6 +7,7 @@
 #include "common/utils.h"
 #include "game/actor.h"
 #include "game/actors/boss_twinmold.h"
+#include "game/actors/npc_bombers.h"
 #include "game/common_data.h"
 #include "game/context.h"
 
@@ -135,6 +136,48 @@ void FixDekuMovingPlatforms() {
     if (calc_fn == waiting_for_player_fn)
       *(uintptr_t*)((u8*)actor + 0x20C) = moving_fn;
   }
+}
+
+// Fix bombers being too enthusiastic and distracting the player even during cutscenes.
+void FixBombers() {
+  static std::array<void*, 5> s_original_data_ptrs{};
+
+  const game::GlobalContext* gctx = GetContext().gctx;
+
+  const auto* npc_rosa_sister =
+      gctx->FindActorWithId(game::act::Id::NpcRosaSisters, game::act::Type::Npc);
+  const bool is_player_around_rosa_sisters =
+      npc_rosa_sister &&
+      gctx->GetPlayerActor()->position.Distance(npc_rosa_sister->position) <= 200;
+
+  const auto& npcs = gctx->actors.GetList(game::act::Type::Npc);
+
+  bool has_at_least_one_bombers_actor = false;
+
+  for (auto* actor = npcs.first; actor; actor = actor->next) {
+    if (actor->id != game::act::Id::NpcBombers)
+      continue;
+
+    has_at_least_one_bombers_actor = true;
+    auto* npc = static_cast<game::act::NpcBombers*>(actor);
+
+    if (is_player_around_rosa_sisters) {
+      // Clear the notebook data pointer, which will make the NPC not chase the player
+      // or provide any hints.
+      if (!s_original_data_ptrs[npc->number]) {
+        util::Print("%s: disabling hints for Bombers %u", __func__, npc->number);
+        std::swap(npc->notebook_data, s_original_data_ptrs[npc->number]);
+      }
+
+    } else if (s_original_data_ptrs[npc->number] && !npc->notebook_data) {
+      // Restore the original pointer.
+      util::Print("%s: re-enabling hints for Bombers %u", __func__, npc->number);
+      std::swap(npc->notebook_data, s_original_data_ptrs[npc->number]);
+    }
+  }
+
+  if (!has_at_least_one_bombers_actor)
+    s_original_data_ptrs.fill(nullptr);
 }
 
 }  // namespace rst
