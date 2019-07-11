@@ -55,6 +55,8 @@ struct ActorList {
 static_assert(sizeof(ActorList) == 0xc);
 
 struct ActorLists {
+  ActorList& GetList(act::Type type) { return lists[u8(type)]; }
+  const ActorList& GetList(act::Type type) const { return lists[u8(type)]; }
   u8 gap_0[0xe];
   u8 num_actors;
   std::array<ActorList, 12> lists;

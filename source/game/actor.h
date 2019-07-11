@@ -82,7 +82,7 @@ struct Actor {
   float field_14;
   u16 field_18;
   u16 field_1A;
-  u16 state;
+  u16 params;
   u8 field_1E;
   u8 field_1F;
   u16 field_20;
@@ -110,8 +110,8 @@ struct Actor {
   u8 gap_90[4];
   rst::Flags<Flag94> flags_94;
   float field_98;
-  float field_9C;
-  float field_A0;
+  float distance_to_link;
+  float height_diff_to_link;
   u8 field_A4[22];
   u8 field_BA;
   /// Used by Twinmold at least. Unused for player?
