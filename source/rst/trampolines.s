@@ -7,7 +7,9 @@
 	.align 4
 rst_trampoline_\name:
   push {r1-r12, lr}
+  vpush {d0-d15}
   bl \name
+  vpop {d0-d15}
   pop {r1-r12, pc}
 .endm
 
