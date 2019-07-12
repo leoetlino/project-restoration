@@ -76,6 +76,10 @@ struct GlobalContext {
   T* FindActorWithId(act::Id id, act::Type type) const {
     return static_cast<T*>(FindActorWithId(id, type));
   }
+  bool IsActorVisible(act::Id id, act::Type type) const {
+    const auto* actor = FindActorWithId(id, type);
+    return actor && actor->draw_fn;
+  }
 
   act::Player* GetPlayerActor() const;
 

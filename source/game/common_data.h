@@ -107,11 +107,7 @@ struct SaveData {
   /// In-game day
   int day;
   int total_day;
-  /// Legacy time speed (?)
-  ///
-  /// Strangely enough, this is still set to -3 on the title screen. But setting this
-  /// during gameplay breaks the game as it tries to dereference a null pointer.
-  s16 legacy_time_speed, legacy_time_speed_padding;
+  int cutscene_stuff;
   /// In-game time.
   /// 0x0000 is midnight, 0x4000 is 6am, 0x8000 is noon, 0xc000 is 6pm.
   u16 time;

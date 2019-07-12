@@ -26,6 +26,7 @@ add_executable(newcode
   game/player.h
   game/static_context.cpp
   game/static_context.h
+  rst/fixes/time.cpp
   rst/fixes.cpp
   rst/fixes.h
   rst/link.cpp

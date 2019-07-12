@@ -85,6 +85,17 @@ captain_keeta_speed:
   data: 00 00 60 40 # 3.5 (was 2.3333)
   addr: 0x3052C4
 
+move_scheduled_npc_hook:
+  type: branch
+  link: true
+  func: rst_trampoline_rst_MoveScheduledNpcHook
+  addr: 0x3168FC
+update_time_hook:
+  type: softbranch
+  opcode: pre
+  func: rst_UpdateTimeHook
+  addr: 0x172A64
+
 main_hook:
   type: softbranch
   opcode: post

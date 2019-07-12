@@ -4,6 +4,7 @@
 #include "common/utils.h"
 #include "game/context.h"
 #include "rst/fixes.h"
+#include "rst/fixes/time.h"
 #include "rst/link.h"
 
 namespace rst {
@@ -38,7 +39,7 @@ void Calc(game::GlobalContext* gctx) {
 
   link::HandleFastTransform();
   link::HandleFastOcarina();
-  // FixTime();
+  FixTime();
   FixTwinmold();
   FixIceArrows();
   FixDekuMovingPlatforms();
@@ -71,7 +72,7 @@ extern void (*__init_array_end[])(void) __attribute__((weak));
 
 RST_HOOK void _start(void) {
   // Just in case something needs to be dynamically allocated...
-  static char s_fake_heap[0x10000];
+  static char s_fake_heap[0x80000];
   fake_heap_start = &s_fake_heap[0];
   fake_heap_end = &s_fake_heap[sizeof(s_fake_heap)];
 

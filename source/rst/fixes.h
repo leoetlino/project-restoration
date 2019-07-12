@@ -2,8 +2,6 @@
 
 namespace rst {
 
-void FixTime();
-
 void FixTwinmold();
 
 void FixIceArrows();

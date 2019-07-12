@@ -22,7 +22,7 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
 * **Fast Ocarina**: Dedicated physical button for the Ocarina of Time
   * Press ZR to play the instrument.
 
-* ~~**More Effective Inverted Song of Time**: The ISoT makes time go at 1/3 speed (rather than 1/2).~~ Temporarily disabled because of issues with some NPCs.
+* **More Effective Inverted Song of Time**: Slow time to 1/3 speed (as in the original)
   * Makes some glitchless challenge runs possible again.
   * Gives the player more time in a three-day cycle.
 

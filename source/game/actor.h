@@ -20,13 +20,17 @@ enum class Id : u16 {
   ObjRailLift = 0xd8,
   // [9] Twinmold (Red/Blue)
   BossTwinmold = 0xcc,
+  // [4] Kafei
+  NpcKafei = 0x00F4,
   // Ice platform created using ice arrows.
   BgIcePlatform = 0x013E,
+  // [4] Old Lady from Bomb Shop
+  NpcOldLady = 0x01C5,
   // [4] Rosa Sisters
   NpcRosaSisters = 0x020A,
   // [4] Bombers
   NpcBombers = 0x020F,
-  // [6] New in MM3D. Actor that shows up as sparkles and spawns an ice platform (actor 0x13E) when hit.
+  // [6] New in MM3D. Shows up as sparkles and spawns an ice platform (actor 0x13E) when hit.
   BgSeaFreezablePoint = 0x0244,
 };
 

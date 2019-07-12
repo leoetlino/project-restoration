@@ -8,30 +8,10 @@
 #include "game/actor.h"
 #include "game/actors/boss_twinmold.h"
 #include "game/actors/npc_bombers.h"
-#include "game/common_data.h"
 #include "game/context.h"
+#include "game/player.h"
 
 namespace rst {
-
-void FixTime() {
-  game::CommonData& cdata = game::GetCommonData();
-
-  // Restore the effectiveness of the Inverted Song of Time.
-  //
-  // In MM, the normal time speed is +3 and the ISoT sets the extra time speed to -2, resulting
-  // in a +1 effective time speed (which means 1/3 time speed).
-  //
-  // In MM3D, the normal speed is +2 and the ISoT only sets the extra speed to -1, which still
-  // gives the player a +1 effective speed, but only 1/2 time speed.
-  //
-  // A quick fix is to skip incrementing the in-game time every 6 frames,
-  // giving us the desired ratio of 2/6.
-
-  if (cdata.save.extra_time_speed == -2)
-    cdata.save.extra_time_speed = -1;
-  if (cdata.save.extra_time_speed == -1 && GetContext().gctx->frame_counter % 6 == 0)
-    cdata.save.extra_time_speed = -2;
-}
 
 struct TwinmoldFixState {
   s8 blue_prev_life;
