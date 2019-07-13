@@ -34,7 +34,7 @@ add_executable(newcode
   rst/trampolines.s
 )
 set_target_properties(newcode PROPERTIES SUFFIX ".elf")
-target_compile_options(newcode PRIVATE -fdiagnostics-color=always -Wall -Wextra -Werror -std=c++17 -fno-exceptions -fomit-frame-pointer -ffunction-sections)
+target_compile_options(newcode PRIVATE -fdiagnostics-color=always -Wall -Wextra -std=c++17 -fno-exceptions -fomit-frame-pointer -ffunction-sections)
 target_include_directories(newcode PRIVATE ./)
 
 if (NOT DEFINED CODEADDR)
