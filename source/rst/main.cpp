@@ -10,17 +10,7 @@ namespace rst {
 
 namespace {
 
-extern "C" {
-extern char* fake_heap_start;
-extern char* fake_heap_end;
-}
-
 void Init(Context& context) {
-  // Just in case something needs to be dynamically allocated...
-  static char s_fake_heap[0x10000];
-  fake_heap_start = &s_fake_heap[0];
-  fake_heap_end = &s_fake_heap[sizeof(s_fake_heap)];
-
   link::Init();
 
   util::Print("Project Restoration initialised (%s %s, target version %lu)", __DATE__, __TIME__, util::Version);
@@ -72,5 +62,20 @@ void Calc(game::GlobalContext* gctx) {
 extern "C" {
 void rst_Calc(game::GlobalContext* gctx) {
   rst::Calc(gctx);
+}
+
+extern char* fake_heap_start;
+extern char* fake_heap_end;
+extern void (*__init_array_start[])(void) __attribute__((weak));
+extern void (*__init_array_end[])(void) __attribute__((weak));
+
+[[gnu::section(".init")]] void _start(void) {
+  // Just in case something needs to be dynamically allocated...
+  static char s_fake_heap[0x10000];
+  fake_heap_start = &s_fake_heap[0];
+  fake_heap_end = &s_fake_heap[sizeof(s_fake_heap)];
+
+  for (size_t i = 0; i < size_t(__init_array_end - __init_array_start); i++)
+    __init_array_start[i]();
 }
 }

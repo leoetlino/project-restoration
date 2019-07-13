@@ -90,3 +90,9 @@ main_hook:
   opcode: post
   func: rst_Calc
   addr: 0x0010676C
+
+start_hook:
+  type: softbranch
+  opcode: post
+  func: _start
+  addr: 0x103EC8
