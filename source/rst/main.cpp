@@ -60,7 +60,7 @@ void Calc(game::GlobalContext* gctx) {
 }  // namespace rst
 
 extern "C" {
-void rst_Calc(game::GlobalContext* gctx) {
+RST_HOOK void rst_Calc(game::GlobalContext* gctx) {
   rst::Calc(gctx);
 }
 
@@ -69,7 +69,7 @@ extern char* fake_heap_end;
 extern void (*__init_array_start[])(void) __attribute__((weak));
 extern void (*__init_array_end[])(void) __attribute__((weak));
 
-[[gnu::section(".init")]] void _start(void) {
+RST_HOOK void _start(void) {
   // Just in case something needs to be dynamically allocated...
   static char s_fake_heap[0x10000];
   fake_heap_start = &s_fake_heap[0];

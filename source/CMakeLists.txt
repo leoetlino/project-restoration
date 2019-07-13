@@ -40,7 +40,7 @@ target_include_directories(newcode PRIVATE ./)
 if (NOT DEFINED CODEADDR)
   message(FATAL_ERROR "Set CODEADDR")
 endif()
-target_link_options(newcode PRIVATE "-Wl,-Ttext-segment=${CODEADDR}")
+target_link_options(newcode PRIVATE "-Wl,--gc-sections,-Ttext-segment=${CODEADDR}")
 add_custom_target(newcode_product ALL
   DEPENDS newcode
   COMMAND ${CMAKE_OBJCOPY} -O binary newcode.elf newcode.bin

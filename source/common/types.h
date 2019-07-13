@@ -28,3 +28,6 @@ struct Vec3 {
     return std::sqrt(delta_x * delta_x + delta_y * delta_y + delta_z * delta_z);
   }
 };
+
+// Put hook functions in .init as they are always kept by the linker.
+#define RST_HOOK [[gnu::section(".init")]] [[gnu::used]]

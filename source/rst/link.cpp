@@ -127,7 +127,7 @@ bool ShouldUseZoraFastSwim() {
 }  // namespace rst::link
 
 extern "C" {
-bool rst_link_ShouldUseZoraFastSwim() {
+RST_HOOK bool rst_link_ShouldUseZoraFastSwim() {
   return rst::link::ShouldUseZoraFastSwim();
 }
 }

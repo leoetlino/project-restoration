@@ -1,4 +1,4 @@
-.text
+.section ".init"
 .align 4
 
 .macro TRAMPOLINE_R0_RESULT name
