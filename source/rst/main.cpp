@@ -13,7 +13,7 @@ namespace {
 void Init(Context& context) {
   link::Init();
 
-  util::Print("Project Restoration initialised (%s %s, target version %lu)", __DATE__, __TIME__, util::Version);
+  util::Print("Project Restoration initialised (" __DATE__ " " __TIME__ ")");
   context.has_initialised = true;
 }
 
