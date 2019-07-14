@@ -482,6 +482,24 @@ struct CommonDataSub13 {
   u32 field_28;
 };
 
+enum class UsableButton : u8 {
+  B = 0,
+  Y = 1,
+  X = 2,
+  I = 3,
+  II = 4,
+  Unknown5 = 5,
+  Ocarina = 6,
+  PictographBox = 7,
+  Unknown8 = 8,
+};
+
+enum class ButtonIsUsable : u8 {
+  Yes = 0,
+  No = 0xff,
+  // Other values are possible and can be seen when riding Epona.
+};
+
 /// Common gameplay data, also known as the Save Context (unofficially).
 struct CommonData {
   int start;
@@ -547,7 +565,8 @@ struct CommonData {
   u16 field_13736;
   int field_13738;
   int field_1373C;
-  u8 field_13740[9];
+  /// see also UsableButton and ButtonIsUsable
+  ButtonIsUsable usable_btns[9];
   char field_13749[15];
   int field_13758;
   char field_1375C;

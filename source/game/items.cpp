@@ -2,6 +2,7 @@
 
 #include <algorithm>
 
+#include "common/context.h"
 #include "common/utils.h"
 #include "game/common_data.h"
 
@@ -45,6 +46,32 @@ bool HasOcarina() {
 bool HasMask(ItemId item_id) {
   const auto& masks = GetCommonData().save.inventory.masks;
   return std::any_of(masks.begin(), masks.end(), [&](ItemId id) { return item_id == id; });
+}
+
+bool CanUseItem(ItemId item_id) {
+  if (item_id == ItemId::Ocarina) {
+    return GetCommonData().usable_btns[u8(UsableButton::Ocarina)] != ButtonIsUsable::No;
+  }
+  if (item_id == ItemId::PictographBox) {
+    return GetCommonData().usable_btns[u8(UsableButton::PictographBox)] != ButtonIsUsable::No;
+  }
+
+  // This is a terrible hack to use the official item usability logic.
+  // Assign the item to an action button, then update item usability by calling
+  // a MM3D function, then restore the original assignment.
+
+  FormEquipmentData& equipment = GetCommonData().save.equipment.data[0];
+  const FormEquipmentData equipment_copy = equipment;
+
+  equipment.item_btn_i = item_id;
+  const auto update_usability = reinterpret_cast<void (*)(GlobalContext*)>(0x1884B0);
+  update_usability(rst::GetContext().gctx);
+
+  const bool is_usable = GetCommonData().usable_btns[u8(UsableButton::I)] != ButtonIsUsable::No;
+
+  equipment = equipment_copy;
+  update_usability(rst::GetContext().gctx);
+  return is_usable;
 }
 
 }  // namespace game

@@ -28,15 +28,14 @@ void Init() {
 namespace {
 struct TransformAction {
   game::pad::Button trigger_btn;
-  bool allow_in_water;
   game::ItemId required_mask;
   game::Action action;
   const char* name;
 };
 static constexpr TransformAction s_actions[] = {
-    {game::pad::Button::Left, true, game::ItemId::ZoraMask, game::Action::ZoraMask, "Zora"},
-    {game::pad::Button::Up, false, game::ItemId::GoronMask, game::Action::GoronMask, "Goron"},
-    {game::pad::Button::Down, false, game::ItemId::DekuMask, game::Action::DekuMask, "Deku"},
+    {game::pad::Button::Left, game::ItemId::ZoraMask, game::Action::ZoraMask, "Zora"},
+    {game::pad::Button::Up, game::ItemId::GoronMask, game::Action::GoronMask, "Goron"},
+    {game::pad::Button::Down, game::ItemId::DekuMask, game::Action::DekuMask, "Deku"},
 };
 
 bool CanUseFastAction(game::act::Player* player) {
@@ -81,8 +80,8 @@ void HandleFastTransform() {
     return;
   }
 
-  if (!it->allow_in_water && player->flags1.IsSet(game::act::Player::Flag1::InWater)) {
-    util::Print("%s: cannot transform into %s in water, skipping", __func__, it->name);
+  if (!game::CanUseItem(it->required_mask)) {
+    util::Print("%s: CanUseItem returned false, skipping", __func__);
     return;
   }
 
@@ -107,12 +106,10 @@ void HandleFastOcarina() {
   if (!game::HasOcarina())
     return;
 
-  if (gctx->pad_state.input.buttons.IsSet(game::pad::Button::R))
+  if (!game::CanUseItem(game::ItemId::Ocarina)) {
+    util::Print("%s: CanUseItem returned false, skipping", __func__);
     return;
-
-  // The ocarina can only be used when grounded (in particular for Zora Link).
-  if (!player->flags_94.IsSet(game::act::Actor::Flag94::Grounded))
-    return;
+  }
 
   player->action = game::Action::Ocarina;
   player->action_type = game::act::Player::ActionType::OcarinaOrTransformation;
