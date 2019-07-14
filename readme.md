@@ -54,15 +54,15 @@ In a roughly increasing order of difficulty.
 
 1. Download the [latest release](https://github.com/leoetlino/project-restoration/releases).
 2. Determine which patch to use.
-    * If you have MM3D 1.0, use v100.
-    * If you have MM3D 1.1, use v110 if your game card came with 1.1 preinstalled, and v101 otherwise. If you're unsure, try v110 first, and follow these instructions again with v101 if the game doesn't work.
+    * If you have MM3D 1.0, use v100 (which targets the MM3D 1.0 code).
+    * If you have MM3D 1.1, you need to try all three patches and choose whichever works. If your game card came with MM3D 1.1 preinstalled, use v110. Otherwise, try v100 even if you have the 1.1 update installed. If it still won't work, try v101.
 3. Determine what your game's Title ID is:
     * MM3D EU: 0004000000125600
     * MM3D US: 0004000000125500
 
 ### Console
 
-A special version of [Luma3DS](https://github.com/AuroraWright/Luma3DS) that supports IPS and BPS patching is required. Download [this `boot.firm`](https://github.com/leoetlino/Luma3DS/releases) and put it at the root of your SD card.
+A special version of [Luma3DS](https://github.com/AuroraWright/Luma3DS) that supports IPS and BPS patching is required. Download [it from my repository](https://github.com/leoetlino/Luma3DS/releases) and put the `boot.firm` file at the root of your SD card. (Upstreaming BPS patch support is planned once it has received enough testing.)
 
 * Create the /luma/titles/*TITLE_ID*/ directory on your SD card (if it doesn't already exist).
 * Copy **code.ips** or **code.bps** (whichever file exists) to that directory.
@@ -70,9 +70,9 @@ A special version of [Luma3DS](https://github.com/AuroraWright/Luma3DS) that sup
 
 ### Citra
 
-**Because Citra does not support BPS patches, only 1.0.0 is supported.** If you have another version, you need to extract the code.bin and apply the patch to code.bin yourself, then put the modified code.bin in exefsdir (see below).
-
 A [**canary build**](https://citra-emu.org/download/) of Citra is required, because I had to add the required code patching functionality myself (PR #4812, #4813, #4817), and those changes haven't all been merged to master yet.
+
+**Because Citra does not support BPS patches, only 1.0.0 is supported.** If you have another version, you need to extract the code.bin and apply the patch to code.bin yourself, then put the modified code.bin in exefsdir (see below).
 
 Let *GAME_FILE* be the path to the game file (3ds/cia/app). If you've installed the game, GAME_FILE is "sdmc/Nintendo 3DS/00000000000000000000000000000000/00000000000000000000000000000000/title/00040000/00125x00/content/xxxxxxxx.app" (where xxxxxxxx.app is the largest file in that directory).
 
