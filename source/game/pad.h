@@ -80,6 +80,7 @@ enum class TouchscreenButton : u8 {
   II = 1 << 1,
   /// Note: does not support holding.
   PictographBox = 1 << 2,
+  Ocarina = 1 << 3,
 };
 
 struct TouchscreenState {
@@ -97,8 +98,9 @@ struct ControllerInfo {
   /// 0x0000 (top) to 0xffff (counterclockwise)
   u16 angle;
   u8 gap_E[22];
-  u32 field_24;
-  u32 field_28;
+  // -1: None, 0: B, 1: Y, 2: X
+  u32 touchscreen_btn_slot;
+  u32 touchscreen_btn_pressed;
   u8 gap_2C[20];
   u32 field_40;
   u32 field_44;
