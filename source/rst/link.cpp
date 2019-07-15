@@ -116,9 +116,22 @@ void HandleFastOcarina() {
 }
 
 bool ShouldUseZoraFastSwim() {
-  const auto& btns = GetContext().gctx->pad_state.input.buttons;
-  return btns.IsSet(game::pad::Button::A) &&
-         (btns.IsSet(game::pad::Button::R) || !btns.IsSet(game::pad::Button::ZL));
+  const auto& input = GetContext().gctx->pad_state.input;
+
+  if (!input.buttons.IsSet(game::pad::Button::A))
+    return false;
+
+  // Toggle fast swim with D-Pad Up/Down
+  if (input.new_buttons.IsOneSet(game::pad::Button::Up, game::pad::Button::Down))
+    GetContext().use_fast_swim ^= true;
+
+  // Overrides
+  if (input.buttons.IsSet(game::pad::Button::R))
+    return true;
+  if (input.buttons.IsSet(game::pad::Button::ZL))
+    return false;
+
+  return GetContext().use_fast_swim;
 }
 
 }  // namespace rst::link

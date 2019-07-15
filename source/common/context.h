@@ -11,6 +11,8 @@ namespace rst {
 struct Context {
   game::GlobalContext* gctx;
   bool has_initialised = false;
+
+  bool use_fast_swim = true;
 };
 
 Context& GetContext();
