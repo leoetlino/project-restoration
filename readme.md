@@ -10,7 +10,7 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
 
 * **Zora Fast Swim**: Swim gracefully as a Zora without having to use magic
   * Fast swim is now the default way of swimming and no longer requires magic.
-  * Slow swim is still available. Hold ZL to slow swim.
+  * Slow swim is still available. Press Up/Down on the D-Pad to *toggle* between fast swim and slow swim. You can also *hold* ZL to slow swim.
 
 * **Fixed Deku Hopping**: Hop on water as fast as in MM
   * Deku Link's walk acceleration value was nerfed in MM3D (2.0 -> 0.6). As a possibly unintended consequence, this made hopping on lilypads very slow compared to the original even if you spin at the optimal time.
