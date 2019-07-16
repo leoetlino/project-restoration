@@ -175,7 +175,32 @@ struct GlobalContext {
   char field_C532;
   u8 gap_C533[5];
   int field_C538;
-  u8 gap_C53C[11162];
+  u8 gap_C53C[798];
+  u8 field_C85A;
+  u8 gap_C85B[5];
+  void* some_ptr;
+  u8 gap_C864[572];
+  void (*some_fn1)(void*, u32);
+  u32 field_CAA4;
+  bool (*some_fn2)(void*);
+  u8 gap_CAAC;
+  u8 field_CAAD;
+  u8 gap_CAAE[2];
+  u32 field_CAB0;
+  u8 gap_CAB4[16];
+  u32 field_CAC4;
+  u8 gap_CAC8[480];
+  char field_CCA8;
+  char field_CCA9;
+  char field_CCAA;
+  char field_CCAB;
+  bool field_CCAC;
+  u32 field_CCB0;
+  u32 field_CCB4;
+  u8 gap_CCB8[8];
+  u8 field_CCC0;
+  u8 field_CCC1;
+  u8 gap_CCC2[9236];
   u8 field_F0D6;
   u8 gap_F0D7;
   float field_F0D8;
@@ -189,5 +214,18 @@ struct GlobalContext {
 };
 static_assert(rst::util::OffsetOf(&GlobalContext::field_C000) == 0xc000);
 static_assert(sizeof(GlobalContext) == 0x11030);
+
+enum class UiScreen {
+  Black,
+  Main,
+  Schedule,
+  Quest,
+  Items,
+  Map,
+  Masks,
+  /// "Play your instrument" screen
+  Ocarina,
+};
+bool OpenUiScreen(UiScreen screen);
 
 }  // namespace game

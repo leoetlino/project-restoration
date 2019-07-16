@@ -111,3 +111,26 @@ start_hook:
   opcode: post
   func: _start
   addr: 0x103EC8
+
+ui_schedule_trigger_hook:
+  type: softbranch
+  opcode: post
+  func: rst_UiScheduleTriggerHook
+  addr: 0x59BA10
+ui_item_close_on_start:
+  type: patch
+  data: 0A 00 11 E3 # tst r1, (Button::B | Button::Start)
+  addr: 0x5C19E4
+
+ui_schedule_trigger_open_on_select:
+  type: patch
+  data: 04 00 50 E3
+  addr: 0x59BA1C
+ui_schedule_trigger_close_on_select:
+  type: patch
+  data: 06 00 10 E3
+  addr: 0x5B2028
+ui_schedule_trigger_close_on_select:
+  type: patch
+  data: 04 00 10 E3
+  addr: 0x5B2050

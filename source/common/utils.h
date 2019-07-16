@@ -49,4 +49,9 @@ Dest BitCastPtr(const T* ptr, size_t offset = 0) {
   return dest;
 }
 
+template <typename ValueType, typename T>
+void Write(T* ptr, size_t offset, const ValueType& value) {
+  std::memcpy(reinterpret_cast<u8*>(ptr) + offset, &value, sizeof(value));
+}
+
 }  // namespace rst::util

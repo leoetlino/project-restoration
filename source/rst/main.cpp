@@ -58,11 +58,24 @@ void Calc(game::GlobalContext* gctx) {
 #endif
 }
 
+void UiScheduleTriggerHook() {
+  auto* gctx = GetContext().gctx;
+  if (!gctx || gctx->type != game::GameStateType::Play)
+    return;
+
+  if (gctx->pad_state.input.new_buttons.IsSet(game::pad::Button::Start))
+    game::OpenUiScreen(game::UiScreen::Items);
+}
+
 }  // namespace rst
 
 extern "C" {
 RST_HOOK void rst_Calc(game::GlobalContext* gctx) {
   rst::Calc(gctx);
+}
+
+RST_HOOK void rst_UiScheduleTriggerHook() {
+  rst::UiScheduleTriggerHook();
 }
 
 extern char* fake_heap_start;
