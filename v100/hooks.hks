@@ -74,6 +74,10 @@ decouple_trigger_btns:
   type: patch
   data: 12 00 00 EA # skips over the ZL/ZR checks
   addr: 0x1166C8
+decouple_start_select:
+  type: patch
+  data: 01
+  addr: 0x006B083C
 
 ice_arrows:
   type: patch
