@@ -64,6 +64,8 @@ In a roughly increasing order of difficulty.
 
 A special version of [Luma3DS](https://github.com/AuroraWright/Luma3DS) that supports IPS and BPS patching is required. Download [it from my repository](https://github.com/leoetlino/Luma3DS/releases) and put the `boot.firm` file at the root of your SD card. (Upstreaming BPS patch support is planned once it has received enough testing.)
 
+You may also need to copy boot.firm to your NAND using a tool like godmode9.
+
 * [Enable game patching](https://github.com/AuroraWright/Luma3DS/wiki/Optional-features) in Luma's menu.
 * Create the /luma/titles/*TITLE_ID*/ directory on your SD card (if it doesn't already exist).
 * Copy **code.ips** or **code.bps** (whichever file exists) to that directory.
