@@ -140,7 +140,11 @@ struct GlobalContext {
   u16 field_8648;
   u8 gap_864A[12];
   u16 field_8656;
-  u8 gap_8658[52];
+  u8 gap_8658[16];
+  u16 field_8668;
+  u16 field_866A;
+  u16 field_866C;
+  u8 gap_866E[30];
   char field_868C;
   __attribute__((aligned(4))) u8 gap_8690[20];
   bool field_86A4_involved_in_form_check;
@@ -175,7 +179,8 @@ struct GlobalContext {
   u8 gap_C500[40];
   u8 field_C528;
   u8 field_C529_one_to_clear_input;
-  u8 gap_C52A[8];
+  u8 gap_C52A[7];
+  bool field_C531;
   char field_C532;
   u8 gap_C533[5];
   int field_C538;

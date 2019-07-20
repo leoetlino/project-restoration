@@ -140,6 +140,13 @@ struct Player : public Actor {
     Hookshot = 3,
   };
 
+  struct ArrowInfo {
+    bool can_use;
+    u16 actor_param;
+    ItemId item_id;
+  };
+  ArrowInfo GetArrowInfo(GlobalContext* gctx) const;
+
   char field_1F8;
   FormParamIndex form_param_idx;
   char field_1FA;

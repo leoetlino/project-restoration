@@ -169,3 +169,9 @@ ui_schedule_shorter_anim_fail:
   type: patch
   data: 0B 00 00 EA
   addr: 0x5B183C
+
+player_get_arrow_info:
+  type: branch
+  link: false
+  func: rst_PlayerGetArrowInfo
+  addr: 0x22F7B0

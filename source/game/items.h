@@ -8,7 +8,7 @@ namespace game {
 
 enum class ItemId : u8 {
   Ocarina = 0x0,
-  Bow = 1,
+  Arrow = 1,
   FireArrow = 2,
   IceArrow = 3,
   LightArrow = 4,
@@ -56,6 +56,7 @@ enum class Action : u8 {
   IceArrow = 0xb,
   LightArrow = 0xc,
   Hookshot = 0xd,
+  DekuBubble = 0x12,
   PictographBox = 0x13,
   Ocarina = 0x14,
   GoronMask = 0x51,
