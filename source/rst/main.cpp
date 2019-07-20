@@ -3,6 +3,7 @@
 #include "common/types.h"
 #include "common/utils.h"
 #include "game/context.h"
+#include "game/sound.h"
 #include "rst/fixes.h"
 #include "rst/fixes/time.h"
 #include "rst/link.h"
@@ -15,6 +16,7 @@ void Init(Context& context) {
   link::Init();
 
   util::Print("Project Restoration initialised (" __DATE__ " " __TIME__ ")");
+  game::sound::PlayEffect(0x10007DD);
   context.has_initialised = true;
 }
 
@@ -25,7 +27,7 @@ void UpdateContext(game::GlobalContext* gctx) {
   Context& context = GetContext();
   context.gctx = gctx;
 
-  if (!context.has_initialised)
+  if (!context.has_initialised && gctx->type == game::GameStateType::FirstGame)
     Init(context);
 }
 
