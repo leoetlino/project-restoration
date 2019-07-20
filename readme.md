@@ -89,6 +89,11 @@ Let *GAME_FILE* be the path to the game file (3ds/cia/app). If you've installed 
 * copy **code.ips** to /home/leo/games/3ds/zelda_mm.3ds.exefsdir/**code.ips**
 * copy **exheader.bin** and place the file in /home/leo/games/3ds/, calling it **zelda_mm.3ds.exheader**
 
+### Notes
+
+* If the Project Restoration patch is applied successfully, a sound effect will be played right before the title screen.
+* In order to use the new ZL/ZR buttons, the Circle Pad Pro must be enabled in MM3D's options even on a New 3DS.
+
 ## Rationale
 
 ### Zora swim
