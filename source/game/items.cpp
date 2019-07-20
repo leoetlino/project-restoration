@@ -64,7 +64,7 @@ bool CanUseItem(ItemId item_id) {
   const FormEquipmentData equipment_copy = equipment;
 
   equipment.item_btn_i = item_id;
-  const auto update_usability = reinterpret_cast<void (*)(GlobalContext*)>(0x1884B0);
+  const auto update_usability = rst::util::GetPointer<void(GlobalContext*)>(0x1884B0);
   update_usability(rst::GetContext().gctx);
 
   const bool is_usable = GetCommonData().usable_btns[u8(UsableButton::I)] != ButtonIsUsable::No;
