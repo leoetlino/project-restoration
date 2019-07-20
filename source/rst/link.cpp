@@ -53,7 +53,7 @@ bool CanUseFastAction(game::act::Player* player) {
   if (player->flags2 & 0x2000000 ||
       (player->flags2 & 0x80000 && 4 <= player->field_11E4C && player->field_11E4C <= 5) ||
       player->flags3.IsSet(game::act::Player::Flag3::Unk20000000) ||
-      (player->current_action_flags == 0xd && player->field_8E4 == 0)) {
+      (player->current_action == game::Action::Hookshot && player->field_8E4 == 0)) {
     util::Print("%s: other flag checks failed, skipping", __func__);
     return false;
   }

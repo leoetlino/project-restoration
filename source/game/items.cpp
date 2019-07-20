@@ -11,7 +11,7 @@ namespace game {
 Action ItemToAction(ItemId item) {
   // 0x68F800 in Joker 1.0
   static constexpr Action table[] = {
-      Action::Ocarina,    Action::Bow,           Action::FireArrow, Action::IceArrow,
+      Action::Ocarina,    Action::Arrow,         Action::FireArrow, Action::IceArrow,
       Action::LightArrow, Action::PictographBox, Action(0xE),       Action(0x10),
       Action(0x7),        Action(0x12),          Action(0x30),      Action::PictographBox,
       Action(0xF),        Action::PictographBox, Action(0x54),      Action(0xD),

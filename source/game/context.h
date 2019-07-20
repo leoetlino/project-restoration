@@ -96,12 +96,16 @@ struct GlobalContext {
   u8 gap_118[12];
   u32 field_124;
   u8 gap_128[16];
-  /// Nnumber of frames since the game state was initialised.
+  /// Number of frames since the game state was initialised.
   u32 frame_counter;
   u8 field_13C;
   GameStateType type;
   u16 field_13E;
-  u8 gap_140[212];
+  u32 field_140;
+  u32 field_144;
+  u16 map_maybe;
+  u16 field_14A;
+  u8 gap_14C[200];
   float field_214;
   u8 gap_218[2144];
   s16 field_A78;

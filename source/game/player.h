@@ -134,10 +134,16 @@ struct Player : public Actor {
     Unk80000000 = 0x80000000,
   };
 
+  enum class ProjectileType : s16 {
+    Arrow = 1,
+    DekuBubble = 2,
+    Hookshot = 3,
+  };
+
   char field_1F8;
   FormParamIndex form_param_idx;
   char field_1FA;
-  u8 current_action_flags;
+  Action current_action;
   ItemId held_item;
   FormParamIndex form_param_idx2;
   Action action;
@@ -343,7 +349,7 @@ struct Player : public Actor {
   u32 field_11E80;
   u32 field_11E84;
   float field_E88;
-  u16 field_11E8C;
+  ProjectileType projectile_type;
   u16 field_11E8E;
   u8 gap_11E90;
   char field_11E91;

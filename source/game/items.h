@@ -51,10 +51,11 @@ enum class ItemId : u8 {
 
 enum class Action : u8 {
   None = 0,
-  Bow = 0x9,
+  Arrow = 0x9,
   FireArrow = 0xa,
   IceArrow = 0xb,
   LightArrow = 0xc,
+  Hookshot = 0xd,
   PictographBox = 0x13,
   Ocarina = 0x14,
   GoronMask = 0x51,
