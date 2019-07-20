@@ -76,6 +76,7 @@ enum class MaskId : u8 {
 };
 
 bool HasOcarina();
+bool HasItem(ItemId item_id);
 bool HasMask(ItemId item_id);
 
 bool CanUseItem(ItemId item_id);

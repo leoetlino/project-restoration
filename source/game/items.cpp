@@ -43,6 +43,11 @@ bool HasOcarina() {
   return items[0] == ItemId::Ocarina;
 }
 
+bool HasItem(ItemId item_id) {
+  const auto& items = GetCommonData().save.inventory.items;
+  return std::any_of(items.begin(), items.end(), [&](ItemId id) { return item_id == id; });
+}
+
 bool HasMask(ItemId item_id) {
   const auto& masks = GetCommonData().save.inventory.masks;
   return std::any_of(masks.begin(), masks.end(), [&](ItemId id) { return item_id == id; });

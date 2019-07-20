@@ -2,6 +2,7 @@
 
 #include "common/utils.h"
 #include "game/common_data.h"
+#include "rst/link.h"
 
 namespace game::act {
 
@@ -17,14 +18,17 @@ Player::ArrowInfo Player::GetArrowInfo(GlobalContext* gctx) const {
     info.actor_param = active_form == Player::Form::Deku ? 7 : 6;
   } else {
     info.item_id = ItemId::Arrow;
-    info.actor_param = flags1.IsSet(Player::Flag1::Unk800000) ? 1 : (u8(current_action) - 7);
+    // Extension: Nintendo directly uses current_action here.
+    info.actor_param = u8(rst::link::GetFastArrowAction().value_or(current_action)) - 7;
+    if (flags1.IsSet(Player::Flag1::Unk800000))
+      info.actor_param = 1;
   }
 
   const CommonData& cdata = GetCommonData();
 
   if (active_form == Player::Form::Deku) {
-    info.can_use = cdata.save.player.player_magic >= 2 ||
-                   ((cdata.save.anonymous_72 & 1) && gctx->map_maybe == 0x11);
+    info.can_use =
+        cdata.save.player.magic >= 2 || ((cdata.save.anonymous_72 & 1) && gctx->map_maybe == 0x11);
   } else {
     info.can_use = flags3.IsSet(Flag3::DekuStuffMaybe) ||
                    (cdata.field_3696 == 1 && gctx->field_866C) || gctx->field_C531 ||
@@ -32,6 +36,12 @@ Player::ArrowInfo Player::GetArrowInfo(GlobalContext* gctx) const {
   }
 
   return info;
+}
+
+bool PlayerUpdateMagicCost(game::GlobalContext* gctx, int cost, int mode,
+                           AllowExistingMagicUsage allow_existing_usage) {
+  return rst::util::GetPointer<bool(game::GlobalContext*, int, int, bool)>(0x2264CC)(
+      gctx, cost, mode, allow_existing_usage == AllowExistingMagicUsage::Yes);
 }
 
 extern "C" {

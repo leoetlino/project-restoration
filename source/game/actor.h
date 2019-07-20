@@ -16,6 +16,8 @@ class Actor;
 enum class Id : u16 {
   // [2] Player actor
   Player = 0,
+  // Arrow
+  Arrow = 0xf,
   // [1] Deku Palace / Woodfall Temple moving platforms (after player lands on them)
   ObjRailLift = 0xd8,
   // [9] Twinmold (Red/Blue)
@@ -81,6 +83,8 @@ struct Actor {
   enum class Flag94 : u16 {
     Grounded = 1,
   };
+
+  void Free();
 
   Id id;
   Type actor_type;

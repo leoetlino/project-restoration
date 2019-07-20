@@ -5,6 +5,7 @@
 #include "common/context.h"
 #include "common/debug.h"
 #include "common/utils.h"
+#include "game/common_data.h"
 #include "game/context.h"
 #include "game/items.h"
 #include "game/pad.h"
@@ -53,7 +54,7 @@ bool CanUseFastAction(game::act::Player* player) {
   if (player->flags2 & 0x2000000 ||
       (player->flags2 & 0x80000 && 4 <= player->field_11E4C && player->field_11E4C <= 5) ||
       player->flags3.IsSet(game::act::Player::Flag3::Unk20000000) ||
-      (player->current_action == game::Action::Hookshot && player->field_8E4 == 0)) {
+      (player->current_action == game::Action::Hookshot && !player->projectile_actor)) {
     util::Print("%s: other flag checks failed, skipping", __func__);
     return false;
   }
@@ -141,6 +142,126 @@ bool ShouldUseZoraFastSwim() {
     return false;
 
   return GetContext().use_fast_swim;
+}
+
+struct FastArrowState {
+  std::optional<game::Action> override_action;
+  int magic_cost_update_timer = -1;
+};
+
+static FastArrowState s_fast_arrow_state{};
+
+struct ArrowTypeInfo {
+  const char* name;
+  int magic_cost;
+  game::ItemId required_item;
+};
+
+static constexpr ArrowTypeInfo s_arrow_types[] = {
+    {"Arrow", 0, game::ItemId::Arrow},
+    {"Fire Arrow", 4, game::ItemId::FireArrow},
+    {"Ice Arrow", 4, game::ItemId::IceArrow},
+    {"Light Arrow", 8, game::ItemId::LightArrow},
+};
+
+static void SpawnArrowActor(game::GlobalContext* gctx, game::act::Player* player) {
+  game::CommonData& cdata = game::GetCommonData();
+
+  const auto info = player->GetArrowInfo(gctx);
+  if (!info.can_use) {
+    util::Print("%s: cannot use arrow", __func__);
+    return;
+  }
+
+  u16 param = info.actor_param;
+  int type = int(param) - 2;
+  if (type < 0 || size_t(type) > std::size(s_arrow_types))
+    return;
+
+  if (cdata.save.player.magic < s_arrow_types[type].magic_cost) {
+    util::Print("%s: not enough magic for %s (%d < %d) -- falling back to normal arrow", __func__,
+                s_arrow_types[type].name, cdata.save.player.magic, s_arrow_types[type].magic_cost);
+    type = 0;
+    param = 2;
+  }
+
+  util::Print("%s: spawning %s (param=%u)", __func__, s_arrow_types[type].name, param);
+
+  auto* arrow = gctx->SpawnActor(player, game::act::Id::Arrow, 0, player->angle, 0, param,
+                                 player->position.x, player->position.y, player->position.z);
+  player->projectile_actor = arrow;
+  cdata.magic_cost = 0;
+  // For some reason, updating the magic cost immediately doesn't work,
+  // so delay the update by 2 frames.
+  if (type != 0)
+    s_fast_arrow_state.magic_cost_update_timer = 2;
+}
+
+void HandleFastArrowSwitch() {
+  game::CommonData& cdata = game::GetCommonData();
+  game::GlobalContext* gctx = GetContext().gctx;
+  game::act::Player* player = gctx->GetPlayerActor();
+  if (!player)
+    return;
+
+  if (gctx->IsUiMenuActive())
+    return;
+
+  // Reset the override action if the player is not using a bow.
+  constexpr u8 first = u8(game::Action::Arrow);
+  constexpr u8 last = u8(game::Action::LightArrow);
+  if (first > u8(player->current_action) || u8(player->current_action) > last ||
+      player->action_type != game::act::Player::ActionType::Type3) {
+    s_fast_arrow_state = {};
+    return;
+  }
+
+  if (s_fast_arrow_state.magic_cost_update_timer > 0)
+    --s_fast_arrow_state.magic_cost_update_timer;
+
+  if (s_fast_arrow_state.override_action && s_fast_arrow_state.magic_cost_update_timer == 0) {
+    const u8 type = u8(*s_fast_arrow_state.override_action) - first;
+    game::act::PlayerUpdateMagicCost(gctx, s_arrow_types[type].magic_cost, 0,
+                                     game::act::AllowExistingMagicUsage::Yes);
+    s_fast_arrow_state.magic_cost_update_timer = -1;
+  }
+
+  if (!s_fast_arrow_state.override_action) {
+    s_fast_arrow_state.override_action = player->current_action;
+    util::Print("%s: override_action is now %u", __func__, u8(*s_fast_arrow_state.override_action));
+  }
+
+  if (gctx->pad_state.input.new_buttons.IsSet(game::pad::Button::ZL)) {
+    int idx = u8(*s_fast_arrow_state.override_action) - first;
+
+    auto can_use_arrow = [&cdata](int idx) {
+      return game::HasItem(s_arrow_types[idx].required_item) &&
+             cdata.save.player.magic >= s_arrow_types[idx].magic_cost &&
+             game::CanUseItem(s_arrow_types[idx].required_item);
+    };
+
+    // Ensure we don't enter an infinite loop if no other arrow type can be used.
+    if (!can_use_arrow(idx))
+      return;
+
+    do {
+      idx = (idx + 1) % std::size(s_arrow_types);
+    } while (!can_use_arrow(idx));
+
+    s_fast_arrow_state.override_action = static_cast<game::Action>(idx + first);
+    util::Print("%s: override_action is now %u (%s)", __func__,
+                u8(*s_fast_arrow_state.override_action), s_arrow_types[idx].name);
+
+    if (player->projectile_actor) {
+      player->projectile_actor->Free();
+      player->projectile_actor = nullptr;
+      SpawnArrowActor(gctx, player);
+    }
+  }
+}
+
+std::optional<game::Action> GetFastArrowAction() {
+  return s_fast_arrow_state.override_action;
 }
 
 }  // namespace rst::link

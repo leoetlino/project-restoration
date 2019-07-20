@@ -13,6 +13,7 @@ add_executable(newcode
   common/svc.s
   common/types.h
   common/utils.h
+  game/actor.cpp
   game/actor.h
   game/actors/boss_twinmold.h
   game/common_data.cpp

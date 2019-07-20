@@ -200,7 +200,7 @@ struct Player : public Actor {
   int field_868;
   u8 gap_86C[116];
   u32 field_8E0;
-  u32 field_8E4;
+  Actor* projectile_actor;
   u8 gap_8E8[8];
   float field_8F0;
   u8 gap_8F4[8];
@@ -332,7 +332,7 @@ struct Player : public Actor {
   u8 gap_11E24[8];
   u32 field_11E2C;
   float lin_vel;
-  u16 angle;
+  u16 player_angle;
   u16 field_11E36;
   u32 field_11E38;
   u8 gap_11E3C;
@@ -458,5 +458,9 @@ struct Player : public Actor {
 static_assert(rst::util::OffsetOf(&Player::transform_mask_item_id) == 0x200);
 static_assert(rst::util::OffsetOf(&Player::field_12CCE) == 0x12CCE);
 // TODO: complete the struct and add a size assertion.
+
+enum class AllowExistingMagicUsage { No, Yes };
+bool PlayerUpdateMagicCost(game::GlobalContext* gctx, int cost, int mode,
+                           AllowExistingMagicUsage allow_existing_usage);
 
 }  // namespace game::act

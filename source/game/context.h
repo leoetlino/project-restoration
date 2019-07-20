@@ -12,7 +12,7 @@ namespace game {
 namespace act {
 class Player;
 class BossTwinmold;
-}
+}  // namespace act
 
 // based on a quick experiment - probably wrong
 enum class UiMenuState : u16 {
@@ -67,9 +67,7 @@ static_assert(sizeof(ActorLists) == 0xa0);
 // The "global context" is actually a game state, and the start of the structure
 // is common to all game states. But I haven't bothered looking at the other ones...
 struct GlobalContext {
-  bool IsUiMenuActive() const {
-    return ui_menu_state != game::UiMenuState::Closed;
-  }
+  bool IsUiMenuActive() const { return ui_menu_state != game::UiMenuState::Closed; }
 
   act::Actor* FindActorWithId(act::Id id, act::Type type) const;
   template <typename T>
@@ -82,6 +80,9 @@ struct GlobalContext {
   }
 
   act::Player* GetPlayerActor() const;
+
+  act::Actor* SpawnActor(act::Actor* actor, act::Id id, u16 rx, u16 ry, u16 rz, u16 param,
+                         float pos_x, float pos_y, float pos_z);
 
   int field_0;
   u8 gap_4[36];

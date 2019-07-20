@@ -20,6 +20,14 @@ act::Player* GlobalContext::GetPlayerActor() const {
   return static_cast<act::Player*>(this->actors.lists[u8(act::Type::Player)].first);
 }
 
+act::Actor* GlobalContext::SpawnActor(act::Actor* actor, act::Id id, u16 rx, u16 ry, u16 rz,
+                                      u16 param, float pos_x, float pos_y, float pos_z) {
+  auto spawn_actor_wrapper =
+      rst::util::GetPointer<act::Actor*(ActorLists*, act::Actor*, GlobalContext*, act::Id, u16, u16,
+                                        u16, u16 param, float x, float y, float z)>(0x22CAAC);
+  return spawn_actor_wrapper(&actors, actor, this, id, rx, ry, rz, param, pos_x, pos_y, pos_z);
+}
+
 namespace {
 
 class Screen;

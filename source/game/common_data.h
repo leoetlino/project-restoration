@@ -3,6 +3,7 @@
 #include <array>
 
 #include "common/types.h"
+#include "common/utils.h"
 #include "game/items.h"
 #include "game/player.h"
 
@@ -11,7 +12,7 @@ namespace game {
 struct __attribute__((packed)) __attribute__((aligned(2))) PlayerData {
   u32 field_11C;
   u8 gap_120[2];
-  u8 save_count_maybe;
+  u16 save_count_maybe;
   int anonymous_d;
   int anonymous_e;
   int anonymous_f;
@@ -19,12 +20,12 @@ struct __attribute__((packed)) __attribute__((aligned(2))) PlayerData {
   u8 anonymous_h[2];
   u16 anonymous_i;
   u16 anonymous_j;
-  char player_magic_size_type;
-  char player_magic;
-  u16 player_rupee_count;
-  u16 player_razor_sword_hp;
+  char magic_size_type;
+  char magic;
+  u16 rupee_count;
+  u16 razor_sword_hp;
   u16 anonymous_k;
-  char player_magic_stuff;
+  char magic_stuff;
   char anonymous_l;
   char anonymous_17;
   char anonymous_18;
@@ -37,6 +38,7 @@ struct __attribute__((packed)) __attribute__((aligned(2))) PlayerData {
   char field_31;
 };
 static_assert(sizeof(PlayerData) == 0x32);
+static_assert(rst::util::OffsetOf(&PlayerData::magic) == 0x1F);
 
 struct FormEquipmentData {
   ItemId item_btn_b;
@@ -530,7 +532,7 @@ struct CommonData {
   u16 field_3688;
   u16 field_368A;
   u16 field_368C;
-  u16 field_368E;
+  s16 magic_cost;
   u16 field_3690;
   u16 field_3692;
   u16 field_3694;
