@@ -44,8 +44,17 @@ bool CanUseFastAction(game::act::Player* player) {
     return false;
   }
 
-  if (player->flags1.IsSet(game::act::Player::Flag1::FreezeLink)) {
+  if (player->flags1.IsOneSet(game::act::Player::Flag1::FreezeLink,
+                              game::act::Player::Flag1::Unk800)) {
     util::Print("%s: Flag1::FreezeLink is set, skipping", __func__);
+    return false;
+  }
+
+  if (player->flags2 & 0x2000000 ||
+      (player->flags2 & 0x80000 && 4 <= player->field_11E4C && player->field_11E4C <= 5) ||
+      player->flags3.IsSet(game::act::Player::Flag3::Unk20000000) ||
+      (player->current_action_flags == 0xd && player->field_8E4 == 0)) {
+    util::Print("%s: other flag checks failed, skipping", __func__);
     return false;
   }
 
