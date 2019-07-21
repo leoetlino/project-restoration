@@ -58,9 +58,11 @@ make_patch_for_secondary_version () {
   flips -b $RST_ROOT/$TARGET_VERSION/code.bin $RST_ROOT/source/build/patched_code.bin $RELEASE_DIR/$TARGET_VERSION/code.bps
 }
 
-make_patch_for_secondary_version v101 &
-make_patch_for_secondary_version v110 &
-wait
+if [ -z ${RST_SKIP_110+x} ]; then
+  make_patch_for_secondary_version v101 &
+  make_patch_for_secondary_version v110 &
+  wait
+fi
 
 print_status "packing"
 
