@@ -21,6 +21,13 @@ public:
     return (flags & std::underlying_type_t<FlagType>(v)) != 0;
   }
 
+  constexpr bool TestAndClear(FlagType v) {
+    if (!IsSet(v))
+      return false;
+    Clear(v);
+    return true;
+  }
+
   constexpr bool AreAllSet(FlagType v) const { return IsSet(v); }
   template <typename... Rest>
   constexpr bool AreAllSet(FlagType v, Rest... rest) const {

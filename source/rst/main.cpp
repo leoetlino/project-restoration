@@ -40,7 +40,6 @@ void Calc(game::GlobalContext* gctx) {
     return;
 
   link::HandleFastTransform();
-  link::HandleFastOcarina();
   link::HandleFastArrowSwitch();
   FixTime();
   FixTwinmold();

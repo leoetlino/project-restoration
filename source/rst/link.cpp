@@ -101,28 +101,31 @@ void HandleFastTransform() {
   player->action_type = game::act::Player::ActionType::OcarinaOrTransformation;
 }
 
-void HandleFastOcarina() {
-  game::GlobalContext* gctx = GetContext().gctx;
-  game::act::Player* player = gctx->GetPlayerActor();
-  if (!player)
+void UpdatePadState() {
+  using namespace game;
+
+  act::Player* player = GetContext().gctx->GetPlayerActor();
+  auto& info = player->controller_info;
+  if (!player || !info.touchscreen || !info.state)
     return;
 
-  if (!gctx->pad_state.input.new_buttons.IsSet(game::pad::Button::ZR))
-    return;
+  const auto set_touch_btn = [&info](pad::Button trigger, pad::TouchscreenButton btn,
+                                     UsableButton btn_to_check) {
+    const bool usable = GetCommonData().usable_btns[u8(btn_to_check)] != ButtonIsUsable::No;
+    if (info.state->input.buttons.TestAndClear(trigger) && usable)
+      info.touchscreen->buttons.Set(btn);
+    if (info.state->input.new_buttons.TestAndClear(trigger) && usable)
+      info.touchscreen->new_buttons.Set(btn);
+  };
 
-  if (!CanUseFastAction(player))
-    return;
+  set_touch_btn(pad::Button::ZL, pad::TouchscreenButton::PictographBox,
+                UsableButton::PictographBox);
 
-  if (!game::HasOcarina())
-    return;
-
-  if (!game::CanUseItem(game::ItemId::Ocarina)) {
-    util::Print("%s: CanUseItem returned false, skipping", __func__);
-    return;
+  if (info.state->input.buttons.IsSet(pad::Button::ZR)) {
+    set_touch_btn(pad::Button::A, pad::TouchscreenButton::Ocarina, UsableButton::Ocarina);
+    set_touch_btn(pad::Button::X, pad::TouchscreenButton::I, UsableButton::I);
+    set_touch_btn(pad::Button::Y, pad::TouchscreenButton::II, UsableButton::II);
   }
-
-  player->action = game::Action::Ocarina;
-  player->action_type = game::act::Player::ActionType::OcarinaOrTransformation;
 }
 
 bool ShouldUseZoraFastSwim() {
@@ -267,6 +270,10 @@ std::optional<game::Action> GetFastArrowAction() {
 }  // namespace rst::link
 
 extern "C" {
+RST_HOOK void rst_link_UpdatePadState() {
+  rst::link::UpdatePadState();
+}
+
 RST_HOOK bool rst_link_ShouldUseZoraFastSwim() {
   return rst::link::ShouldUseZoraFastSwim();
 }

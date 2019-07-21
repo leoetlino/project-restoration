@@ -9,7 +9,6 @@ namespace rst::link {
 void Init();
 
 void HandleFastTransform();
-void HandleFastOcarina();
 void HandleFastArrowSwitch();
 
 std::optional<game::Action> GetFastArrowAction();
