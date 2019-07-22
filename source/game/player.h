@@ -69,7 +69,7 @@ struct Player : public Actor {
     Unk2 = 0x2,
     Unk4 = 0x4,
     Unk8 = 0x8,
-    Unk10 = 0x10,
+    IsUsingZoraBarrier = 0x10,
     Unk20 = 0x20,
     Unk40 = 0x40,
     Unk80 = 0x80,
@@ -97,6 +97,10 @@ struct Player : public Actor {
     FreezeLink = 0x20000000,
     Unk40000000 = 0x40000000,
     Unk80000000 = 0x80000000,
+  };
+
+  enum class Flag2 : u32 {
+    Underwater = 0x400,
   };
 
   enum class Flag3 : u32 {
@@ -289,7 +293,7 @@ struct Player : public Actor {
   u8 gap_11D04[168];
   u32 field_11DAC;
   rst::Flags<Flag1> flags1;
-  u32 flags2;
+  rst::Flags<Flag2> flags2;
   rst::Flags<Flag3> flags3;
   u32 flags4;
   int field_11DC0;
@@ -391,7 +395,7 @@ struct Player : public Actor {
   u16 field_EF6;
   u16 field_EF8;
   u16 field_EFA;
-  u16 field_EFC;
+  u16 zora_swim_a_press_duration;
   u16 zora_fast_swim_countdown;
   u16 field_F00;
   u16 field_F02;

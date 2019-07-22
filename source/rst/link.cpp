@@ -51,8 +51,8 @@ bool CanUseFastAction(game::act::Player* player) {
     return false;
   }
 
-  if (player->flags2 & 0x2000000 ||
-      (player->flags2 & 0x80000 && 4 <= player->field_11E4C && player->field_11E4C <= 5) ||
+  if (player->flags2.flags & 0x2000000 ||
+      (player->flags2.flags & 0x80000 && 4 <= player->field_11E4C && player->field_11E4C <= 5) ||
       player->flags3.IsSet(game::act::Player::Flag3::Unk20000000) ||
       (player->current_action == game::Action::Hookshot && !player->projectile_actor)) {
     util::Print("%s: other flag checks failed, skipping", __func__);
@@ -145,6 +145,14 @@ bool ShouldUseZoraFastSwim() {
     return false;
 
   return GetContext().use_fast_swim;
+}
+
+bool SwitchToZoraFastSwim(game::GlobalContext* gctx, game::act::Player* player, bool check_magic) {
+  const auto do_switch =
+      util::GetPointer<bool(game::GlobalContext*, game::act::Player*, bool)>(0x220EA0);
+  return (player->zora_swim_a_press_duration >= 7 ||
+          player->flags1.IsSet(game::act::Player::Flag1::IsUsingZoraBarrier)) &&
+         do_switch(gctx, player, check_magic);
 }
 
 struct FastArrowState {
@@ -276,5 +284,10 @@ RST_HOOK void rst_link_UpdatePadState() {
 
 RST_HOOK bool rst_link_ShouldUseZoraFastSwim() {
   return rst::link::ShouldUseZoraFastSwim();
+}
+
+RST_HOOK bool rst_link_SwitchToZoraFastSwim(game::GlobalContext* gctx, game::act::Player* player,
+                                            bool check_magic) {
+  return rst::link::SwitchToZoraFastSwim(gctx, player, check_magic);
 }
 }

@@ -18,6 +18,7 @@ rst_dummy:
   nop
 
 TRAMPOLINE_R0_RESULT rst_link_ShouldUseZoraFastSwim
+TRAMPOLINE_R0_RESULT rst_link_SwitchToZoraFastSwim
 
 .global rst_trampoline_rst_MoveScheduledNpcHook
 .type rst_trampoline_rst_MoveScheduledNpcHook, %function

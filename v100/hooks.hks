@@ -51,6 +51,11 @@ zora_swim_4:
   data: EA000009
   addr: 0x00220F00
   reverse: true
+zora_in_water_state_start_fast_swim:
+  type: branch
+  link: true
+  func: rst_trampoline_rst_link_SwitchToZoraFastSwim
+  addr: 0x1F0C78
 
 fix_transformation_mask_equip_checks_1:
   # prevent forced transform when mask is not equipped
