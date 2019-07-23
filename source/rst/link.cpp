@@ -108,8 +108,11 @@ void UpdatePadState() {
   using namespace game;
 
   act::Player* player = GetContext().gctx->GetPlayerActor();
+  if (!player)
+    return;
+
   auto& info = player->controller_info;
-  if (!player || !info.touchscreen || !info.state)
+  if (!info.touchscreen || !info.state)
     return;
 
   const auto set_touch_btn = [&info](pad::Button trigger, pad::TouchscreenButton btn,
