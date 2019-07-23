@@ -151,8 +151,7 @@ bool ShouldUseZoraFastSwim() {
 }
 
 bool SwitchToZoraFastSwim(game::GlobalContext* gctx, game::act::Player* player, bool check_magic) {
-  const auto do_switch =
-      util::GetPointer<bool(game::GlobalContext*, game::act::Player*, bool)>(0x220EA0);
+  const auto do_switch = util::GetPointer<decltype(SwitchToZoraFastSwim)>(0x220EA0);
   return (player->zora_swim_a_press_duration >= 7 ||
           player->flags1.IsSet(game::act::Player::Flag1::IsUsingZoraBarrier)) &&
          do_switch(gctx, player, check_magic);
