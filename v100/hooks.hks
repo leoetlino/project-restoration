@@ -186,3 +186,14 @@ pad_update_hook:
   opcode: post
   func: rst_UpdatePadState
   addr: 0x116A30
+
+ui_items_fast_assign_item:
+  type: branch
+  link: true
+  func: rst_trampoline_rst_ui_items_IsItemAssignRequested
+  addr: 0x5C14F4
+ui_items_fast_assign_item:
+  type: branch
+  link: true
+  func: rst_trampoline_rst_ui_items_GetItemAssignIndex
+  addr: 0x5C161C
