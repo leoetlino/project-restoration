@@ -28,16 +28,14 @@ public:
     return true;
   }
 
-  constexpr bool AreAllSet(FlagType v) const { return IsSet(v); }
-  template <typename... Rest>
-  constexpr bool AreAllSet(FlagType v, Rest... rest) const {
-    return IsSet(v) && AreAllSet(rest...);
+  template <typename... Flags>
+  constexpr bool AreAllSet(Flags... v) const {
+    return (... && IsSet(v));
   }
 
-  constexpr bool IsOneSet(FlagType v) const { return IsSet(v); }
-  template <typename... Rest>
-  constexpr bool IsOneSet(FlagType v, Rest... rest) const {
-    return IsSet(v) || IsOneSet(rest...);
+  template <typename... Flags>
+  constexpr bool IsOneSet(Flags... v) const {
+    return (... || IsSet(v));
   }
 
   std::underlying_type_t<FlagType> flags = 0;
