@@ -31,12 +31,13 @@ struct TransformAction {
   game::pad::Button trigger_btn;
   game::ItemId required_mask;
   game::Action action;
+  bool usable_in_water;
   const char* name;
 };
 static constexpr TransformAction s_actions[] = {
-    {game::pad::Button::Left, game::ItemId::ZoraMask, game::Action::ZoraMask, "Zora"},
-    {game::pad::Button::Up, game::ItemId::GoronMask, game::Action::GoronMask, "Goron"},
-    {game::pad::Button::Down, game::ItemId::DekuMask, game::Action::DekuMask, "Deku"},
+    {game::pad::Button::Left, game::ItemId::ZoraMask, game::Action::ZoraMask, true, "Zora"},
+    {game::pad::Button::Up, game::ItemId::GoronMask, game::Action::GoronMask, false, "Goron"},
+    {game::pad::Button::Down, game::ItemId::DekuMask, game::Action::DekuMask, false, "Deku"},
 };
 
 bool CanUseFastAction(game::act::Player* player) {
@@ -75,9 +76,11 @@ void HandleFastTransform() {
   if (!player)
     return;
 
+  const bool in_water = player->flags1.IsSet(game::act::Player::Flag1::InWater);
   const auto it =
       std::find_if(std::begin(s_actions), std::end(s_actions), [&](const TransformAction& action) {
-        return gctx->pad_state.input.new_buttons.IsSet(action.trigger_btn);
+        return gctx->pad_state.input.new_buttons.IsSet(action.trigger_btn) &&
+               (!in_water || action.usable_in_water);
       });
   if (it == std::end(s_actions))
     return;
