@@ -22,6 +22,7 @@ add_executable(newcode
   game/context.h
   game/items.cpp
   game/items.h
+  game/pad.cpp
   game/pad.h
   game/player.cpp
   game/player.h
@@ -31,6 +32,7 @@ add_executable(newcode
   rst/fixes/time.cpp
   rst/fixes.cpp
   rst/fixes.h
+  rst/input.cpp
   rst/link.cpp
   rst/link.h
   rst/main.cpp

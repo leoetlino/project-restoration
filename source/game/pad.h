@@ -2,6 +2,7 @@
 
 #include "common/flags.h"
 #include "common/types.h"
+#include "common/utils.h"
 
 namespace game::pad {
 
@@ -105,5 +106,26 @@ struct ControllerInfo {
   u32 field_40;
   u32 field_44;
 };
+
+#pragma pack(push, 1)
+struct ControllerMgr {
+  u8 gap_0[0x1000];
+  State state;
+  State state2; // unused?
+  void* pad_readers;
+  u32 field_DC;
+  u32 field_E0;
+  u32 field_E4;
+  u32 field_E8;
+  u8 field_EC;
+  TouchscreenState touchscreen_state;
+  u8 field_EF;
+};
+#pragma pack(pop)
+static_assert(sizeof(ControllerMgr) == 0x10F0);
+static_assert(rst::util::OffsetOf(&ControllerMgr::state) == 0x1000);
+static_assert(rst::util::OffsetOf(&ControllerMgr::touchscreen_state) == 0x10ED);
+
+ControllerMgr& GetControllerMgr();
 
 }  // namespace game::pad

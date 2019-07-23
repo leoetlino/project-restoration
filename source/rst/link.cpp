@@ -104,36 +104,6 @@ void HandleFastTransform() {
   player->action_type = game::act::Player::ActionType::OcarinaOrTransformation;
 }
 
-void UpdatePadState() {
-  using namespace game;
-
-  act::Player* player = GetContext().gctx->GetPlayerActor();
-  if (!player)
-    return;
-
-  auto& info = player->controller_info;
-  if (!info.touchscreen || !info.state)
-    return;
-
-  const auto set_touch_btn = [&info](pad::Button trigger, pad::TouchscreenButton btn,
-                                     UsableButton btn_to_check) {
-    const bool usable = GetCommonData().usable_btns[u8(btn_to_check)] != ButtonIsUsable::No;
-    if (info.state->input.buttons.TestAndClear(trigger) && usable)
-      info.touchscreen->buttons.Set(btn);
-    if (info.state->input.new_buttons.TestAndClear(trigger) && usable)
-      info.touchscreen->new_buttons.Set(btn);
-  };
-
-  set_touch_btn(pad::Button::ZL, pad::TouchscreenButton::PictographBox,
-                UsableButton::PictographBox);
-
-  if (info.state->input.buttons.IsSet(pad::Button::ZR)) {
-    set_touch_btn(pad::Button::A, pad::TouchscreenButton::Ocarina, UsableButton::Ocarina);
-    set_touch_btn(pad::Button::X, pad::TouchscreenButton::I, UsableButton::I);
-    set_touch_btn(pad::Button::Y, pad::TouchscreenButton::II, UsableButton::II);
-  }
-}
-
 bool ShouldUseZoraFastSwim() {
   const auto& input = GetContext().gctx->pad_state.input;
 
@@ -283,10 +253,6 @@ std::optional<game::Action> GetFastArrowAction() {
 }  // namespace rst::link
 
 extern "C" {
-RST_HOOK void rst_link_UpdatePadState() {
-  rst::link::UpdatePadState();
-}
-
 RST_HOOK bool rst_link_ShouldUseZoraFastSwim() {
   return rst::link::ShouldUseZoraFastSwim();
 }

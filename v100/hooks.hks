@@ -184,5 +184,5 @@ player_get_arrow_info:
 pad_update_hook:
   type: softbranch
   opcode: post
-  func: rst_link_UpdatePadState
-  addr: 0x1FA070
+  func: rst_UpdatePadState
+  addr: 0x116A30
