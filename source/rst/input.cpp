@@ -1,4 +1,5 @@
 #include "game/common_data.h"
+#include "game/context.h"
 #include "game/pad.h"
 
 namespace rst {
@@ -43,6 +44,27 @@ void UpdatePadState() {
   unset_if_not_usable(pad::TouchscreenButton::PictographBox, UsableButton::PictographBox);
 }
 
+void UpdatePadStateForOcarina() {
+  using namespace game;
+  auto& controller_mgr = pad::GetControllerMgr();
+  auto& state = controller_mgr.state;
+
+  // Merge ZL and L, ZR and R for the Ocarina screen
+  if (!CheckCurrentUiScreen(UiScreen::Ocarina))
+    return;
+
+  auto map = [&state](pad::Button source, pad::Button target) {
+    if (state.input.buttons.IsSet(source))
+      state.input.buttons.Set(target);
+    if (state.input.new_buttons.IsSet(source))
+      state.input.new_buttons.Set(target);
+    if (state.input.released_buttons.IsSet(source))
+      state.input.released_buttons.Set(target);
+  };
+  map(pad::Button::ZL, pad::Button::L);
+  map(pad::Button::ZR, pad::Button::R);
+}
+
 namespace ui::items {
 
 bool IsItemAssignRequested() {
@@ -73,6 +95,9 @@ int GetItemAssignIndex() {
 extern "C" {
 RST_HOOK void rst_UpdatePadState() {
   rst::UpdatePadState();
+}
+RST_HOOK void rst_UpdatePadStateForOcarina() {
+  rst::UpdatePadStateForOcarina();
 }
 RST_HOOK bool rst_ui_items_IsItemAssignRequested() {
   return rst::ui::items::IsItemAssignRequested();

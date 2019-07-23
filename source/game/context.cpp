@@ -94,4 +94,8 @@ bool OpenUiScreen(UiScreen screen) {
   return true;
 }
 
+bool CheckCurrentUiScreen(UiScreen screen) {
+  return GetUiScreenContext().active_screen == GetScreenPointer(screen);
+}
+
 }  // namespace game

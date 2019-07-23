@@ -238,4 +238,6 @@ enum class UiScreen {
 };
 bool OpenUiScreen(UiScreen screen);
 
+bool CheckCurrentUiScreen(UiScreen screen);
+
 }  // namespace game

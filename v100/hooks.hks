@@ -186,6 +186,11 @@ pad_update_hook:
   opcode: post
   func: rst_UpdatePadState
   addr: 0x116A30
+pad_update_hook:
+  type: softbranch
+  opcode: post
+  func: rst_UpdatePadStateForOcarina
+  addr: 0x116900
 
 ui_items_fast_assign_item:
   type: branch
