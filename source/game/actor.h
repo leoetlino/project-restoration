@@ -32,6 +32,8 @@ enum class Id : u16 {
   NpcRosaSisters = 0x020A,
   // [4] Bombers
   NpcBombers = 0x020F,
+  // [6] Sheikah Hint Stone (MM3D)
+  NpcHintStone = 0x0241,
   // [6] New in MM3D. Shows up as sparkles and spawns an ice platform (actor 0x13E) when hit.
   BgSeaFreezablePoint = 0x0244,
 };
@@ -150,7 +152,7 @@ struct Actor {
   u8 gap_114[4];
   u8 field_118;
   u8 gap119;
-  u16 field_11A;
+  u16 text_id_maybe;
   u16 field_11C;
   u16 field_11E;
   u8 gap_120[5];

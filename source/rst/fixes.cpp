@@ -160,4 +160,24 @@ void FixBombers() {
     s_original_data_ptrs.fill(nullptr);
 }
 
+void FixHintStone() {
+  namespace act = game::act;
+  const game::GlobalContext* gctx = GetContext().gctx;
+  act::Actor* hintstone = gctx->FindActorWithId(act::Id::NpcHintStone, act::Type::Prop);
+  if (!hintstone)
+    return;
+
+  // Disable the "new hint" glowing animation until the player has the Deku Mask
+  // to prevent the hint stone from distracting them during important cutscenes
+  // in the Clock Tower.
+  if (!game::HasMask(game::ItemId::DekuMask)) {
+    // moving animation?
+    util::Write<float>(hintstone, 0x4AC, 0.0);
+    // color animation?
+    util::Write<float>(hintstone, 0x4C8, 0.0);
+    // color animation?
+    util::Write<float>(hintstone, 0x4CC, 0.0);
+  }
+}
+
 }  // namespace rst
