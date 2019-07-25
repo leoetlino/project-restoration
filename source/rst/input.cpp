@@ -21,7 +21,11 @@ void UpdatePadState() {
       s_touchscreen_state.new_buttons.Set(btn);
   };
 
-  set_touch_btn(pad::Button::ZL, pad::TouchscreenButton::PictographBox);
+  if (state.input.buttons.IsSet(pad::Button::ZL))
+    s_touchscreen_state.buttons.Set(pad::TouchscreenButton::PictographBox);
+  if (state.input.new_buttons.IsSet(pad::Button::ZL))
+    s_touchscreen_state.new_buttons.Set(pad::TouchscreenButton::PictographBox);
+
   if (state.input.buttons.IsSet(pad::Button::ZR)) {
     set_touch_btn(pad::Button::A, pad::TouchscreenButton::Ocarina);
     set_touch_btn(pad::Button::X, pad::TouchscreenButton::I);
