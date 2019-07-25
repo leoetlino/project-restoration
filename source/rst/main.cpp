@@ -3,6 +3,7 @@
 #include "common/types.h"
 #include "common/utils.h"
 #include "game/context.h"
+#include "game/player.h"
 #include "game/sound.h"
 #include "rst/fixes.h"
 #include "rst/fixes/time.h"
@@ -54,10 +55,16 @@ void Calc(game::GlobalContext* gctx) {
     game::ActorList& list = gctx->actors.lists[i];
     actors_str += util::StringFromFormat("\ntype %02zu: ", i);
     for (auto* actor = list.first; actor; actor = actor->next) {
-      actors_str += util::StringFromFormat("%04x ", u16(actor->id));
+      actors_str += util::StringFromFormat("%04x[%04x] ", u16(actor->id), actor->params);
     }
   }
   util::Print(actors_str);
+
+  const auto* player_actor = gctx->GetPlayerActor();
+  if (player_actor) {
+    util::Print("state handler: %p - 92C: %u - 92D: %u", player_actor->state_handler_fn,
+                player_actor->some_fn_idx, player_actor->other_fn_idx);
+  }
 #endif
 }
 
