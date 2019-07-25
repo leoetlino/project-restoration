@@ -63,6 +63,45 @@ struct ActorLists {
 };
 static_assert(sizeof(ActorLists) == 0xa0);
 
+enum class OcarinaState : u16 {
+  NotOpened = 0,
+  Playing = 1,
+  PlayingAndReplayDone = 3,
+  StoppedPlaying = 4,
+  PlayedSongOfTime = 0x12,
+  PlayedInvertedSongOfTime = 0x13,
+  GoingBackInTime = 0x16,
+  RestoringTimeToNormalSpeed = 0x18,
+  SlowingTime = 0x19,
+  JumpingForwardInTime = 0x1a,
+  WarpingToGreatBayCoast = 0x1c,
+  WarpingToZoraCape = 0x1d,
+  WarpingToSnowhead = 0x1e,
+  WarpingToMountainVillage = 0x1f,
+  WarpingToClockTown = 0x20,
+  WarpingToMilkRoad = 0x21,
+  WarpingToWoodfall = 0x22,
+  WarpingToSouthernSwamp = 0x23,
+  WarpingToIkanaCanyon = 0x24,
+  WarpingToStoneTower = 0x25,
+};
+
+// Incomplete
+enum class OcarinaSong : u16 {
+  SonataOfAwakening = 0,
+  GoronLullaby = 1,
+  NewWaveBossaNova = 2,
+  ElegyOfEmptiness = 3,
+  OathToOrder = 4,
+  SongOfTime = 6,
+  SongOfHealing = 7,
+  EponaSong = 8,
+  SongOfSoaring = 9,
+  SongOfStorms = 10,
+  InvertedSongOfTime = 12,
+  SongOfDoubleTime = 13,
+};
+
 // Likely incomplete.
 // The "global context" is actually a game state, and the start of the structure
 // is common to all game states. But I haven't bothered looking at the other ones...
@@ -123,17 +162,37 @@ struct GlobalContext {
   char field_23A8;
   u8 gap_23A9[3];
   pad::State pad_state_copy;
-  u8 gap_2418[624];
+  u8 gap_2418[16];
+  u32 field_2428;
+  u8 gap_242C[604];
   u32 field_2688;
-  u8 gap_268C[22932];
-  u32 field_8020;
+  u8 field_268C;
+  u8 gap_268D[5999];
+  u16 field_3DFC;
+  u8 gap_3DFE[16898];
+  u32 field_8000;
+  u8 gap_8004[28];
+  u32 notebook_stuff;
   u8 gap_8024[570];
   u16 field_825E;
-  u8 gap_8260[226];
-  u16 field_8342;
-  u8 gap_8344[34];
-  u16 field_8366;
-  u8 gap_8368[192];
+  u8 gap_8260[160];
+  u32 field_8300;
+  u8 gap_8304[98];
+  OcarinaState ocarina_state;
+  u16 field_8368;
+  OcarinaSong ocarina_song;
+  u16 field_836C;
+  char field_836E;
+  char field_836F;
+  int field_8370;
+  int field_8374;
+  int field_8378;
+  int field_837C;
+  u16 field_8380;
+  u16 field_8382;
+  u8 gap_8384[88];
+  u32 field_83DC;
+  u8 gap_83E0[72];
   u32 field_8428;
   u8 gap_842C[468];
   u32 field_8600;
@@ -223,6 +282,9 @@ struct GlobalContext {
   u8 gap_F0F4[7996];
 };
 static_assert(rst::util::OffsetOf(&GlobalContext::field_C000) == 0xc000);
+static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_state) == 0x8366);
+static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_song) == 0x836A);
+static_assert(rst::util::OffsetOf(&GlobalContext::field_836E) == 0x836E);
 static_assert(sizeof(GlobalContext) == 0x11030);
 
 enum class UiScreen {
