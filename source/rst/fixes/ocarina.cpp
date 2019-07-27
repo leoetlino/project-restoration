@@ -31,6 +31,17 @@ static bool IsElegyOfEmptinessAllowed() {
 
 // Returns true to make the caller return, false to continue.
 bool HandleOcarinaSong(game::ui::MessageWindow* self, game::OcarinaSong song) {
+  // field_42C is MessageWindow's ocarina state
+  // 0 inactive
+  // 0xd playing
+  // 0x12 repeating (step 1; textbox appears)
+  // 0x13 repeating (step 2; first note appears)
+  // 0x14 repeating (step 3; main)
+  // 0x15 repeating (step 4)
+  // 0x16 repeating (step 5; you played text appeared)
+  // 0x17 repeating (step 6; textbox disappears)
+  // 0x18 repeating (step 7; end)
+
   if (song == game::OcarinaSong::ElegyOfEmptiness) {
     static bool s_played_once = false;
     util::Print("%s: played the Elegy of Emptiness (once=%u)", __func__, s_played_once);

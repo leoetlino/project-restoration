@@ -100,6 +100,9 @@ enum class OcarinaSong : u16 {
   SongOfStorms = 10,
   InvertedSongOfTime = 12,
   SongOfDoubleTime = 13,
+
+  InvalidDetecting = 0xfe,
+  Invalid = 0xff,
 };
 
 // Likely incomplete.
@@ -179,9 +182,10 @@ struct GlobalContext {
   u16 field_825E;
   u8 gap_8260[160];
   u32 field_8300;
-  u8 gap_8304[98];
+  u8 gap_8304[96];
+  OcarinaSong ocarina_song2;
   OcarinaState ocarina_state;
-  u16 field_8368;
+  OcarinaState ocarina_state2;
   OcarinaSong ocarina_song;
   u16 field_836C;
   char field_836E;
