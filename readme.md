@@ -19,8 +19,19 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
   * Three of the four D-Pad buttons are now used to fast transform (*Left*: Zora, *Up*: Goron, *Down*: Deku)
   * This frees up as many as 3 buttons!
 
-* **Fast Ocarina**: Dedicated physical button for the Ocarina of Time
-  * Press ZR to play the instrument.
+* **Dedicated Physical Buttons** for more convenient access to items and menus
+  * Open the *Items* menu by pressing START.
+  * The *Bomber's Notebook* is now mapped to SELECT.
+  * *Ocarina of Time*: ZR+A
+  * *Pictograph Box*: ZL
+  * *I*: ZR+X
+  * *II*: ZR+Y
+  * It is now possible to assign items to I and II with a single press.
+
+* **More Fluid Bomber's Notebook**: Less annoyingly slow popups and transitions
+  * The Bomber's Notebook screen now updates instantly when it's opened instead of waiting for 1.8 seconds just before starting the "new" text animation (!), followed by another 1.18s pause and another 1.56s delay until the main text box appears (!!).
+
+* **Fast Arrow Switching**: Press ZL to quickly switch between arrow types (Normal/Fire/Ice/Light).
 
 * **More Effective Inverted Song of Time**: Slow time to 1/3 speed (as in the original)
   * Makes some glitchless challenge runs possible again.
@@ -37,18 +48,11 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
 * Other minor adjustments to improve the player's experience:
   * The moving platforms in Deku Palace and Woodfall Temple now actually always move.
   * The Bombers will no longer distract the player from a particular cutscene.
+  * The new Sheikah hint stone will also no longer distract the player during an important cutscene in the Clock Tower.
   * Captain Keeta now walks as fast as in the original game, which restores the challenge of the chasing mini-game.
+  * Link no longer plays the Elegy of Emptiness a second time after it's been played once. This makes Stone Tower a lot less tedious, considering it needs to be played 10+ times to beat Stone Tower Temple normally.
 
-### Planned changes
-
-In a roughly increasing order of difficulty.
-
-* **More Fluid Bomber's Notebook**: MM3D has annoying long popups and UI animations. It should be possible to decrease the transition durations and reduce pauses.
-
-### Considered changes
-
-* **Optional Saving via Song of Time**: This was suggested to me and I have no strong opinion on this, though adding a brand new option to save the game is probably a bit difficult to implement, especially considering it will likely require text edits, when Citra still doesn't support LayeredFS-style patching functionality.
-
+For a list of planned changes, see the [project dashboard](https://github.com/leoetlino/project-restoration/projects/1).
 
 ## Setup
 
@@ -59,6 +63,12 @@ In a roughly increasing order of difficulty.
 3. Determine what your game's Title ID is:
     * MM3D EU: 0004000000125600
     * MM3D US: 0004000000125500
+4. Follow the instructions (for console or Citra) below.
+
+Notes:
+
+* If the Project Restoration patch is applied successfully, a sound effect will be played right before the title screen.
+* In order to use the new ZL/ZR buttons, the Circle Pad Pro must be enabled in MM3D's options even on a New 3DS.
 
 ### Console
 
@@ -88,11 +98,6 @@ Let *GAME_FILE* be the path to the game file (3ds/cia/app). If you've installed 
 * create /home/leo/games/3ds/zelda_mm.3ds.exefsdir
 * copy **code.ips** to /home/leo/games/3ds/zelda_mm.3ds.exefsdir/**code.ips**
 * copy **exheader.bin** and place the file in /home/leo/games/3ds/, calling it **zelda_mm.3ds.exheader**
-
-### Notes
-
-* If the Project Restoration patch is applied successfully, a sound effect will be played right before the title screen.
-* In order to use the new ZL/ZR buttons, the Circle Pad Pro must be enabled in MM3D's options even on a New 3DS.
 
 ## Rationale
 
