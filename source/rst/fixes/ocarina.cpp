@@ -1,3 +1,5 @@
+#include <bitset>
+
 #include "common/context.h"
 #include "common/debug.h"
 #include "common/types.h"
@@ -33,7 +35,9 @@ static bool IsElegyOfEmptinessAllowed() {
 bool HandleOcarinaSong(game::ui::MessageWindow* self, game::OcarinaSong song) {
   // field_42C is MessageWindow's ocarina state
   // 0 inactive
-  // 0xd playing
+  // 0x0D playing
+  // 0x0E ?
+  // 0x0F ?
   // 0x12 repeating (step 1; textbox appears)
   // 0x13 repeating (step 2; first note appears)
   // 0x14 repeating (step 3; main)
@@ -42,13 +46,29 @@ bool HandleOcarinaSong(game::ui::MessageWindow* self, game::OcarinaSong song) {
   // 0x17 repeating (step 6; textbox disappears)
   // 0x18 repeating (step 7; end)
 
-  if (song == game::OcarinaSong::ElegyOfEmptiness) {
-    static bool s_played_once = false;
-    util::Print("%s: played the Elegy of Emptiness (once=%u)", __func__, s_played_once);
-    if (!s_played_once) {
-      s_played_once = true;
+  static std::bitset<16> s_played_songs;
+
+  const bool played_once = u16(song) < s_played_songs.size() && s_played_songs.test(u16(song));
+  if (u16(song) < s_played_songs.size())
+    s_played_songs.set(u16(song));
+
+  if (song == game::OcarinaSong::SongOfSoaring) {
+    if (!played_once)
       return false;
-    }
+
+    EndOcarinaSession(self);
+    auto* gctx = GetContext().gctx;
+    game::sound::PlayEffect(0x1000773);
+    gctx->ocarina_song = song;
+    gctx->ocarina_state = game::OcarinaState::PlayingAndReplayDone;
+    util::Write<u32>(self, 0x428, u16(song));
+    util::Write<u32>(self, 0x42C, 0xF);
+    return true;
+  }
+
+  if (song == game::OcarinaSong::ElegyOfEmptiness) {
+    if (!played_once)
+      return false;
 
     EndOcarinaSession(self);
 
