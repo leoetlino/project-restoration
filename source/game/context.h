@@ -123,6 +123,8 @@ struct GlobalContext {
   act::Actor* SpawnActor(act::Actor* actor, act::Id id, u16 rx, u16 ry, u16 rz, u16 param,
                          float pos_x, float pos_y, float pos_z);
 
+  void ShowMessage(u16 msgid, int unknown = 0);
+
   int field_0;
   u8 gap_4[36];
   pad::State pad_state;

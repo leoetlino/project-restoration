@@ -28,6 +28,10 @@ act::Actor* GlobalContext::SpawnActor(act::Actor* actor, act::Id id, u16 rx, u16
   return spawn_actor_wrapper(&actors, actor, this, id, rx, ry, rz, param, pos_x, pos_y, pos_z);
 }
 
+void GlobalContext::ShowMessage(u16 msgid, int unknown) {
+  rst::util::GetPointer<void(GlobalContext*, int msgid, int)>(0x21BAFC)(this, msgid, unknown);
+}
+
 namespace {
 
 class Screen;

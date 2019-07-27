@@ -50,3 +50,22 @@ TRAMPOLINE_DECLARE rst_ui_items_GetItemAssignIndex
   mov r3, r0
   vpop {d0-d15}
   pop {r0-r2, r4-r12, pc}
+
+TRAMPOLINE_DECLARE rst_HandleOcarinaSong
+  push {lr}
+
+  push {r0-r12}
+  vpush {d0-d15}
+  mov r1, r0 // song
+  mov r0, r4 // MessageWindow* this
+  bl rst_HandleOcarinaSong
+  cmp r0, #0
+  vpop {d0-d15}
+  pop {r0-r12}
+
+  // jump out of this trampoline and MessageWindow code directly
+  addne sp, sp, #0x70
+  popne {r4-r11, pc}
+
+  cmp r0, #0x16 // original instruction
+  pop {pc}

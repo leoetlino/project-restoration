@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cstring>
 #include <tuple>
 #include <type_traits>
@@ -52,6 +53,16 @@ Dest BitCastPtr(const T* ptr, size_t offset = 0) {
 template <typename ValueType, typename T>
 void Write(T* ptr, size_t offset, const ValueType& value) {
   std::memcpy(reinterpret_cast<u8*>(ptr) + offset, &value, sizeof(value));
+}
+
+template <class InputIt, class T>
+bool Contains(InputIt first, InputIt last, const T& value) {
+  return std::find(first, last, value) != last;
+}
+
+template <class C, class T>
+bool Contains(const C& c, const T& value) {
+  return Contains(std::begin(c), std::end(c), value);
 }
 
 }  // namespace rst::util

@@ -207,3 +207,9 @@ ui_items_fast_assign_item:
   link: true
   func: rst_trampoline_rst_ui_items_GetItemAssignIndex
   addr: 0x5C161C
+
+messagewindow_handle_ocarina_song_hook:
+  type: branch
+  link: true
+  func: rst_trampoline_rst_HandleOcarinaSong
+  addr: 0x604D8C
