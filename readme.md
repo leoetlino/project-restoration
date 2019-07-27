@@ -51,6 +51,7 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
   * The new Sheikah hint stone will also no longer distract the player during an important cutscene in the Clock Tower.
   * Captain Keeta now walks as fast as in the original game, which restores the challenge of the chasing mini-game.
   * Link no longer plays the Elegy of Emptiness a second time after it's been played once. This makes Stone Tower a lot less tedious, considering it needs to be played 10+ times to beat Stone Tower Temple normally.
+  * For similar reasons, the Song of Soaring is only repeated once during a play session.
 
 For a list of planned changes, see the [project dashboard](https://github.com/leoetlino/project-restoration/projects/1).
 
