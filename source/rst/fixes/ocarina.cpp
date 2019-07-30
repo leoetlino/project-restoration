@@ -62,7 +62,11 @@ bool HandleOcarinaSong(game::ui::MessageWindow* self, game::OcarinaSong song) {
     gctx->ocarina_song = song;
     gctx->ocarina_state = game::OcarinaState::PlayingAndReplayDone;
     util::Write<u32>(self, 0x428, u16(song));
-    util::Write<u32>(self, 0x42C, 0xF);
+    // This flag must always be false; otherwise the Song of Soaring handler will refuse
+    // to show the map screen.
+    util::Write<bool>(gctx, 0x83EC, false);
+    const auto handle_songs = util::GetPointer<void(game::ui::MessageWindow*)>(0x1D78F0);
+    handle_songs(self);
     return true;
   }
 
