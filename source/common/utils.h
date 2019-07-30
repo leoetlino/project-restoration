@@ -35,6 +35,22 @@ constexpr auto GetPointer(Ts... addresses) {
   return reinterpret_cast<Type*>(detail::GetAddr(addresses...));
 }
 
+template <typename T>
+static void InitIfNeeded(T* instance, bool* init_flag, void (*init_fn)(T*)) {
+  if (*init_flag)
+    return;
+  *init_flag = true;
+  init_fn(instance);
+}
+
+template <class T, class... A, class... B, class... C>
+static T& GetInstance(std::tuple<A...> ptrs, std::tuple<B...> flags, std::tuple<C...> fns) {
+  T* instance = std::apply([](auto&&... a) { return GetPointer<T>(a...); }, ptrs);
+  InitIfNeeded(instance, std::apply([](auto&&... a) { return GetPointer<bool>(a...); }, flags),
+               std::apply([](auto&&... a) { return GetPointer<void(T*)>(a...); }, fns));
+  return *instance;
+}
+
 /// Returns the offset in bytes of a member.
 /// Unlike offsetof, this works for derived classes as well.
 template <typename T1, typename T2>
