@@ -4,6 +4,7 @@
 #include "common/debug.h"
 #include "common/types.h"
 #include "game/context.h"
+#include "game/player.h"
 #include "game/sound.h"
 
 namespace game::ui {
@@ -13,14 +14,16 @@ class MessageWindow;
 namespace rst {
 
 static void EndOcarinaSession(game::ui::MessageWindow* window) {
+  auto* gctx = GetContext().gctx;
+
+  constexpr int fade_durations[] = {20, 25, 25, 20, 20};
   const auto set_ocarina_fadeout = util::GetPointer<void(int zero, int duration)>(0x4FE0BC);
-  set_ocarina_fadeout(0, 30);
+  set_ocarina_fadeout(0, fade_durations[u8(gctx->GetPlayerActor()->active_form)]);
 
   const auto set_ocarina_mode =
       util::GetPointer<void(game::ui::MessageWindow*, int mode)>(0x1D1A18);
   set_ocarina_mode(window, 1);
 
-  auto* gctx = GetContext().gctx;
   // Disable BGM fadeout
   util::Write(gctx, 0x8422, 1);
   gctx->ocarina_state = game::OcarinaState::StoppedPlaying;
