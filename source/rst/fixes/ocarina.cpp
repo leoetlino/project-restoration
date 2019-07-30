@@ -58,7 +58,7 @@ bool HandleOcarinaSong(game::ui::MessageWindow* self, game::OcarinaSong song) {
 
     EndOcarinaSession(self);
     auto* gctx = GetContext().gctx;
-    game::sound::PlayEffect(0x1000773);
+    game::sound::PlayEffect(game::sound::EffectId::NA_SE_SY_TRE_BOX_APPEAR);
     gctx->ocarina_song = song;
     gctx->ocarina_state = game::OcarinaState::PlayingAndReplayDone;
     util::Write<u32>(self, 0x428, u16(song));
@@ -78,7 +78,7 @@ bool HandleOcarinaSong(game::ui::MessageWindow* self, game::OcarinaSong song) {
 
     auto* gctx = GetContext().gctx;
     if (IsElegyOfEmptinessAllowed()) {
-      game::sound::PlayEffect(0x1000773);
+      game::sound::PlayEffect(game::sound::EffectId::NA_SE_SY_TRE_BOX_APPEAR);
       gctx->ocarina_song = game::OcarinaSong::ElegyOfEmptiness;
       gctx->ocarina_state = game::OcarinaState::PlayingAndReplayDone;
     } else {

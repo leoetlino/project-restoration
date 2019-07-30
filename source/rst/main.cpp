@@ -17,7 +17,7 @@ void Init(Context& context) {
   link::Init();
 
   util::Print("Project Restoration initialised (" __DATE__ " " __TIME__ ")");
-  game::sound::PlayEffect(0x10007DD);
+  game::sound::PlayEffect(game::sound::EffectId::NA_SE_SY_QUEST_CLEAR);
   context.has_initialised = true;
 }
 

@@ -13,8 +13,8 @@ static StreamMgr& GetStreamMgr() {
                                            std::tuple{0x1E11F8});
 }
 
-bool PlayEffect(u32 id) {
-  return rst::util::GetPointer<bool(u32)>(0x2006E4)(id);
+bool PlayEffect(EffectId id) {
+  return rst::util::GetPointer<bool(EffectId)>(0x2006E4)(id);
 }
 
 StreamId GetCurrentStreamId(StreamPlayer player) {
