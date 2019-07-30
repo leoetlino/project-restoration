@@ -304,6 +304,7 @@ enum class UiScreen {
   /// "Play your instrument" screen
   Ocarina,
 };
+void* GetUiScreen(UiScreen screen);
 bool OpenUiScreen(UiScreen screen);
 
 bool CheckCurrentUiScreen(UiScreen screen);

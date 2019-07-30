@@ -73,8 +73,20 @@ void UiScheduleTriggerHook() {
   if (!gctx || gctx->type != game::GameStateType::Play)
     return;
 
-  if (gctx->pad_state.input.new_buttons.IsSet(game::pad::Button::Start))
+  const bool zr = gctx->pad_state.input.buttons.IsSet(game::pad::Button::ZR);
+  const bool start = gctx->pad_state.input.new_buttons.IsSet(game::pad::Button::Start);
+  const bool select = gctx->pad_state.input.new_buttons.IsSet(game::pad::Button::Select);
+  if (!zr && start)
     game::OpenUiScreen(game::UiScreen::Items);
+  if (zr && start)
+    game::OpenUiScreen(game::UiScreen::Quest);
+  if (zr && select) {
+    // Clear map screen type. (Needed because the screen could be in "soaring" mode.)
+    util::Write<u8>(game::GetUiScreen(game::UiScreen::Map), 0x78E, 0);
+    game::OpenUiScreen(game::UiScreen::Map);
+    gctx->pad_state.input.buttons.Clear(game::pad::Button::Select);
+    gctx->pad_state.input.new_buttons.Clear(game::pad::Button::Select);
+  }
 }
 
 }  // namespace rst

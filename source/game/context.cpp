@@ -74,6 +74,10 @@ Screen* GetScreenPointer(UiScreen screen) {
 
 }  // namespace
 
+void* GetUiScreen(UiScreen screen) {
+  return GetScreenPointer(screen);
+}
+
 bool OpenUiScreen(UiScreen screen) {
   GlobalContext* gctx = rst::GetContext().gctx;
   UiScreenContext& ui_ctx = GetUiScreenContext();
