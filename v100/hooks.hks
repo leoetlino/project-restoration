@@ -213,3 +213,8 @@ messagewindow_handle_ocarina_song_hook:
   link: true
   func: rst_trampoline_rst_HandleOcarinaSong
   addr: 0x604D8C
+
+fourth_heart_piece_sound:
+  type: patch
+  addr: 0x231184
+  data: 00 00 50 E3
