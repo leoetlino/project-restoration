@@ -16,6 +16,8 @@ add_executable(newcode
   game/actor.cpp
   game/actor.h
   game/actors/boss_twinmold.h
+  game/camera.cpp
+  game/camera.h
   game/common_data.cpp
   game/common_data.h
   game/context.cpp

@@ -5,6 +5,7 @@
 #include "common/types.h"
 #include "common/utils.h"
 #include "game/actor.h"
+#include "game/camera.h"
 #include "game/pad.h"
 
 namespace game {
@@ -152,9 +153,21 @@ struct GlobalContext {
   u16 field_14A;
   u8 gap_14C[200];
   float field_214;
-  u8 gap_218[2144];
-  s16 field_A78;
-  __attribute__((aligned(4))) u8 gap_A7C[48];
+  float field_218;
+  float field_21C;
+  u8 gap_220[132];
+  float field_2A4;
+  u8 gap_2A8[228];
+  u8 field_38C;
+  u8 gap_38D[123];
+  Camera main_camera;
+  Camera other_cameras[3];
+  Camera* cameras[4];
+  u16 new_camera_idx;
+  u16 camera_idx;
+  u8 gap_A7C[12];
+  u32 field_A88;
+  u8 gap_A8C[32];
   UiMenuState ui_menu_state;
   u32 field_AB0;
   u8 gap_AB4[76];
@@ -287,6 +300,8 @@ struct GlobalContext {
   act::Actor* some_actor;
   u8 gap_F0F4[7996];
 };
+static_assert(rst::util::OffsetOf(&GlobalContext::main_camera) == 0x408);
+static_assert(rst::util::OffsetOf(&GlobalContext::ui_menu_state) == 0xAAC);
 static_assert(rst::util::OffsetOf(&GlobalContext::field_C000) == 0xc000);
 static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_state) == 0x8366);
 static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_song) == 0x836A);

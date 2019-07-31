@@ -64,6 +64,13 @@ void Calc(game::GlobalContext* gctx) {
   if (player_actor) {
     util::Print("state handler: %p - 92C: %u - 92D: %u", player_actor->state_handler_fn,
                 player_actor->some_fn_idx, player_actor->other_fn_idx);
+
+    auto* camera = &gctx->main_camera + gctx->camera_idx;
+    util::Print("camera_idx=%u target=%p%s state=%04x mode=%04x", gctx->camera_idx,
+                camera->target_actor,
+                (camera->target_actor && camera->target_actor == player) ? "(player)" : "",
+                u16(camera->state), u16(camera->mode));
+
   }
 #endif
 }
