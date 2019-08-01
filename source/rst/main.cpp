@@ -34,6 +34,30 @@ void UpdateContext(game::GlobalContext* gctx) {
 
 }  // anonymous namespace
 
+[[maybe_unused]] static void PrintDebug(game::GlobalContext* gctx) {
+  std::string actors_str = "actors:";
+  for (size_t i = 0; i < gctx->actors.lists.size(); ++i) {
+    game::ActorList& list = gctx->actors.lists[i];
+    actors_str += util::StringFromFormat("\ntype %02zu: ", i);
+    for (auto* actor = list.first; actor; actor = actor->next) {
+      actors_str += util::StringFromFormat("%04x[%04x] ", u16(actor->id), actor->params);
+    }
+  }
+  util::Print(actors_str);
+
+  const auto* player = gctx->GetPlayerActor();
+  if (player) {
+    util::Print("state handler: %p - 92C: %u - 92D: %u", player->state_handler_fn,
+                player->some_fn_idx, player->other_fn_idx);
+
+    auto* camera = &gctx->main_camera + gctx->camera_idx;
+    util::Print("camera_idx=%u target=%p%s state=%04x mode=%04x", gctx->camera_idx,
+                camera->target_actor,
+                (camera->target_actor && camera->target_actor == player) ? "(player)" : "",
+                u16(camera->state), u16(camera->mode));
+  }
+}
+
 void Calc(game::GlobalContext* gctx) {
   UpdateContext(gctx);
 
@@ -51,28 +75,7 @@ void Calc(game::GlobalContext* gctx) {
   FixFreeCameraReset();
 
 #if 0
-  std::string actors_str = "actors:";
-  for (size_t i = 0; i < gctx->actors.lists.size(); ++i) {
-    game::ActorList& list = gctx->actors.lists[i];
-    actors_str += util::StringFromFormat("\ntype %02zu: ", i);
-    for (auto* actor = list.first; actor; actor = actor->next) {
-      actors_str += util::StringFromFormat("%04x[%04x] ", u16(actor->id), actor->params);
-    }
-  }
-  util::Print(actors_str);
-
-  const auto* player_actor = gctx->GetPlayerActor();
-  if (player_actor) {
-    util::Print("state handler: %p - 92C: %u - 92D: %u", player_actor->state_handler_fn,
-                player_actor->some_fn_idx, player_actor->other_fn_idx);
-
-    auto* camera = &gctx->main_camera + gctx->camera_idx;
-    util::Print("camera_idx=%u target=%p%s state=%04x mode=%04x", gctx->camera_idx,
-                camera->target_actor,
-                (camera->target_actor && camera->target_actor == player) ? "(player)" : "",
-                u16(camera->state), u16(camera->mode));
-
-  }
+  PrintDebug(gctx);
 #endif
 }
 
