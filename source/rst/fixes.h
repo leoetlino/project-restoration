@@ -12,4 +12,7 @@ void FixDekuMovingPlatforms();
 void FixBombers();
 void FixHintStone();
 
+// Fix the free camera not resetting when Z-targeting in some cases.
+void FixFreeCameraReset();
+
 }  // namespace rst

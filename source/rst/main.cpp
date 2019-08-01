@@ -48,6 +48,7 @@ void Calc(game::GlobalContext* gctx) {
   FixDekuMovingPlatforms();
   FixBombers();
   FixHintStone();
+  FixFreeCameraReset();
 
 #if 0
   std::string actors_str = "actors:";

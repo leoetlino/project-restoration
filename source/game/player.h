@@ -119,7 +119,7 @@ struct Player : public Actor {
     GoronRolling = 0x1000,
     DekuFlyingCamera = 0x2000,
     Unk4000 = 0x4000,
-    ZoraFastSwimCamera = 0x8000,
+    ZoraFastSwimming = 0x8000,
     Unk10000 = 0x10000,
     AfterChangeMask = 0x20000,
     Unk40000 = 0x40000,
