@@ -79,7 +79,7 @@ You may also need to copy boot.firm to your NAND using a tool like godmode9.
 
 * [Enable game patching](https://github.com/AuroraWright/Luma3DS/wiki/Optional-features) in Luma's menu.
 * Create the /luma/titles/*TITLE_ID*/ directory on your SD card (if it doesn't already exist).
-* Copy **code.ips** or **code.bps** (whichever file exists) to that directory.
+* Copy **code.ips** or **code.bps** (whichever file exists) to that directory. (If you want faster aiming, copy **code_faster_aim.ips/bps** instead and rename the patch to code.ips/bps while keeping the same extension.)
 * Copy **exheader_legacy.bin** to that directory and rename the file to **exheader.bin**.
 
 ### Citra
@@ -91,7 +91,7 @@ A [**canary build**](https://citra-emu.org/download/) of Citra is required, beca
 Let *GAME_FILE* be the path to the game file (3ds/cia/app). If you've installed the game, GAME_FILE is "sdmc/Nintendo 3DS/00000000000000000000000000000000/00000000000000000000000000000000/title/00040000/00125x00/content/xxxxxxxx.app" (where xxxxxxxx.app is the largest file in that directory).
 
 * Create the ***GAME_FILE*.exefsdir** directory (if it doesn't already exist).
-* Copy **code.ips** to that directory and rename the file to **code.ips**.
+* Copy **code.ips** to that directory and rename the file to **code.ips**. (If you want faster aiming, copy **code_faster_aim.ips** instead and rename the patch to code.ips.)
 * Copy **exheader.bin** to the same folder as the game file, then rename it to ***GAME_FILE*.exheader**.
 
 **Example**: If your game is at /home/leo/games/3ds/zelda_mm.3ds, then:

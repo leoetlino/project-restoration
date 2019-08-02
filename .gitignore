@@ -1,4 +1,5 @@
 # Build files
+.mypy_cache
 *.bin
 *.o
 *.x
