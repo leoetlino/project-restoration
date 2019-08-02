@@ -1,6 +1,9 @@
 #pragma once
 
+#include <array>
 #include <type_traits>
+
+#include "common/debug.h"
 
 namespace rst {
 
@@ -8,14 +11,8 @@ namespace rst {
 template <typename FlagType, typename = typename std::enable_if_t<std::is_enum_v<FlagType>, void>>
 class Flags {
 public:
-  constexpr auto Set(FlagType v) {
-    flags |= std::underlying_type_t<FlagType>(v);
-    return *this;
-  }
-  constexpr auto Clear(FlagType v) {
-    flags &= ~std::underlying_type_t<FlagType>(v);
-    return *this;
-  }
+  constexpr void Set(FlagType v) { flags |= std::underlying_type_t<FlagType>(v); }
+  constexpr void Clear(FlagType v) { flags &= ~std::underlying_type_t<FlagType>(v); }
 
   constexpr bool IsSet(FlagType v) const {
     return (flags & std::underlying_type_t<FlagType>(v)) != 0;
