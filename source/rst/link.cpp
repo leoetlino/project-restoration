@@ -196,8 +196,9 @@ void HandleFastArrowSwitch() {
   // Reset the override action if the player is not using a bow.
   constexpr u8 first = u8(game::Action::Arrow);
   constexpr u8 last = u8(game::Action::LightArrow);
-  if (first > u8(player->current_action) || u8(player->current_action) > last ||
-      player->action_type != game::act::Player::ActionType::Type3) {
+  const bool is_using =
+      player->action_type == game::act::Player::ActionType::Type3 || player->projectile_actor;
+  if (first > u8(player->current_action) || u8(player->current_action) > last || !is_using) {
     s_fast_arrow_state = {};
     return;
   }
