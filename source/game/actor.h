@@ -105,8 +105,9 @@ struct Actor {
   float field_34;
   u8 gap_36[6];
   Vec3 pos_copy;
-  u16 field_48;
-  __attribute__((packed)) __attribute__((aligned(1))) u32 field_4A;
+  u16 angle_ud;
+  u16 angle_lr;
+  u16 field_4C;
   u8 gap_4E[2];
   u32 field_50;
   u8 gap_54[4];
