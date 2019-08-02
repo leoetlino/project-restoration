@@ -1,5 +1,6 @@
 #pragma once
 
+#include "common/flags.h"
 #include "common/types.h"
 
 namespace game {
@@ -181,6 +182,7 @@ enum class CameraMode : u16 {
   /// [MM3D] Free camera mode
   FREECAMERA = 0x1F,
 };
+constexpr size_t NumCameraModes = 0x20;
 
 struct Camera {
   u32 ChangeMode(CameraMode mode, u32 unknown = 0);
@@ -274,5 +276,21 @@ struct Camera {
   u16 field_196;
 };
 static_assert(sizeof(Camera) == 0x198);
+
+struct CameraModeInfo {
+  u16 handler_fn_idx;
+  u16 field_2;
+  uintptr_t field_4;
+};
+static_assert(sizeof(CameraModeInfo) == 0x8);
+
+struct CameraStateInfo {
+  rst::BitSet<NumCameraModes, u32, CameraMode> allowed_modes;
+  u32 flags;
+  std::array<CameraModeInfo, NumCameraModes>* modes;
+};
+static_assert(sizeof(CameraStateInfo) == 0xc);
+
+void CalcCamera();
 
 }  // namespace game

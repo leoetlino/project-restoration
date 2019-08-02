@@ -226,3 +226,9 @@ do_not_lock_swordsman_school_door:
   # if (!swordSchool || !(s_common_data.save.anonymous_130 & 8))
   #                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   data: 00 F0 20 E3
+
+camera_change_mode_hook:
+  type: branch
+  addr: 0x18B320
+  link: true
+  func: rst_CameraChangeModeExHook

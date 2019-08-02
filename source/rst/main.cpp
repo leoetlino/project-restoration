@@ -2,6 +2,7 @@
 #include "common/debug.h"
 #include "common/types.h"
 #include "common/utils.h"
+#include "game/camera.h"
 #include "game/context.h"
 #include "game/player.h"
 #include "game/sound.h"
@@ -64,6 +65,7 @@ void Calc(game::GlobalContext* gctx) {
   if (gctx->type != game::GameStateType::Play)
     return;
 
+  game::CalcCamera();
   link::HandleFastTransform();
   link::HandleFastArrowSwitch();
   FixTime();

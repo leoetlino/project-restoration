@@ -69,3 +69,20 @@ TRAMPOLINE_DECLARE rst_HandleOcarinaSong
 
   cmp r0, #0x16 // original instruction
   pop {pc}
+
+.global rst_CameraChangeModeExHook
+rst_CameraChangeModeExHook:
+  push {lr}
+  vpush {d0-d15}
+  mov r4, r0
+  mov r5, r1
+  mov r6, r2
+  bl rst_ShouldSwitchToFreeCam
+  cmp r0, #1
+  moveq r5, #0x1f
+  mov r0, r4
+  mov r1, r5
+  mov r2, r6
+  add r4, r0, #0x100 // original instruction
+  vpop {d0-d15}
+  pop {pc}

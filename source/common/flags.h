@@ -39,19 +39,19 @@ public:
 };
 
 // Super simple alternative to std::bitset with a guaranteed storage layout.
-template <size_t N, typename WordType = u32>
+template <size_t N, typename WordType = u32, typename IndexType = WordType>
 class BitSet {
 public:
-  constexpr void Set(size_t idx) { GetWord(idx) |= 1 << (idx % NumBitsPerWord); }
-  constexpr void Clear(size_t idx) { GetWord(idx) &= ~(1 << (idx % NumBitsPerWord)); }
-  constexpr bool IsSet(size_t idx) const {
-    return (GetWord(idx) & (1 << (idx % NumBitsPerWord))) != 0;
+  constexpr void Set(IndexType idx) { GetWord(idx) |= 1 << (size_t(idx) % NumBitsPerWord); }
+  constexpr void Clear(IndexType idx) { GetWord(idx) &= ~(1 << (size_t(idx) % NumBitsPerWord)); }
+  constexpr bool IsSet(IndexType idx) const {
+    return (GetWord(idx) & (1 << (size_t(idx) % NumBitsPerWord))) != 0;
   }
 
-  constexpr bool TestAndClear(FlagType v) {
-    if (!IsSet(v))
+  constexpr bool TestAndClear(IndexType idx) {
+    if (!IsSet(idx))
       return false;
-    Clear(v);
+    Clear(idx);
     return true;
   }
 
@@ -60,8 +60,8 @@ private:
   // Yes, not technically correct, but this will work on any sane machine, including the 3DS...
   static constexpr size_t NumBitsPerWord = sizeof(WordType) * 8;
   static constexpr size_t NumWords = (N + NumBitsPerWord - 1) / NumBitsPerWord;
-  constexpr Word& GetWord(size_t idx) { return m_storage[idx / NumBitsPerWord]; }
-  std::array<Word, NumWords> m_storage{};
+  constexpr WordType& GetWord(IndexType idx) { return m_storage[size_t(idx) / NumBitsPerWord]; }
+  std::array<WordType, NumWords> m_storage{};
 };
 
 }  // namespace rst
