@@ -20,6 +20,8 @@ enum class Id : u16 {
   Arrow = 0xf,
   // [1] Deku Palace / Woodfall Temple moving platforms (after player lands on them)
   ObjRailLift = 0xd8,
+  // [9] Odolwa
+  BossOdolwa = 0xcb,
   // [9] Twinmold (Red/Blue)
   BossTwinmold = 0xcc,
   // [4] Kafei
