@@ -238,3 +238,12 @@ trigger_item_use_hook:
   opcode: post
   addr: 0x1DB744
   func: rst_TriggerItemUseHook
+
+stone_tower_block_faster_movement:
+  type: patch
+  addr: 0x2AC634
+  data: 00 00 70 42
+stone_tower_block_faster_movement:
+  type: patch
+  addr: 0x2D0C0C
+  data: 00 00 A0 42
