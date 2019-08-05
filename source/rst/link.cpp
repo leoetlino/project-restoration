@@ -51,7 +51,7 @@ void HandleFastTransform() {
   const bool in_water = player->flags1.IsSet(game::act::Player::Flag1::InWater);
   const auto it =
       std::find_if(std::begin(s_actions), std::end(s_actions), [&](const TransformAction& action) {
-        return gctx->pad_state.input.new_buttons.IsSet(action.trigger_btn) &&
+        return player->controller_info.state->input.new_buttons.IsSet(action.trigger_btn) &&
                (!in_water || action.usable_in_water);
       });
   if (it == std::end(s_actions))
