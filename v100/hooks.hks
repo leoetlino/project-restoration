@@ -232,3 +232,9 @@ camera_change_mode_hook:
   addr: 0x18B320
   link: true
   func: rst_CameraChangeModeExHook
+
+trigger_item_use_hook:
+  type: softbranch
+  opcode: post
+  addr: 0x1DB744
+  func: rst_TriggerItemUseHook

@@ -69,7 +69,6 @@ void Calc(game::GlobalContext* gctx) {
     return;
 
   game::CalcCamera();
-  link::HandleFastTransform();
   link::HandleFastArrowSwitch();
   FixTime();
   FixTwinmold();

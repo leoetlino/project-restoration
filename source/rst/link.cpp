@@ -39,38 +39,10 @@ static constexpr TransformAction s_actions[] = {
     {game::pad::Button::Up, game::ItemId::GoronMask, game::Action::GoronMask, false, "Goron"},
     {game::pad::Button::Down, game::ItemId::DekuMask, game::Action::DekuMask, false, "Deku"},
 };
-
-bool CanUseFastAction(game::act::Player* player) {
-  if (GetContext().gctx->IsUiMenuActive()) {
-    util::Print("%s: player is in a menu, skipping", __func__);
-    return false;
-  }
-
-  if (player->flags1.IsOneSet(game::act::Player::Flag1::FreezeLink,
-                              game::act::Player::Flag1::Unk800)) {
-    util::Print("%s: Flag1::FreezeLink is set, skipping", __func__);
-    return false;
-  }
-
-  if (player->flags2.flags & 0x2000000 ||
-      (player->flags2.flags & 0x80000 && 4 <= player->field_11E4C && player->field_11E4C <= 5) ||
-      player->flags3.IsSet(game::act::Player::Flag3::Unk20000000) ||
-      (player->current_action == game::Action::Hookshot && !player->projectile_actor)) {
-    util::Print("%s: other flag checks failed, skipping", __func__);
-    return false;
-  }
-
-  if (player->active_mask_id == game::MaskId::GiantMask) {
-    util::Print("%s: wearing Giant's Mask, skipping", __func__);
-    return false;
-  }
-
-  return true;
-}
 }  // namespace
 
 void HandleFastTransform() {
-  game::GlobalContext* gctx = GetContext().gctx;
+  const game::GlobalContext* gctx = GetContext().gctx;
 
   game::act::Player* player = gctx->GetPlayerActor();
   if (!player)
@@ -85,8 +57,10 @@ void HandleFastTransform() {
   if (it == std::end(s_actions))
     return;
 
-  if (!CanUseFastAction(player))
+  if (player->active_mask_id == game::MaskId::GiantMask) {
+    util::Print("%s: wearing Giant's Mask, skipping", __func__);
     return;
+  }
 
   if (!game::HasMask(it->required_mask)) {
     util::Print("%s: player does not have the %s Mask, skipping", __func__, it->name);
@@ -255,6 +229,10 @@ std::optional<game::Action> GetFastArrowAction() {
 }  // namespace rst::link
 
 extern "C" {
+RST_HOOK void rst_TriggerItemUseHook() {
+  rst::link::HandleFastTransform();
+}
+
 RST_HOOK bool rst_link_ShouldUseZoraFastSwim() {
   return rst::link::ShouldUseZoraFastSwim();
 }
