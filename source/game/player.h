@@ -100,7 +100,10 @@ struct Player : public Actor {
   };
 
   enum class Flag2 : u32 {
+    Moving = 0x20,
     Underwater = 0x400,
+    TatlFlying = 0x0010'0000,
+    PlayingIdleAnimation = 0x1000'0000,
   };
 
   enum class Flag3 : u32 {
@@ -110,7 +113,7 @@ struct Player : public Actor {
     AttackingB = 0x8,
     Unk10 = 0x10,
     Unk20 = 0x20,
-    Shooting = 0x40,
+    HasProjectileActor = 0x40,
     Unk80 = 0x80,
     DekuInFlower = 0x100,
     DekuLaunching = 0x200,
