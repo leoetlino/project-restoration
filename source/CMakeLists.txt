@@ -15,9 +15,11 @@ add_executable(newcode
   common/utils.h
   game/actor.cpp
   game/actor.h
+  game/actors/boss_goht.h
   game/actors/boss_twinmold.h
   game/camera.cpp
   game/camera.h
+  game/collision.h
   game/common_data.cpp
   game/common_data.h
   game/context.cpp

@@ -6,10 +6,37 @@
 #include "common/debug.h"
 #include "common/types.h"
 #include "game/actor.h"
+#include "game/actors/boss_goht.h"
 #include "game/actors/boss_twinmold.h"
 #include "game/context.h"
 
 namespace rst {
+
+extern "C" RST_HOOK bool rst_IsGohtCollided(game::act::BossGoht* goht) {
+  if (!goht->goht_flags.IsSet(game::act::BossGoht::Flag::FinishedPlayingStunCutsceneOnce) ||
+      goht->field_3998) {
+    return false;
+  }
+
+  for (size_t i = 0; i < 0x12; ++i) {
+    if (goht->collision[i].flags1 & 2)
+      return true;
+  }
+  return false;
+}
+
+void FixGoht() {
+  const game::GlobalContext* gctx = GetContext().gctx;
+  auto* goht =
+      gctx->FindActorWithId<game::act::BossGoht>(game::act::Id::BossGoht, game::act::Type::Boss);
+  if (!goht)
+    return;
+
+  // Prevent the eye from popping out.
+  goht->eye_scale = {0.8, 0.8, 0.05};
+  // Disable the "eye pops out" cutscene.
+  goht->goht_flags.Set(game::act::BossGoht::Flag::FinishedPlayingStunCutsceneOnce);
+}
 
 struct TwinmoldFixState {
   s8 blue_prev_life;
@@ -57,11 +84,11 @@ void FixTwinmold() {
       state->is_hit_counter_sane = true;
 
     // 10 hits are required to stun Red or Blue Twinmold. This would have been acceptable
-    // if it weren't for the fact that Red Twinmold regularly burrows back into sand during phase 2
-    // and the hit counter is reset every time that happens.
-    // This makes for a confusing experience the first time the player fights Twinmold,
-    // as there is nothing in the game that indicates that the hit counter resets every time
-    // (and it's still frustrating on subsequent playthroughs).
+    // if it weren't for the fact that Red Twinmold regularly burrows back into sand during phase
+    // 2 and the hit counter is reset every time that happens. This makes for a confusing
+    // experience the first time the player fights Twinmold, as there is nothing in the game that
+    // indicates that the hit counter resets every time (and it's still frustrating on subsequent
+    // playthroughs).
     //
     // Fix that by restoring the previous hit counter after it's been reset by the game.
     const bool was_reset = red_twinmold->hit_counter == 9 && state->red_prev_hit_counter != 9;
@@ -84,6 +111,7 @@ void FixTwinmold() {
 }
 
 void FixBosses() {
+  FixGoht();
   FixTwinmold();
 }
 

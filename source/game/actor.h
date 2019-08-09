@@ -28,6 +28,8 @@ enum class Id : u16 {
   NpcKafei = 0x00F4,
   // Ice platform created using ice arrows.
   BgIcePlatform = 0x013E,
+  // Goht
+  BossGoht = 0x016E,
   // [4] Old Lady from Bomb Shop
   NpcOldLady = 0x01C5,
   // [4] Rosa Sisters
@@ -56,6 +58,8 @@ enum class Type : u8 {
   Chest = 11,
 };
 
+using MainFunction = void(*)(Actor* self, GlobalContext* gctx);
+
 struct ActorInfo {
   Id id;
   Type type;
@@ -64,10 +68,10 @@ struct ActorInfo {
   u16 object_id;
   u8 anonymous_3[2];
   size_t inst_size;
-  void (*init_fn)(Actor*, GlobalContext*);
-  void (*deinit_fn)(Actor*, GlobalContext*);
-  void (*calc_fn)(Actor*, GlobalContext*);
-  void (*draw_fn)(Actor*, GlobalContext*);
+  MainFunction init_fn;
+  MainFunction deinit_fn;
+  MainFunction calc_fn;
+  MainFunction draw_fn;
 };
 
 // Actor overlay info. Same structure as Majora's Mask, though most fields are now unused.
@@ -133,8 +137,8 @@ struct Actor {
   u8 field_BA;
   /// Used by Twinmold at least. Unused for player?
   s8 life;
-  u8 field_BC;
-  u8 field_BD;
+  u8 damage;
+  u8 damage_type;
   u8 field_BE;
   u8 field_BF;
   u16 field_C0;
@@ -167,10 +171,10 @@ struct Actor {
   Actor* prev;
   /// Next actor of the same type in the linked list.
   Actor* next;
-  void (*init_fn)(Actor*, GlobalContext*);
-  void (*deinit_fn)(Actor*, GlobalContext*);
-  void (*calc_fn)(Actor*, GlobalContext*);
-  void (*draw_fn)(Actor*, GlobalContext*);
+  MainFunction init_fn;
+  MainFunction deinit_fn;
+  MainFunction calc_fn;
+  MainFunction draw_fn;
   ActorOverlayInfo* overlay_info;
   float field_14C;
   float field_150;

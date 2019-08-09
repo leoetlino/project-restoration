@@ -17,6 +17,16 @@ rst_trampoline_\name:
   pop {r1-r12, pc}
 .endm
 
+.macro TRAMPOLINE_CMP_RESULT name, val
+  TRAMPOLINE_DECLARE \name
+  push {r0-r12, lr}
+  vpush {d0-d15}
+  bl \name
+  cmp r0, \val
+  vpop {d0-d15}
+  pop {r0-r12, pc}
+.endm
+
 .global rst_dummy
 rst_dummy:
   nop
@@ -35,13 +45,7 @@ TRAMPOLINE_DECLARE rst_MoveScheduledNpcHook
   vpop {s1-s15}
   pop {r0-r12, pc}
 
-TRAMPOLINE_DECLARE rst_ui_items_IsItemAssignRequested
-  push {r0-r12, lr}
-  vpush {d0-d15}
-  bl rst_ui_items_IsItemAssignRequested
-  cmp r0, #0
-  vpop {d0-d15}
-  pop {r0-r12, pc}
+TRAMPOLINE_CMP_RESULT rst_ui_items_IsItemAssignRequested, #0
 
 TRAMPOLINE_DECLARE rst_ui_items_GetItemAssignIndex
   push {r0-r2, r4-r12, lr}
@@ -86,3 +90,5 @@ rst_CameraChangeModeExHook:
   add r4, r0, #0x100 // original instruction
   vpop {d0-d15}
   pop {pc}
+
+TRAMPOLINE_CMP_RESULT rst_IsGohtCollided, #1
