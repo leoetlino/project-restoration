@@ -7,6 +7,7 @@
 #include "game/player.h"
 #include "game/sound.h"
 #include "rst/fixes.h"
+#include "rst/fixes/boss.h"
 #include "rst/fixes/time.h"
 #include "rst/link.h"
 
@@ -71,7 +72,7 @@ void Calc(game::GlobalContext* gctx) {
   game::CalcCamera();
   link::HandleFastArrowSwitch();
   FixTime();
-  FixTwinmold();
+  FixBosses();
   FixIceArrows();
   FixDekuMovingPlatforms();
   FixBombers();
