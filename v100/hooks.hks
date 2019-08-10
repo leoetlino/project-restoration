@@ -1,3 +1,19 @@
+start_hook:
+  type: softbranch
+  opcode: post
+  func: _start
+  addr: 0x103EC8
+pre_calc_hook:
+  type: softbranch
+  opcode: post
+  func: rst_Calc
+  addr: 0x0010676C
+post_actor_calc_hook:
+  type: softbranch
+  opcode: post
+  addr: 0x174E08
+  func: rst_PostActorCalcHook
+
 zora_swim_1a:
   # Remove fast swim magic check
   type: patch
@@ -109,18 +125,6 @@ update_time_hook:
   opcode: pre
   func: rst_UpdateTimeHook
   addr: 0x172A64
-
-main_hook:
-  type: softbranch
-  opcode: post
-  func: rst_Calc
-  addr: 0x0010676C
-
-start_hook:
-  type: softbranch
-  opcode: post
-  func: _start
-  addr: 0x103EC8
 
 ui_schedule_trigger_hook:
   type: softbranch

@@ -72,7 +72,6 @@ void Calc(game::GlobalContext* gctx) {
   game::CalcCamera();
   link::HandleFastArrowSwitch();
   FixTime();
-  FixBosses();
   FixIceArrows();
   FixDekuMovingPlatforms();
   FixBombers();
@@ -82,6 +81,10 @@ void Calc(game::GlobalContext* gctx) {
 #if 0
   PrintDebug(gctx);
 #endif
+}
+
+void PostActorCalcHook() {
+  FixBosses();
 }
 
 void UiScheduleTriggerHook() {
@@ -110,6 +113,10 @@ void UiScheduleTriggerHook() {
 extern "C" {
 RST_HOOK void rst_Calc(game::GlobalContext* gctx) {
   rst::Calc(gctx);
+}
+
+RST_HOOK void rst_PostActorCalcHook() {
+  rst::PostActorCalcHook();
 }
 
 RST_HOOK void rst_UiScheduleTriggerHook() {
