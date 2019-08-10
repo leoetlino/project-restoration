@@ -8,6 +8,7 @@
 #include "game/actor.h"
 #include "game/actors/boss_goht.h"
 #include "game/actors/boss_twinmold.h"
+#include "game/collision.h"
 #include "game/context.h"
 
 namespace rst {
