@@ -19,6 +19,7 @@ add_executable(newcode
   game/actors/boss_twinmold.h
   game/camera.cpp
   game/camera.h
+  game/collision.cpp
   game/collision.h
   game/common_data.cpp
   game/common_data.h
