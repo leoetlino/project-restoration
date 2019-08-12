@@ -4,6 +4,7 @@
 
 #include "common/flags.h"
 #include "common/types.h"
+#include "common/utils.h"
 
 namespace game {
 struct GlobalContext;
@@ -24,6 +25,8 @@ enum class Id : u16 {
   BossOdolwa = 0xcb,
   // [9] Twinmold (Red/Blue)
   BossTwinmold = 0xcc,
+  // [9] Gyorg
+  BossGyorg = 0xcd,
   // [4] Kafei
   NpcKafei = 0x00F4,
   // Ice platform created using ice arrows.
@@ -98,7 +101,8 @@ struct Actor {
   Type actor_type;
   u8 room_number;
   u32 flags;
-  Vec3 pos;
+  // Not the same as position.
+  Vec3 some_pos;
   float field_14;
   u16 field_18;
   u16 field_1A;
@@ -110,7 +114,7 @@ struct Actor {
   Vec3 position;
   float field_34;
   u8 gap_36[6];
-  Vec3 pos_copy;
+  Vec3 target_pos;
   u16 angle_ud;
   u16 angle_lr;
   u16 field_4C;
@@ -133,7 +137,10 @@ struct Actor {
   float field_98;
   float distance_to_link;
   float height_diff_to_link;
-  u8 field_A4[22];
+  void* damage_table;
+  Vec3 field_A8;
+  u32 field_B4;
+  u16 field_B8;
   u8 field_BA;
   /// Used by Twinmold at least. Unused for player?
   s8 life;
@@ -148,15 +155,11 @@ struct Actor {
   float field_C8;
   u32 field_CC;
   float field_D0;
-  u8 gap_D4[37];
-  u8 field_F9;
-  u8 gap_FA[6];
-  u32 field_100;
-  u8 gap_104[8];
-  u16 field_10C;
-  u8 gap_10E[2];
-  float field_110;
-  u8 gap_114[4];
+  u8 gap_D4[28];
+  Vec3 field_F0;
+  u32 field_FC;
+  Vec3 field_100;
+  Vec3 field_10C;
   u8 field_118;
   u8 gap119;
   u16 text_id_maybe;
@@ -202,5 +205,9 @@ struct Actor {
   float field_1F4;
 };
 static_assert(sizeof(Actor) == 0x1F8);
+static_assert(rst::util::OffsetOf(&Actor::field_80) == 0x80);
+static_assert(rst::util::OffsetOf(&Actor::field_B4) == 0xB4);
+static_assert(rst::util::OffsetOf(&Actor::field_F0) == 0xF0);
+static_assert(rst::util::OffsetOf(&Actor::field_11C) == 0x11C);
 
 }  // namespace game::act

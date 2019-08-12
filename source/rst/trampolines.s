@@ -92,3 +92,12 @@ rst_CameraChangeModeExHook:
   pop {pc}
 
 TRAMPOLINE_CMP_RESULT rst_IsGohtCollided, #1
+
+TRAMPOLINE_DECLARE rst_GetGyorgCollisionResponse
+  push {r0-r9, r11-r12, lr}
+  vpush {d0-d15}
+  mov r0, r4 // this
+  bl rst_GetGyorgCollisionResponse
+  mov r10, r0
+  vpop {d0-d15}
+  pop {r0-r9, r11-r12, pc}

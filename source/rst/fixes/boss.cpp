@@ -1,5 +1,6 @@
 #include "rst/fixes/boss.h"
 
+#include <array>
 #include <optional>
 
 #include "common/context.h"
@@ -7,6 +8,7 @@
 #include "common/types.h"
 #include "game/actor.h"
 #include "game/actors/boss_goht.h"
+#include "game/actors/boss_gyorg.h"
 #include "game/actors/boss_twinmold.h"
 #include "game/collision.h"
 #include "game/context.h"
@@ -37,6 +39,24 @@ void FixGoht() {
   goht->eye_scale = {0.8, 0.8, 0.05};
   // Disable the "eye pops out" cutscene.
   goht->goht_flags.Set(game::act::BossGoht::Flag::FinishedPlayingStunCutsceneOnce);
+}
+
+extern "C" RST_HOOK int rst_GetGyorgCollisionResponse(game::act::BossGyorg* gyorg) {
+  const auto calc_fn = reinterpret_cast<uintptr_t>(gyorg->gyorg_calc);
+  constexpr uintptr_t stunned = util::GetAddr(0x2802C8);
+  constexpr uintptr_t stunned_2 = util::GetAddr(0x5560C0);
+  constexpr uintptr_t stunned_attacked = util::GetAddr(0x27AAD0);
+  return util::Contains(std::array{stunned, stunned_2, stunned_attacked}, calc_fn) ? 2 : 1;
+}
+
+void FixGyorg() {
+  const auto* gctx = GetContext().gctx;
+  auto* gyorg =
+      gctx->FindActorWithId<game::act::BossGyorg>(game::act::Id::BossGyorg, game::act::Type::Boss);
+  if (!gyorg)
+    return;
+  gyorg->eyeball_flags = 0;
+  gyorg->eyeball_scale = {0.0, 0.0, 0.0};
 }
 
 struct TwinmoldFixState {
@@ -113,6 +133,7 @@ void FixTwinmold() {
 
 void FixBosses() {
   FixGoht();
+  FixGyorg();
   FixTwinmold();
 }
 

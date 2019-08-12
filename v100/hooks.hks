@@ -266,6 +266,20 @@ boss_goht_no_eyeball:
   addr: 0x469F24
   data: 00 00 00 00
 
+boss_gyorg_collision_check:
+  type: patch
+  addr: 0x2A06C8
+  data: 00 F0 20 E3
+boss_gyorg_collision_check:
+  type: branch
+  link: true
+  addr: 0x2A06D0
+  func: rst_trampoline_rst_GetGyorgCollisionResponse
+boss_gyorg_no_auto_rotate:
+  type: patch
+  addr: 0x2803FC
+  data: 00 F0 20 E3 00 F0 20 E3 00 F0 20 E3
+
 stone_tower_block_faster_movement:
   type: patch
   addr: 0x2AC634
