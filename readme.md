@@ -84,7 +84,7 @@ You may also need to copy boot.firm to your NAND using a tool like godmode9.
 
 ### Citra
 
-A [**canary build**](https://citra-emu.org/download/) of Citra is required, because I had to add the required code patching functionality myself (PR #4812, #4813, #4817), and those changes haven't all been merged to master yet.
+A [**canary build**](https://citra-emu.org/download/) of Citra is required until [PR #4812](https://github.com/citra-emu/citra/pull/4862) has been merged to master.
 
 **Because Citra does not support BPS patches, only 1.0.0 is supported.** If you have another version, you need to extract the code.bin and apply the patch to code.bin yourself, then put the modified code.bin in exefsdir (see below).
 
