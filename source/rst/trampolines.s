@@ -101,3 +101,16 @@ TRAMPOLINE_DECLARE rst_GetGyorgCollisionResponse
   mov r10, r0
   vpop {d0-d15}
   pop {r0-r9, r11-r12, pc}
+
+TRAMPOLINE_R0_RESULT rst_OdolwaGetWaitDuration
+TRAMPOLINE_R0_RESULT rst_OdolwaGetChargeDuration
+TRAMPOLINE_R0_RESULT rst_OdolwaShouldMoveToPhase2
+
+TRAMPOLINE_DECLARE rst_OdolwaCheckIsInvincible
+  push {r0-r12, lr}
+  vpush {d0-d15}
+  mov r0, r4 // this
+  bl rst_OdolwaCheckIsInvincible
+  cmp r0, #0
+  vpop {d0-d15}
+  pop {r0-r12, pc}

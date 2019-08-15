@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <array>
+#include <cmath>
 #include <optional>
 
 #include "common/context.h"
@@ -10,11 +11,89 @@
 #include "game/actor.h"
 #include "game/actors/boss_goht.h"
 #include "game/actors/boss_gyorg.h"
+#include "game/actors/boss_odolwa.h"
 #include "game/actors/boss_twinmold.h"
+#include "game/as.h"
 #include "game/collision.h"
 #include "game/context.h"
+#include "game/random.h"
+#include "game/sound.h"
 
 namespace rst {
+
+extern "C" RST_HOOK int rst_OdolwaGetWaitDuration(game::act::BossOdolwa* odolwa) {
+  constexpr auto calc_intro = util::GetAddr(0x308484);
+  if (uintptr_t(odolwa->odolwa_calc_prev) == calc_intro)
+    return 90;
+  const bool is_phase_1 = odolwa->call_bug_counter == 0;
+  const int delay = game::RandomFloat() <= 0.25f ? 15 : 0;
+  return delay + (is_phase_1 ? 60 : 15);
+}
+
+extern "C" RST_HOOK int rst_OdolwaGetChargeDuration(game::act::BossOdolwa* odolwa) {
+  if (odolwa->command == u8(game::act::BossOdolwa::ChargeCommand::DanceThrust)) {
+    const float probability_long_charge = odolwa->call_bug_counter == 0 ? 0.9 : 0.25;
+    return game::RandomFloat() <= probability_long_charge ? 88 : 0;
+  }
+  return 2 * static_cast<int>(odolwa->anim_duration * 1.5f + 0.5f);
+}
+
+extern "C" RST_HOOK bool rst_OdolwaShouldMoveToPhase2(game::act::BossOdolwa* odolwa) {
+  if (odolwa->call_bug_counter)
+    return false;
+  return odolwa->call_bug_timer > 1500 || odolwa->life <= 10;
+}
+
+extern "C" RST_HOOK bool rst_OdolwaCheckIsInvincible(game::act::BossOdolwa* odolwa) {
+  // Nintendo uses an invincibility timer to ensure some attacks such as kicking
+  // don't deal too much damage and send Link flying.
+  // The problem is that this system also prevents landing attacks whenever Odolwa is kicking...
+  // The workaround is to check whether an attack has landed in addition to checking the timer.
+  static bool s_collided_last_time = false;
+  if (odolwa->invincibility_timer == 0)
+    return false;
+  const bool collided = std::any_of(odolwa->collision, odolwa->collision + 11, game::IsCollided);
+  s_collided_last_time = collided;
+  return !collided && !s_collided_last_time;
+}
+
+void FixOdolwa() {
+  auto* gctx = GetContext().gctx;
+  auto* boss = gctx->FindActorWithId<game::act::BossOdolwa>(game::act::Id::BossOdolwa,
+                                                            game::act::Type::Boss);
+  if (!boss)
+    return;
+
+  if (boss->intro_state == 3) {
+    // Re-implement the SFX and BGM triggers.
+    if (boss->intro_timer == 0) {
+      const auto play_boss_bgm = util::GetPointer<void(game::sound::StreamId)>(0x15D198);
+      play_boss_bgm(game::sound::StreamId::NA_BGM_BOSS00);
+    }
+    // Skip the eye opening part of the intro animation.
+    if (boss->intro_timer == 2) {
+      boss->actor_util.state.position = 32.666653;
+      boss->intro_timer = 49;
+    }
+    if (boss->intro_timer == 60 || boss->intro_timer == 114 || boss->intro_timer == 176)
+      game::sound::PlayEffect(*boss, game::sound::EffectId::NA_SE_EN_MIBOSS_SWORD);
+    return;
+  }
+
+  const auto calc_preparing = util::GetAddr(0x24FE24);
+  const auto calc_waiting = util::GetAddr(0x5725E4);
+  const auto current_calc = uintptr_t(boss->odolwa_calc);
+  const bool preparing_charge =
+      current_calc == calc_preparing &&
+      boss->command == u8(game::act::BossOdolwa::ChargeCommand::DanceThrust);
+  if (preparing_charge || current_calc == calc_waiting) {
+    if (boss->distance_to_link <= 130.0f) {
+      const auto jump_away =
+          util::GetPointer<void(game::act::BossOdolwa*, game::GlobalContext*, int)>(0x2FE074);
+      jump_away(boss, gctx, 2);
+    }
+  }
+}
 
 extern "C" RST_HOOK bool rst_IsGohtCollided(game::act::BossGoht* goht) {
   if (!goht->goht_flags.IsSet(game::act::BossGoht::Flag::FinishedPlayingStunCutsceneOnce) ||
@@ -128,6 +207,7 @@ void FixTwinmold() {
 }
 
 void FixBosses() {
+  FixOdolwa();
   FixGoht();
   FixGyorg();
   FixTwinmold();

@@ -243,6 +243,96 @@ trigger_item_use_hook:
   addr: 0x1DB744
   func: rst_TriggerItemUseHook
 
+boss_odolwa_no_crippling_weakness_to_deku_nuts:
+  type: patch
+  addr: 0x29E600
+  data: 6B 00 00 EA # FIXME: change this to stun
+boss_odolwa_no_crippling_weakness_to_deku_nuts:
+  type: patch
+  addr: 0x65e52c
+  # Effectively sets the damage multiplier back to 1.0.
+  data: 00 00 00 00
+boss_odolwa_longer_stun:
+  type: patch
+  addr: 0x29ED40
+  data: 5A 00 A0 13
+boss_odolwa_hp:
+  type: patch
+  addr: 0x349368
+  data: 14 20 A0 E3
+boss_odolwa_more_frequent_attacks_no_life_check:
+  type: patch
+  addr: 0x572A60
+  data: 00 F0 20 E3 00 F0 20 E3 49 00 00 0A
+boss_odolwa_move_to_phase_2_if_hp_low:
+  type: patch
+  addr: 0x572C08
+  # mov r0, r4; bl <...>; cmp r0, #0; beq <...>; b <...>
+  data: 04 00 A0 E1 FF FF FF FF 00 00 50 E3 02 00 00 0A 15 00 00 EA
+boss_odolwa_move_to_phase_2_if_hp_low:
+  type: branch
+  link: true
+  addr: 0x572C0C
+  func: rst_trampoline_rst_OdolwaShouldMoveToPhase2
+boss_odolwa_move_to_phase_2_if_hp_low_wait:
+  type: patch
+  addr: 0x30C5CC
+  # mov r0, r4; bl <...>; cmp r0, #1
+  data: 04 00 A0 E1 FF FF FF FF 01 00 50 E3
+boss_odolwa_move_to_phase_2_if_hp_low_wait:
+  type: branch
+  link: true
+  addr: 0x30C5D0
+  func: rst_trampoline_rst_OdolwaShouldMoveToPhase2
+boss_odolwa_more_frequent_attacks_probability:
+  type: patch
+  addr: 0x572D74
+  data: 00 00 00 3F # 0.5
+boss_odolwa_more_frequent_attacks_no_life_check:
+  type: patch
+  addr: 0x572A90
+  data: 00 F0 20 E3
+boss_odolwa_more_frequent_attacks_no_taunting:
+  type: patch
+  addr: 0x572A54
+  data: 00 F0 20 E3
+boss_odolwa_more_frequent_attacks_wait_duration:
+  type: patch
+  addr: 0x30C654
+  data: 04 00 A0 E1
+boss_odolwa_more_frequent_attacks_wait_duration:
+  type: branch
+  link: true
+  addr: 0x30C658
+  func: rst_trampoline_rst_OdolwaGetWaitDuration
+boss_odolwa_charge_duration:
+  type: patch
+  addr: 0x335C70
+  # push {r0}; mov r0, r4; BRANCH; mov r2, r0; pop {r0};
+  data: 04 00 2D E5 04 00 A0 E1 FF FF FF FF 00 20 A0 E1 04 00 9D E4
+boss_odolwa_charge_duration:
+  type: branch
+  link: true
+  addr: 0x335C78
+  func: rst_trampoline_rst_OdolwaGetChargeDuration
+boss_odolwa_more_frequent_spin_attack:
+  type: patch
+  addr: 0x572BD4
+  data: 08 00 50 E3 # life < 7
+boss_odolwa_no_invincibility:
+  type: branch
+  link: true
+  addr: 0x29E028
+  func: rst_trampoline_rst_OdolwaCheckIsInvincible
+boss_odolwa_intro_bgm:
+  type: patch
+  addr: 0x30890C
+  data: 00 F0 20 E3 # nop
+boss_odolwa_intro_bgm:
+  type: patch
+  addr: 0x3087EC
+  data: 00 F0 20 E3 # nop
+
 boss_goht_collision_check:
   type: patch
   addr: 0x4C17F4

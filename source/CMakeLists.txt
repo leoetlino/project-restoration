@@ -39,6 +39,7 @@ add_executable(newcode
   game/sound.cpp
   rst/fixes/boss.cpp
   rst/fixes/boss.h
+  rst/fixes/boss.s
   rst/fixes/ocarina.cpp
   rst/fixes/time.cpp
   rst/fixes.cpp
