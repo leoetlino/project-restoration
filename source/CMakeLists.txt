@@ -32,6 +32,8 @@ add_executable(newcode
   game/pad.h
   game/player.cpp
   game/player.h
+  game/random.cpp
+  game/random.h
   game/static_context.cpp
   game/static_context.h
   game/sound.cpp
