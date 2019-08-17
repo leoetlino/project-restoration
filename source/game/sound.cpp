@@ -3,6 +3,7 @@
 #include <tuple>
 
 #include "common/utils.h"
+#include "game/actor.h"
 
 namespace game::sound {
 
@@ -15,6 +16,14 @@ static StreamMgr& GetStreamMgr() {
 
 bool PlayEffect(EffectId id) {
   return rst::util::GetPointer<bool(EffectId)>(0x2006E4)(id);
+}
+
+bool PlayEffect(const Vec3& position, EffectId id) {
+  return rst::util::GetPointer<bool(const Vec3&, EffectId)>(0x226218)(position, id);
+}
+
+bool PlayEffect(const act::Actor& actor, EffectId id) {
+  return PlayEffect(actor.position, id);
 }
 
 StreamId GetCurrentStreamId(StreamPlayer player) {

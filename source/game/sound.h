@@ -2,6 +2,10 @@
 
 #include "common/types.h"
 
+namespace game::act {
+class Actor;
+};
+
 namespace game::sound {
 
 enum class EffectId : u32 {
@@ -2640,6 +2644,8 @@ enum class EffectId : u32 {
 };
 
 bool PlayEffect(EffectId id);
+bool PlayEffect(const Vec3& position, EffectId id);
+bool PlayEffect(const act::Actor& actor, EffectId id);
 
 enum class StreamPlayer : u32 {
   // Mostly used for BGMs
