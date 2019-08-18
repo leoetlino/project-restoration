@@ -55,12 +55,18 @@ public:
     return true;
   }
 
+  constexpr WordType GetStorage(size_t idx) const { return m_storage[idx]; }
+
 private:
   static_assert(std::is_arithmetic_v<WordType>);
   // Yes, not technically correct, but this will work on any sane machine, including the 3DS...
   static constexpr size_t NumBitsPerWord = sizeof(WordType) * 8;
   static constexpr size_t NumWords = (N + NumBitsPerWord - 1) / NumBitsPerWord;
   constexpr WordType& GetWord(IndexType idx) { return m_storage[size_t(idx) / NumBitsPerWord]; }
+  constexpr const WordType& GetWord(IndexType idx) const {
+    return m_storage[size_t(idx) / NumBitsPerWord];
+  }
+
   std::array<WordType, NumWords> m_storage{};
 };
 

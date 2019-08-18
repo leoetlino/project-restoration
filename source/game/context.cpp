@@ -21,11 +21,16 @@ act::Player* GlobalContext::GetPlayerActor() const {
 }
 
 act::Actor* GlobalContext::SpawnActor(act::Actor* actor, act::Id id, u16 rx, u16 ry, u16 rz,
-                                      u16 param, float pos_x, float pos_y, float pos_z) {
-  auto spawn_actor_wrapper =
-      rst::util::GetPointer<act::Actor*(ActorLists*, act::Actor*, GlobalContext*, act::Id, u16, u16,
-                                        u16, u16 param, float x, float y, float z)>(0x22CAAC);
-  return spawn_actor_wrapper(&actors, actor, this, id, rx, ry, rz, param, pos_x, pos_y, pos_z);
+                                      u16 param, Vec3 pos) {
+  auto spawn_actor_wrapper = rst::util::GetPointer<act::Actor*(
+      ActorLists*, act::Actor*, GlobalContext*, act::Id, u16, u16, u16, u16 param, Vec3)>(0x22CAAC);
+  return spawn_actor_wrapper(&actors, actor, this, id, rx, ry, rz, param, pos);
+}
+
+act::Actor* GlobalContext::SpawnActor(act::Id id, u16 rx, u16 ry, u16 rz, u16 param, Vec3 pos) {
+  auto spawn_actor_wrapper = rst::util::GetPointer<act::Actor*(
+      ActorLists*, GlobalContext*, act::Id, u16, u16, u16, u16 param, Vec3)>(0x22074C);
+  return spawn_actor_wrapper(&actors, this, id, rx, ry, rz, param, pos);
 }
 
 void GlobalContext::ShowMessage(u16 msgid, int unknown) {

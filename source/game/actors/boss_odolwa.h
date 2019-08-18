@@ -7,7 +7,7 @@
 namespace game {
 class Collision;
 class GlobalContext;
-}
+}  // namespace game
 
 namespace game::act {
 
@@ -31,7 +31,7 @@ struct BossOdolwa : Actor {
 
   u16 time_since_start;
   u8 cycle_damage;
-  u8 cycle_life;
+  s8 cycle_life;
   int call_bug_timer;
   u8 status;
   char field_201[1];
@@ -51,10 +51,14 @@ struct BossOdolwa : Actor {
   float anim_duration;
   u8 gap_34C[4];
   float field_350;
-  u8 gap_354[8];
-  u8 field_35C;
+  u8 gap_354[4];
+  u8 field_358;
+  u8 field_359;
+  u8 field_35A;
+  u8 do_not_use_shield;
+  u8 shield_timer;
   u8 gap_35D[3];
-  u16 field_360;
+  u16 shield_timer_2;
   u8 gap_362;
   u8 call_bug_counter;
   float field_364;
@@ -68,6 +72,10 @@ struct BossOdolwa : Actor {
   u8 gap_1004[976];
   void (*odolwa_calc)(BossOdolwa* self, GlobalContext* gctx);
   void (*odolwa_calc_prev)(BossOdolwa* self, GlobalContext* gctx);
+  void ChangeCalcFunction(decltype(odolwa_calc) new_handler) {
+    odolwa_calc_prev = odolwa_calc;
+    odolwa_calc = new_handler;
+  }
   u32 field_13DC;
   u8 gap_3E0[24];
   // 3 entries
@@ -107,7 +115,10 @@ struct BossOdolwa : Actor {
   float field_1BC8;
   u8 gap_1BCC[88];
   float field_1C24;
-  u8 gap_1C28[16];
+  u8 gap_1C28[13];
+  u8 field_1C35;
+  u8 field_1C36;
+  u8 field_1C37;
   u32 field_1C38;
   char field_1C3C[128];
   char field_1CBC[384];
@@ -141,5 +152,16 @@ struct BossOdolwa : Actor {
   char gap_235C[1432];
 };
 static_assert(sizeof(BossOdolwa) == 0x28F4);
+
+struct OdolwaDamageReaction {
+  enum class Type : int {
+    Nop = 0,
+    ApplyDamageMultiplier = 1,
+    AddExtraDamage = 2,
+    SetDamage = 3,
+  };
+  Type type;
+  float value;
+};
 
 }  // namespace game::act

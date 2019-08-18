@@ -26,6 +26,10 @@ bool PlayEffect(const act::Actor& actor, EffectId id) {
   return PlayEffect(actor.position, id);
 }
 
+void EmitDamageHitSound(const act::Actor& actor, int a, int b, int c, int d) {
+  rst::util::GetPointer<void(const act::Actor&, int, int, int, int)>(0x51E214)(actor, a, b, c, d);
+}
+
 StreamId GetCurrentStreamId(StreamPlayer player) {
   return rst::util::GetPointer<StreamId(StreamMgr&, StreamPlayer)>(0x1E1194)(GetStreamMgr(),
                                                                              player);

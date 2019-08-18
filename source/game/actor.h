@@ -19,6 +19,8 @@ enum class Id : u16 {
   Player = 0,
   // Arrow
   Arrow = 0xf,
+  // Clear Tag (?)
+  ClearTag = 0x73,
   // [1] Deku Palace / Woodfall Temple moving platforms (after player lands on them)
   ObjRailLift = 0xd8,
   // [9] Odolwa
@@ -90,6 +92,19 @@ struct ActorOverlayInfo {
   u8 loaded_count;
 };
 
+enum class DamageType : u8 {
+  Type1 = 1,
+  FireArrow = 2,
+  IceArrow = 3,
+  Type4 = 4,
+  Hookshot = 0xA,
+  TypeB = 0xB,
+  TypeC = 0xC,
+  ArrowOrZoraBoomerang = 0xD,
+  SwordOrBombOrBeamOrZora = 0xE,
+  DekuNut = 0xF,
+};
+
 struct Actor {
   enum class Flag94 : u16 {
     Grounded = 1,
@@ -145,7 +160,7 @@ struct Actor {
   /// Used by Twinmold at least. Unused for player?
   s8 life;
   u8 damage;
-  u8 damage_type;
+  DamageType damage_type;
   u8 field_BE;
   u8 field_BF;
   u16 field_C0;

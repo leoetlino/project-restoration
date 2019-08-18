@@ -125,7 +125,8 @@ struct GlobalContext {
   act::Player* GetPlayerActor() const;
 
   act::Actor* SpawnActor(act::Actor* actor, act::Id id, u16 rx, u16 ry, u16 rz, u16 param,
-                         float pos_x, float pos_y, float pos_z);
+                         Vec3 pos);
+  act::Actor* SpawnActor(act::Id id, u16 rx, u16 ry, u16 rz, u16 param, Vec3 pos);
 
   void ShowMessage(u16 msgid, int unknown = 0);
 

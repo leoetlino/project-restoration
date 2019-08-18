@@ -18,6 +18,8 @@ add_executable(newcode
   game/actors/boss_goht.h
   game/actors/boss_gyorg.h
   game/actors/boss_twinmold.h
+  game/as.cpp
+  game/as.h
   game/camera.cpp
   game/camera.h
   game/collision.cpp

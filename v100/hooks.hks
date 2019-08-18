@@ -243,19 +243,21 @@ trigger_item_use_hook:
   addr: 0x1DB744
   func: rst_TriggerItemUseHook
 
-boss_odolwa_no_crippling_weakness_to_deku_nuts:
+boss_odolwa_collision_hook:
   type: patch
-  addr: 0x29E600
-  data: 6B 00 00 EA # FIXME: change this to stun
+  addr: 0x29E5E0
+  # mov r0, r4; BRANCH; b {end}
+  data: 04 00 A0 E1 FF FF FF FF 58 FE FF EA
+boss_odolwa_collision_hook:
+  type: branch
+  link: true
+  addr: 0x29E5E4
+  func: rst_OdolwaHandleRegularCollision
 boss_odolwa_no_crippling_weakness_to_deku_nuts:
   type: patch
   addr: 0x65e52c
   # Effectively sets the damage multiplier back to 1.0.
   data: 00 00 00 00
-boss_odolwa_longer_stun:
-  type: patch
-  addr: 0x29ED40
-  data: 5A 00 A0 13
 boss_odolwa_hp:
   type: patch
   addr: 0x349368
