@@ -10,7 +10,7 @@ void PrintCollision(const Collision* col, size_t count, std::string_view descrip
   std::string s{description};
   s += ' ';
   for (size_t i = 0; i < count; ++i) {
-    s += rst::util::StringFromFormat("%zu=%02x ", i, col[i].flags1);
+    s += rst::util::StringFromFormat("%zu=%02x ", i, col[i].flags1.flags);
   }
   rst::util::Print(s);
 }

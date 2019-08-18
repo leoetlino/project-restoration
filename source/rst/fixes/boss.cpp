@@ -1,5 +1,6 @@
 #include "rst/fixes/boss.h"
 
+#include <algorithm>
 #include <array>
 #include <optional>
 
@@ -20,12 +21,7 @@ extern "C" RST_HOOK bool rst_IsGohtCollided(game::act::BossGoht* goht) {
       goht->field_3998) {
     return false;
   }
-
-  for (size_t i = 0; i < 0x12; ++i) {
-    if (goht->collision[i].flags1 & 2)
-      return true;
-  }
-  return false;
+  return std::any_of(goht->collision, goht->collision + 0x12, game::IsCollided);
 }
 
 void FixGoht() {
