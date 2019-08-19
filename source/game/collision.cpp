@@ -15,6 +15,8 @@ void HandleCollision(const Collision& col, CollisionResponse response) {
       rst::GetContext().gctx, col, response);
 }
 
+// Similar to HandleCollision, but additionally emits a graphical hit effect that looks similar
+// to a light arrow hit.
 void HandleCollisionForBossCycleLastDamage(const Collision& col) {
   rst::util::GetPointer<void(GlobalContext*, const Collision&)>(0x5149B0)(rst::GetContext().gctx,
                                                                           col);

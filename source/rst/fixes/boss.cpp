@@ -33,6 +33,7 @@ static auto const odolwa_weakened = (OdolwaCalc*)util::GetAddr(0x27E194);
 static auto const odolwa_charging = (OdolwaCalc*)util::GetAddr(0x24C5A4);
 static auto const odolwa_preparing = (OdolwaCalc*)util::GetAddr(0x24FE24);
 static auto const odolwa_waiting = (OdolwaCalc*)util::GetAddr(0x5725E4);
+static auto const odolwa_dying = (OdolwaCalc*)util::GetAddr(0x2A4FAC);
 
 extern "C" RST_HOOK int rst_OdolwaGetWaitDuration(game::act::BossOdolwa* odolwa) {
   if (odolwa->odolwa_calc_prev == odolwa_intro)
@@ -103,6 +104,12 @@ static int OdolwaGetDamage(const game::act::BossOdolwa* boss, const game::Collis
   }
 }
 
+static void OdolwaJumpAway(game::act::BossOdolwa* boss) {
+  const auto jump_away =
+      util::GetPointer<void(game::act::BossOdolwa*, game::GlobalContext*, int)>(0x2FE074);
+  jump_away(boss, GetContext().gctx, 2);
+}
+
 extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa* boss) {
   using namespace game;
   auto* gctx = GetContext().gctx;
@@ -146,7 +153,7 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
     break;
   }
 
-  void* moth_swarm = util::BitCastPtr<void*>(gctx, 0xF000 + 4);
+  auto* moth_swarm = util::BitCastPtr<act::Actor*>(gctx, 0xF000 + 4);
   util::Write<u16>(moth_swarm, 0x1FE, 0);
 
   // Apply damage.
@@ -154,31 +161,40 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
   boss->life -= damage;
   boss->cycle_life -= damage;
 
+  if (boss->life <= 0) {
+    boss->actor_util.PlayAnimFull(0xE, boss->field_208);
+    boss->anim_duration = boss->actor_util.GetAnimDuration(0xE);
+    boss->actor_util.field_89 = 0;
+    boss->timer2 = 0;
+    boss->ChangeCalcFunction(odolwa_dying);
+    sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_FANTOM_DEAD);
+    boss->flags &= ~1;
+    boss->shield_timer_2 = 0x5DC;
+    boss->intro_timer = 0;
+    boss->intro_state = 0;
+    sound::ControlStream(sound::StreamPlayer::DEFAULT_PLAYER, 1, 1);
+    util::Write<u8>(moth_swarm, 0x1F8, 0xFA);
+    auto some_fn = util::GetPointer<void(GlobalContext*, act::Actor*, act::Actor*, int)>(0x211734);
+    some_fn(gctx, boss, moth_swarm, 9);
+    sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_MIBOSS_DEAD);
+    gctx->EmitLastDamageSound(*boss);
+    HandleCollision(*it, CollisionResponse::Damage);
+    return;
+  }
+
   if (damage == 0) {
     HandleCollision(*it, CollisionResponse::NoDamage);
   } else {
-    if (boss->cycle_life <= 0)
-      HandleCollisionForBossCycleLastDamage(*it);
-    else
-      HandleCollision(*it, CollisionResponse::Damage);
+    HandleCollision(*it, CollisionResponse::Damage);
   }
   boss->field_364 *= 0.5f;
   boss->field_368 *= 0.5f;
 
   if (boss->cycle_life <= 0) {
-    sound::EmitDamageHitSound(*boss, 0x400000, 0xA0, 0, 0x17);
-    boss->actor_util.PlayAnimFull(0x1A, 0.0);
-    boss->anim_duration = boss->actor_util.GetAnimDuration(0x1A);
-    boss->actor_util.field_89 = 0;
-    if (boss->odolwa_calc != odolwa_stunned_eye_exposed_taking_damage) {
-      boss->timer = 200;
-      boss->cycle_damage = 0;
-    }
-    boss->ChangeCalcFunction(odolwa_stunned_eye_exposed);
+    OdolwaJumpAway(boss);
     boss->invincibility_timer = 8;
-    boss->cycle_life = 5;
+    boss->cycle_life = 3;
     sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_MIBOSS_DAMAGE);
-
   } else {
     switch (boss->damage_type) {
     case act::DamageType::DekuNut: {
@@ -206,15 +222,14 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
       } else {
         if (boss->field_30C_delta == 0 && boss->field_30C == 0)
           boss->field_30C_delta = 2;
-        if (boss->odolwa_calc != odolwa_stunned || boss->actor_util.state.id == 27) {
+        if (boss->odolwa_calc != odolwa_weakened || boss->actor_util.state.id == 27) {
           if (it->info->IsType(AttackType::Arrow) ||
-              (boss->odolwa_calc != odolwa_stunned && boss->actor_util.state.id != 27)) {
-            boss->timer = 30;
+              (boss->odolwa_calc != odolwa_weakened && boss->actor_util.state.id != 27)) {
+            boss->timer = 60;
           }
-          boss->actor_util.PlayAnimFull(0x1C, 0.0);
-          boss->anim_duration = boss->actor_util.GetAnimDuration(0x1C);
+          boss->actor_util.PlayAnim(0x13, 0.0);
           boss->actor_util.field_89 = 0;
-          boss->ChangeCalcFunction(odolwa_stunned);
+          boss->ChangeCalcFunction(odolwa_weakened);
         }
       }
       sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_MIBOSS_DAMAGE);
@@ -263,9 +278,7 @@ void FixOdolwa() {
       boss->command == u8(game::act::BossOdolwa::ChargeCommand::DanceThrust);
   if (preparing_charge || boss->odolwa_calc == odolwa_waiting) {
     if (boss->distance_to_link <= 120.0f) {
-      const auto jump_away =
-          util::GetPointer<void(game::act::BossOdolwa*, game::GlobalContext*, int)>(0x2FE074);
-      jump_away(boss, gctx, 2);
+      OdolwaJumpAway(boss);
     }
   }
 }

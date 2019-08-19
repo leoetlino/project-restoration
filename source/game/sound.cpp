@@ -40,4 +40,9 @@ bool PlayStream(StreamId id, StreamPlayer player) {
       GetStreamMgr(), id, player, 0xffffffff);
 }
 
+void ControlStream(StreamPlayer player, int a, int b) {
+  rst::util::GetPointer<void(StreamMgr&, StreamPlayer, int, int)>(0x1DC2F0)(GetStreamMgr(), player,
+                                                                            a, b);
+}
+
 }  // namespace game::sound

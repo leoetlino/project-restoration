@@ -130,6 +130,8 @@ struct GlobalContext {
 
   void ShowMessage(u16 msgid, int unknown = 0);
 
+  void EmitLastDamageSound(const act::Actor& actor);
+
   int field_0;
   u8 gap_4[36];
   pad::State pad_state;

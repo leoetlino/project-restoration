@@ -2804,5 +2804,6 @@ enum class StreamId : u32 {
 
 bool PlayStream(StreamId id, StreamPlayer player = StreamPlayer::FAN_PLAYER);
 StreamId GetCurrentStreamId(StreamPlayer player);
+void ControlStream(StreamPlayer player, int a, int b);
 
 }  // namespace game::sound

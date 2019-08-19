@@ -37,6 +37,10 @@ void GlobalContext::ShowMessage(u16 msgid, int unknown) {
   rst::util::GetPointer<void(GlobalContext*, int msgid, int)>(0x21BAFC)(this, msgid, unknown);
 }
 
+void GlobalContext::EmitLastDamageSound(const act::Actor& actor) {
+  rst::util::GetPointer<void(GlobalContext*, const act::Actor&)>(0x389AC0)(this, actor);
+}
+
 namespace {
 
 class Screen;
