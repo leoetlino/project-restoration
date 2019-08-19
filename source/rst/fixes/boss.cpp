@@ -150,9 +150,11 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
   util::Write<u16>(moth_swarm, 0x1FE, 0);
 
   // Apply damage.
-  const int cycle_damage = OdolwaGetDamage(boss, it);
-  boss->cycle_life -= cycle_damage;
-  if (cycle_damage == 0) {
+  const int damage = OdolwaGetDamage(boss, it);
+  boss->life -= damage;
+  boss->cycle_life -= damage;
+
+  if (damage == 0) {
     HandleCollision(*it, CollisionResponse::NoDamage);
   } else {
     if (boss->cycle_life <= 0)
@@ -205,8 +207,10 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
         if (boss->field_30C_delta == 0 && boss->field_30C == 0)
           boss->field_30C_delta = 2;
         if (boss->odolwa_calc != odolwa_stunned || boss->actor_util.state.id == 27) {
-          if (boss->odolwa_calc != odolwa_stunned && boss->actor_util.state.id != 27)
+          if (it->info->IsType(AttackType::Arrow) ||
+              (boss->odolwa_calc != odolwa_stunned && boss->actor_util.state.id != 27)) {
             boss->timer = 30;
+          }
           boss->actor_util.PlayAnimFull(0x1C, 0.0);
           boss->anim_duration = boss->actor_util.GetAnimDuration(0x1C);
           boss->actor_util.field_89 = 0;
@@ -233,6 +237,10 @@ void FixOdolwa() {
                                                             game::act::Type::Boss);
   if (!boss)
     return;
+
+  if (boss->damage_table) {
+    boss->damage_table->entries[u8(game::AttackType::Arrow)].damage = 0;
+  }
 
   if (boss->intro_state == 3) {
     // Re-implement the SFX and BGM triggers.
