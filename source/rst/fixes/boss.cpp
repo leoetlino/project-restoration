@@ -17,6 +17,7 @@
 #include "game/as.h"
 #include "game/collision.h"
 #include "game/context.h"
+#include "game/player.h"
 #include "game/random.h"
 #include "game/sound.h"
 
@@ -34,6 +35,7 @@ static auto const odolwa_charging = (OdolwaCalc*)util::GetAddr(0x24C5A4);
 static auto const odolwa_preparing = (OdolwaCalc*)util::GetAddr(0x24FE24);
 static auto const odolwa_waiting = (OdolwaCalc*)util::GetAddr(0x5725E4);
 static auto const odolwa_dying = (OdolwaCalc*)util::GetAddr(0x2A4FAC);
+static auto const odolwa_jump_landed = (OdolwaCalc*)util::GetAddr(0x2A6FF8);
 
 extern "C" RST_HOOK int rst_OdolwaGetWaitDuration(game::act::BossOdolwa* odolwa) {
   if (odolwa->odolwa_calc_prev == odolwa_intro)
@@ -277,7 +279,8 @@ void FixOdolwa() {
       boss->odolwa_calc == odolwa_preparing &&
       boss->command == u8(game::act::BossOdolwa::ChargeCommand::DanceThrust);
   if (preparing_charge || boss->odolwa_calc == odolwa_waiting) {
-    if (boss->distance_to_link <= 120.0f) {
+    if (boss->distance_to_link <= 120.0f && boss->odolwa_calc_prev != odolwa_jump_landed &&
+        !gctx->GetPlayerActor()->flags3.IsSet(game::act::Player::Flag3::DekuInFlower)) {
       OdolwaJumpAway(boss);
     }
   }
