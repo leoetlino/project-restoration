@@ -2,6 +2,7 @@
 
 #include <array>
 
+#include "common/bitfield.h"
 #include "common/flags.h"
 #include "common/types.h"
 #include "common/utils.h"
@@ -104,6 +105,15 @@ enum class DamageType : u8 {
   SwordOrBombOrBeamOrZora = 0xE,
   DekuNut = 0xF,
 };
+union DamageTableEntry {
+  u8 raw;
+  BitField<4, 4, DamageType> type;
+  BitField<0, 4, u8> damage;
+};
+struct DamageTable {
+  DamageTableEntry entries[32];
+};
+static_assert(sizeof(DamageTable) == 0x20);
 
 struct Actor {
   enum class Flag94 : u16 {
@@ -152,7 +162,7 @@ struct Actor {
   float field_98;
   float distance_to_link;
   float height_diff_to_link;
-  void* damage_table;
+  DamageTable* damage_table;
   Vec3 field_A8;
   u32 field_B4;
   u16 field_B8;
