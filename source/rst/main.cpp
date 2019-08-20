@@ -4,6 +4,7 @@
 #include "common/utils.h"
 #include "game/camera.h"
 #include "game/context.h"
+#include "game/pad.h"
 #include "game/player.h"
 #include "game/sound.h"
 #include "game/ui.h"
@@ -64,6 +65,26 @@ void UpdateContext(game::GlobalContext* gctx) {
   }
 }
 
+static void UiOcarinaScreenUpdate() {
+  if (!game::ui::CheckCurrentScreen(game::ui::ScreenType::Ocarina))
+    return;
+  auto* screen = game::ui::GetScreen(game::ui::ScreenType::Ocarina);
+
+  const bool toggle_requested = GetContext().gctx->pad_state.input.new_buttons.IsOneSet(
+      game::pad::Button::Start, game::pad::Button::Select);
+  if (toggle_requested) {
+    util::Write<bool>(screen, 0x41, true);  // is transitioning
+    auto* layout_ocarina = util::BitCastPtr<game::ui::Layout*>(screen, 0x10);
+    auto* layout_music_list = util::BitCastPtr<game::ui::Layout*>(screen, 0x14);
+    const bool is_menu_ocarina = util::BitCastPtr<bool>(screen, 0x40);
+    if (is_menu_ocarina)
+      util::GetPointer<void(void*)>(0x5F54DC)(layout_ocarina);
+    else
+      util::GetPointer<void(void*)>(0x5F7DC8)(layout_music_list);
+    game::sound::PlayEffect(game::sound::EffectId::NA_SE_SY_DECIDE);
+  }
+}
+
 void Calc(game::GlobalContext* gctx) {
   UpdateContext(gctx);
 
@@ -78,6 +99,7 @@ void Calc(game::GlobalContext* gctx) {
   FixBombers();
   FixHintStone();
   FixFreeCameraReset();
+  UiOcarinaScreenUpdate();
 
 #if 0
   PrintDebug(gctx);

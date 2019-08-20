@@ -71,4 +71,8 @@ bool CheckCurrentScreen(ScreenType screen) {
   return GetScreenContext().active_screen == GetScreen(screen);
 }
 
+void UpdateLayout(Layout* layout) {
+  rst::util::GetPointer<void(Layout*)>(0x161AE8)(layout);
+}
+
 }  // namespace game::ui

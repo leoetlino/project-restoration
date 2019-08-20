@@ -20,4 +20,7 @@ bool OpenScreen(ScreenType screen);
 
 bool CheckCurrentScreen(ScreenType screen);
 
+class Layout;
+void UpdateLayout(Layout* layout);
+
 }  // namespace game::ui
