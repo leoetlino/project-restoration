@@ -39,6 +39,8 @@ add_executable(newcode
   game/static_context.cpp
   game/static_context.h
   game/sound.cpp
+  game/ui.cpp
+  game/ui.h
   rst/fixes/boss.cpp
   rst/fixes/boss.h
   rst/fixes/boss.s

@@ -6,6 +6,7 @@
 #include "game/context.h"
 #include "game/player.h"
 #include "game/sound.h"
+#include "game/ui.h"
 #include "rst/fixes.h"
 #include "rst/fixes/boss.h"
 #include "rst/fixes/time.h"
@@ -96,13 +97,13 @@ void UiScheduleTriggerHook() {
   const bool start = gctx->pad_state.input.new_buttons.IsSet(game::pad::Button::Start);
   const bool select = gctx->pad_state.input.new_buttons.IsSet(game::pad::Button::Select);
   if (!zr && start)
-    game::OpenUiScreen(game::UiScreen::Items);
+    game::ui::OpenScreen(game::ui::ScreenType::Items);
   if (zr && start)
-    game::OpenUiScreen(game::UiScreen::Quest);
+    game::ui::OpenScreen(game::ui::ScreenType::Quest);
   if (zr && select) {
     // Clear map screen type. (Needed because the screen could be in "soaring" mode.)
-    util::Write<u8>(game::GetUiScreen(game::UiScreen::Map), 0x78E, 0);
-    game::OpenUiScreen(game::UiScreen::Map);
+    util::Write<u8>(game::ui::GetScreen(game::ui::ScreenType::Map), 0x78E, 0);
+    game::ui::OpenScreen(game::ui::ScreenType::Map);
     gctx->pad_state.input.buttons.Clear(game::pad::Button::Select);
     gctx->pad_state.input.new_buttons.Clear(game::pad::Button::Select);
   }

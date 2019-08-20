@@ -1,6 +1,7 @@
 #include "game/common_data.h"
 #include "game/context.h"
 #include "game/pad.h"
+#include "game/ui.h"
 
 namespace rst {
 
@@ -54,7 +55,7 @@ void UpdatePadStateForOcarina() {
   auto& state = controller_mgr.state;
 
   // Merge ZL and L, ZR and R for the Ocarina screen
-  if (!CheckCurrentUiScreen(UiScreen::Ocarina))
+  if (!game::ui::CheckCurrentScreen(game::ui::ScreenType::Ocarina))
     return;
 
   auto map = [&state](pad::Button source, pad::Button target) {

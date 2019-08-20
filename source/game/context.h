@@ -311,20 +311,4 @@ static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_song) == 0x836A);
 static_assert(rst::util::OffsetOf(&GlobalContext::field_836E) == 0x836E);
 static_assert(sizeof(GlobalContext) == 0x11030);
 
-enum class UiScreen {
-  Black,
-  Main,
-  Schedule,
-  Quest,
-  Items,
-  Map,
-  Masks,
-  /// "Play your instrument" screen
-  Ocarina,
-};
-void* GetUiScreen(UiScreen screen);
-bool OpenUiScreen(UiScreen screen);
-
-bool CheckCurrentUiScreen(UiScreen screen);
-
 }  // namespace game
