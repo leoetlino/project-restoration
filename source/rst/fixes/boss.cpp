@@ -235,7 +235,8 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
         }
       }
       sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_MIBOSS_DAMAGE);
-      EmitDamageFlash(*boss, 0x400000, 0x64, 0, 0x17);
+      if (!it->info->IsType(AttackType::Arrow))
+        EmitDamageFlash(*boss, 0x400000, 0x64, 0, 0x17);
       boss->invincibility_timer = 8;
       break;
     }
