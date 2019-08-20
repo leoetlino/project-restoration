@@ -10,16 +10,20 @@ namespace game {
 
 struct GlobalContext;
 
-void HandleCollision(const Collision& col, CollisionResponse response) {
+void EmitDamageEffect(const Collision& col, CollisionResponse response) {
   rst::util::GetPointer<void(GlobalContext*, const Collision&, CollisionResponse)>(0x51297C)(
       rst::GetContext().gctx, col, response);
 }
 
-// Similar to HandleCollision, but additionally emits a graphical hit effect that looks similar
+// Similar to EmitDamageEffect, but additionally emits a graphical hit effect that looks similar
 // to a light arrow hit.
-void HandleCollisionForBossCycleLastDamage(const Collision& col) {
+void EmitDamageEffectForBossCycle(const Collision& col) {
   rst::util::GetPointer<void(GlobalContext*, const Collision&)>(0x5149B0)(rst::GetContext().gctx,
                                                                           col);
+}
+
+void EmitDamageFlash(const act::Actor& actor, int a, int b, int c, int d) {
+  rst::util::GetPointer<void(const act::Actor&, int, int, int, int)>(0x51E214)(actor, a, b, c, d);
 }
 
 void PrintCollision(const Collision* col, size_t count, std::string_view description) {

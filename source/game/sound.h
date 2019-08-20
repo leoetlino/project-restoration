@@ -2646,7 +2646,6 @@ enum class EffectId : u32 {
 bool PlayEffect(EffectId id);
 bool PlayEffect(const Vec3& position, EffectId id);
 bool PlayEffect(const act::Actor& actor, EffectId id);
-void EmitDamageHitSound(const act::Actor& actor, int a, int b, int c, int d);
 
 enum class StreamPlayer : u32 {
   // Mostly used for BGMs

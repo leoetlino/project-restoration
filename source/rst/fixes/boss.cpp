@@ -82,7 +82,7 @@ static void OdolwaHandleCollisionFreeze(game::act::BossOdolwa* boss) {
   boss->timer = 60;
   if (boss->field_30C_delta == 0 && boss->field_30C == 0)
     boss->field_30C_delta = 2;
-  sound::EmitDamageHitSound(*boss, 0, 0x78, 0, 0x3C);
+  EmitDamageFlash(*boss, 0, 0x78, 0, 0x3C);
   boss->invincibility_timer = 23;
   sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_COMMON_FREEZE);
   boss->do_not_use_shield = 0;
@@ -180,14 +180,14 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
     some_fn(gctx, boss, moth_swarm, 9);
     sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_MIBOSS_DEAD);
     gctx->EmitLastDamageSound(*boss);
-    HandleCollision(*it, CollisionResponse::Damage);
+    EmitDamageEffect(*it, CollisionResponse::Damage);
     return;
   }
 
   if (damage == 0) {
-    HandleCollision(*it, CollisionResponse::NoDamage);
+    EmitDamageEffect(*it, CollisionResponse::NoDamage);
   } else {
-    HandleCollision(*it, CollisionResponse::Damage);
+    EmitDamageEffect(*it, CollisionResponse::Damage);
   }
   boss->field_364 *= 0.5f;
   boss->field_368 *= 0.5f;
@@ -200,7 +200,7 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
   } else {
     switch (boss->damage_type) {
     case act::DamageType::DekuNut: {
-      sound::EmitDamageHitSound(*boss, 0, 0x80, 0, 0x17);
+      EmitDamageFlash(*boss, 0, 0x80, 0, 0x17);
       boss->actor_util.PlayAnim(0x13, boss->field_20C);
       boss->actor_util.field_89 = 0;
       if (boss->field_30C_delta == 0 && boss->field_30C == 0)
@@ -235,7 +235,7 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
         }
       }
       sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_MIBOSS_DAMAGE);
-      sound::EmitDamageHitSound(*boss, 0x400000, 0x64, 0, 0x17);
+      EmitDamageFlash(*boss, 0x400000, 0x64, 0, 0x17);
       boss->invincibility_timer = 8;
       break;
     }

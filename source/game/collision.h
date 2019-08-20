@@ -87,8 +87,9 @@ enum class CollisionResponse : int {
   NoDamage = 1,
   NoDamageYellow = 2,
 };
-void HandleCollision(const Collision& col, CollisionResponse response);
-void HandleCollisionForBossCycleLastDamage(const Collision& col);
+void EmitDamageEffect(const Collision& col, CollisionResponse response);
+void EmitDamageEffectForBossCycle(const Collision& col);
+void EmitDamageFlash(const act::Actor& actor, int a, int b, int c, int d);
 
 void PrintCollision(const Collision* col, size_t count, std::string_view description = "");
 
