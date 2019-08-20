@@ -84,8 +84,6 @@ You may also need to copy boot.firm to your NAND using a tool like godmode9.
 
 ### Citra
 
-A [**canary build**](https://citra-emu.org/download/) of Citra is required until [PR #4812](https://github.com/citra-emu/citra/pull/4862) has been merged to master.
-
 **Because Citra does not support BPS patches, only 1.0.0 is supported.** If you have another version, you need to extract the code.bin and apply the patch to code.bin yourself, then put the modified code.bin in exefsdir (see below).
 
 Let *GAME_FILE* be the path to the game file (3ds/cia/app). If you've installed the game, GAME_FILE is "sdmc/Nintendo 3DS/00000000000000000000000000000000/00000000000000000000000000000000/title/00040000/00125x00/content/xxxxxxxx.app" (where xxxxxxxx.app is the largest file in that directory).
