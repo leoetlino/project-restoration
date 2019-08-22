@@ -176,8 +176,7 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
     boss->intro_state = 0;
     sound::ControlStream(sound::StreamPlayer::DEFAULT_PLAYER, 1, 1);
     util::Write<u8>(moth_swarm, 0x1F8, 0xFA);
-    auto some_fn = util::GetPointer<void(GlobalContext*, act::Actor*, act::Actor*, int)>(0x211734);
-    some_fn(gctx, boss, moth_swarm, 9);
+    gctx->ChangeActorType(*moth_swarm, act::Type::Boss);
     sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_MIBOSS_DEAD);
     gctx->EmitLastDamageSound(*boss);
     EmitDamageEffect(*it, CollisionResponse::Damage);

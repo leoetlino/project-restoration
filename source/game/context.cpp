@@ -33,6 +33,11 @@ act::Actor* GlobalContext::SpawnActor(act::Id id, u16 rx, u16 ry, u16 rz, u16 pa
   return spawn_actor_wrapper(&actors, this, id, rx, ry, rz, param, pos);
 }
 
+void GlobalContext::ChangeActorType(act::Actor& actor, act::Type type) {
+  actors.GetList(actor.actor_type).need_to_update_lists = true;
+  actor.actor_type = type;
+}
+
 void GlobalContext::ShowMessage(u16 msgid, int unknown) {
   rst::util::GetPointer<void(GlobalContext*, int msgid, int)>(0x21BAFC)(this, msgid, unknown);
 }

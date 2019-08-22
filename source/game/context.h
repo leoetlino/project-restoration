@@ -51,7 +51,8 @@ enum class GameStateType : u8 {
 struct ActorList {
   u32 num_actors;
   act::Actor* first;
-  u32 unknown;
+  /// Set this after changing an actor's type to update the linked lists.
+  bool need_to_update_lists;
 };
 static_assert(sizeof(ActorList) == 0xc);
 
@@ -127,6 +128,7 @@ struct GlobalContext {
   act::Actor* SpawnActor(act::Actor* actor, act::Id id, u16 rx, u16 ry, u16 rz, u16 param,
                          Vec3 pos);
   act::Actor* SpawnActor(act::Id id, u16 rx, u16 ry, u16 rz, u16 param, Vec3 pos);
+  void ChangeActorType(act::Actor& actor, act::Type type);
 
   void ShowMessage(u16 msgid, int unknown = 0);
 
