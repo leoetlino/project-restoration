@@ -16,18 +16,20 @@ using size_t = std::size_t;
 static_assert(sizeof(u16) == sizeof(short));
 static_assert(sizeof(u32) == sizeof(int));
 
-struct Vec3 {
-  float x;
-  float y;
-  float z;
+template <typename T = float>
+struct TVec3 {
+  T x;
+  T y;
+  T z;
 
-  float Distance(const Vec3& other) const {
-    const float delta_x = x - other.x;
-    const float delta_y = y - other.y;
-    const float delta_z = z - other.z;
+  T Distance(const TVec3& other) const {
+    const T delta_x = x - other.x;
+    const T delta_y = y - other.y;
+    const T delta_z = z - other.z;
     return std::sqrt(delta_x * delta_x + delta_y * delta_y + delta_z * delta_z);
   }
 };
+using Vec3 = TVec3<float>;
 
 // Put hook functions in .init as they are always kept by the linker.
 #define RST_HOOK [[gnu::section(".init")]] [[gnu::used]]
