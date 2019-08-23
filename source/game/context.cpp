@@ -42,6 +42,11 @@ void GlobalContext::ShowMessage(u16 msgid, int unknown) {
   rst::util::GetPointer<void(GlobalContext*, int msgid, int)>(0x21BAFC)(this, msgid, unknown);
 }
 
+void GlobalContext::Talk(act::Actor* actor, int a) {
+  GetPlayerActor()->talk_actor = actor;
+  rst::util::GetPointer<void(GlobalContext*, act::Actor*, int)>(0x2209A8)(this, actor, a);
+}
+
 void GlobalContext::EmitLastDamageSound(const act::Actor& actor) {
   rst::util::GetPointer<void(GlobalContext*, const act::Actor&)>(0x389AC0)(this, actor);
 }

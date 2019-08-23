@@ -131,6 +131,7 @@ struct GlobalContext {
   void ChangeActorType(act::Actor& actor, act::Type type);
 
   void ShowMessage(u16 msgid, int unknown = 0);
+  void Talk(act::Actor* actor, int a = 0);
 
   void EmitLastDamageSound(const act::Actor& actor);
 

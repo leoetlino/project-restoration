@@ -59,6 +59,8 @@ struct CollisionInfo {
 
   AttackType GetType() const { return AttackType(__builtin_ctz(attack_type.GetStorage(0))); }
   bool IsType(AttackType t) const { return attack_type.IsSet(t); }
+  bool IsCollided() const { return flags1.IsSet(Flag1::Collided); }
+  void ClearCollided() { flags1.Clear(Flag1::Collided); }
 
   rst::BitSet<32, u32, AttackType> attack_type;
   u8 gap_4[10];

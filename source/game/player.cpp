@@ -38,6 +38,17 @@ Player::ArrowInfo Player::GetArrowInfo(GlobalContext* gctx) const {
   return info;
 }
 
+bool Player::SetTalkActor(u8 new_fn1_idx, Actor* actor) {
+  if (fn1_idx == 5)
+    return false;
+  if (new_fn1_idx == 6 && fn1_idx == 0)
+    return false;
+  fn1_idx = new_fn1_idx;
+  talk_actor = actor;
+  talking = 1;
+  return true;
+}
+
 bool PlayerUpdateMagicCost(game::GlobalContext* gctx, int cost, int mode,
                            AllowExistingMagicUsage allow_existing_usage) {
   return rst::util::GetPointer<bool(game::GlobalContext*, int, int, bool)>(0x2264CC)(

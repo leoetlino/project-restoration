@@ -154,6 +154,8 @@ struct Player : public Actor {
   };
   ArrowInfo GetArrowInfo(GlobalContext* gctx) const;
 
+  bool SetTalkActor(u8 new_fn1_idx, Actor* actor);
+
   char field_1F8;
   FormParamIndex form_param_idx;
   char field_1FA;
@@ -218,15 +220,16 @@ struct Player : public Actor {
   int field_920;
   u8 gap_924[4];
   u32 field_928;
-  u8 some_fn_idx;
-  char other_fn_idx;
+  u8 fn1_idx;
+  u8 fn2_idx;
   char field_92E;
   char field_92F;
-  u8 gap_930[8];
+  Actor* talk_actor2;
+  u8 gap_934[4];
   Vec3 field_938;
   u32 field_944;
   u8 gap_948[10];
-  u16 field_952;
+  u16 talking;
   s16 field_954;
   u8 gap_956[22];
   char field_96C;
@@ -277,7 +280,8 @@ struct Player : public Actor {
   u8 gap_CE0[12];
   u16 field_CEC;
   u8 gap_CEE[270];
-  u32 field_DFC;
+  /// Z-target actor.
+  Actor* target_actor;
   u8 gap_E00[4];
   u32 field_E04;
   u32 field_E08;
@@ -305,7 +309,7 @@ struct Player : public Actor {
   u16 field_DCC;
   char field_11DCE;
   char active_item_id;
-  u32 field_11DD0;
+  Actor* talk_actor;
   int field_11DD4;
   int field_11DD8;
   float field_11DDC;

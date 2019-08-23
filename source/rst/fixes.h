@@ -15,4 +15,7 @@ void FixHintStone();
 // Fix the free camera not resetting when Z-targeting in some cases.
 void FixFreeCameraReset();
 
+// Make it possible to activate owl statues by striking them with a sword.
+void FixOwlStatueActivationTrigger();
+
 }  // namespace rst

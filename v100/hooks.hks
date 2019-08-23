@@ -8,6 +8,11 @@ pre_calc_hook:
   opcode: post
   func: rst_Calc
   addr: 0x0010676C
+pre_actor_calc_hook:
+  type: softbranch
+  opcode: post
+  addr: 0x174A6C
+  func: rst_PreActorCalcHook
 post_actor_calc_hook:
   type: softbranch
   opcode: post

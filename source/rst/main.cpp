@@ -55,7 +55,7 @@ void UpdateContext(game::GlobalContext* gctx) {
                 player->flags3.flags, player->flags4, player->flags_94.flags);
 
     util::Print("state handler: %p - 92C: %u - 92D: %u", player->state_handler_fn,
-                player->some_fn_idx, player->other_fn_idx);
+                player->fn1_idx, player->fn2_idx);
 
     auto* camera = &gctx->main_camera + gctx->camera_idx;
     util::Print("camera_idx=%u target=%p%s state=%04x mode=%04x", gctx->camera_idx,
@@ -106,6 +106,10 @@ void Calc(game::GlobalContext* gctx) {
 #endif
 }
 
+void PreActorCalcHook() {
+  FixOwlStatueActivationTrigger();
+}
+
 void PostActorCalcHook() {
   FixBosses();
 }
@@ -136,6 +140,10 @@ void UiScheduleTriggerHook() {
 extern "C" {
 RST_HOOK void rst_Calc(game::GlobalContext* gctx) {
   rst::Calc(gctx);
+}
+
+RST_HOOK void rst_PreActorCalcHook() {
+  rst::PreActorCalcHook();
 }
 
 RST_HOOK void rst_PostActorCalcHook() {

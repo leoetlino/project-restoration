@@ -36,6 +36,8 @@ enum class Id : u16 {
   BgIcePlatform = 0x013E,
   // Goht
   BossGoht = 0x016E,
+  // [7] Owl statue
+  ObjOwlStatue = 0x01B2,
   // [4] Old Lady from Bomb Shop
   NpcOldLady = 0x01C5,
   // [4] Rosa Sisters

@@ -31,7 +31,7 @@ struct __attribute__((packed)) __attribute__((aligned(2))) PlayerData {
   char anonymous_18;
   char anonymous_19;
   char anonymous_20;
-  u16 anonymous_21;
+  u16 owl_statue_flags;
   char field_2E;
   char field_2F;
   char field_30;

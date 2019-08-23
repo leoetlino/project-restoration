@@ -7,6 +7,8 @@
 #include "common/utils.h"
 #include "game/actor.h"
 #include "game/actors/npc_bombers.h"
+#include "game/actors/obj_owl_statue.h"
+#include "game/common_data.h"
 #include "game/context.h"
 #include "game/player.h"
 
@@ -128,6 +130,32 @@ void FixFreeCameraReset() {
     util::Print("%s: resetting camera mode (Goron rolling)", __func__);
     const bool on_ground = player->flags_94.IsSet(act::Actor::Flag94::Grounded);
     gctx->main_camera.ChangeMode(on_ground ? CameraMode::GORONDASH : CameraMode::GORONJUMP);
+  }
+}
+
+void FixOwlStatueActivationTrigger() {
+  using namespace game;
+  auto& cdata = GetCommonData();
+  auto* gctx = GetContext().gctx;
+  auto* owl = gctx->FindActorWithId<act::ObjOwlStatue>(act::Id::ObjOwlStatue, act::Type::Item);
+  if (!owl)
+    return;
+
+  if (owl->activation_timer > 1) {
+    --owl->activation_timer;
+  }
+
+  const bool activated = cdata.save.player.owl_statue_flags & (1 << (owl->params & 0xF));
+  const bool hit = owl->col_body.info.IsCollided();
+  owl->col_body.info.ClearCollided();
+  if (!activated && hit && owl->activation_timer == 0) {
+    util::Print("%s: scheduling owl statue activation (%04x)", __func__, owl->params);
+    owl->activation_timer = 5;
+  }
+  if (owl->activation_timer == 1) {
+    util::Print("%s: activating owl statue (%04x)", __func__, owl->params);
+    gctx->Talk(owl);
+    owl->activation_timer = -1;
   }
 }
 
