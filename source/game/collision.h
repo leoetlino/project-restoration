@@ -151,6 +151,21 @@ struct CollisionBodyQuad : CollisionBody {
 };
 static_assert(sizeof(CollisionBodyQuad) == 0x7C);
 
+struct CollisionBodyType4 : CollisionBody {
+  CollisionInfo info;
+  u32 field_40;
+  u32 field_44;
+  u32 field_48;
+  u32 field_4C;
+  u32 field_50;
+  u32 field_54;
+  u32 field_58;
+  u32 field_5C;
+  float field_60;
+  u8 field_64;
+};
+static_assert(sizeof(CollisionBodyType4) == 0x68);
+
 enum class DamageEffect : int {
   Damage = 0,
   NoDamage = 1,
