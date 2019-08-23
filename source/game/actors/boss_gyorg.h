@@ -4,7 +4,7 @@
 #include "game/actor.h"
 
 namespace game {
-struct Collision;
+struct CollisionInfo;
 struct GlobalContext;
 }  // namespace game
 
@@ -88,7 +88,7 @@ struct BossGyorg : Actor {
   u32 field_AC0;
   u8 gap_AC4[20];
   u32 collision_eye_num_entries;
-  Collision* collision_eye;
+  CollisionInfo* collision_eye;
   int field_AE0;
   u8 gap_AE4[76];
   u32 field_B30;
@@ -96,7 +96,7 @@ struct BossGyorg : Actor {
   Player* player;
   u8 gap_B40[8];
   u32 collision_armor_num_entries;
-  Collision* collision_armor;
+  CollisionInfo* collision_armor;
   int field_B50;
   u8 gap_B54[156];
   u32 field_BF0;
@@ -110,7 +110,7 @@ struct BossGyorg : Actor {
   u8 field_D64;
   u8 gap_D65[3];
   u32 collision_num_entries;
-  Collision* collision;
+  CollisionInfo* collision;
   int field_D70;
   u8 gap_D74[140];
   u32 field_E00;

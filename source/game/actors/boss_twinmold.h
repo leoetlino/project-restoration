@@ -5,6 +5,7 @@
 #include "game/actor.h"
 
 namespace game {
+class CollisionInfo;
 class GlobalContext;
 }
 
@@ -108,14 +109,14 @@ struct BossTwinmold : Actor {
   /// 0x14 - one of each segment of Twinmold's body,
   /// starting at the head (0) and ending at the tail (0x13)
   u32 num_collision_entries2;
-  Collision* collision2;
+  CollisionInfo* collision2;
   u8 gap_5E5C[420];
   u32 field_6000;
   u8 gap_6004[720];
   /// 0x14 - one of each segment of Twinmold's body,
   /// starting at the head (0) and ending at the tail (0x13)
   u32 main_collision_num_entries;
-  Collision* main_collision;
+  CollisionInfo* main_collision;
   u8 gap_62DC[292];
   u32 field_6400;
   u8 gap_6404[920];
@@ -166,7 +167,7 @@ struct BossTwinmold : Actor {
   u8 gap9170[60];
   /// 1
   u32 eye_collision_num_entries;
-  Collision* eye_collision;
+  CollisionInfo* eye_collision;
   u8 gap91B4[1040];
   Vec3 field_95C4;
   u8 gap_95D0[8];

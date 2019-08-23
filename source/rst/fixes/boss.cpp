@@ -88,10 +88,10 @@ static void OdolwaHandleCollisionFreeze(game::act::BossOdolwa* boss) {
   boss->do_not_use_shield = 0;
 }
 
-static int OdolwaGetDamage(const game::act::BossOdolwa* boss, const game::Collision* col) {
+static int OdolwaGetDamage(const game::act::BossOdolwa* boss, const game::CollisionInfo* info) {
   if (boss->damage_type == game::act::DamageType::Hookshot)
     return 0;
-  const game::AttackType type = col->info->GetType();
+  const game::AttackType type = info->colliding_info->GetType();
   const auto* reactions = util::GetPointer<game::act::OdolwaDamageReaction>(0x65E49C);
   const auto& reaction = reactions[u8(type)];
   switch (reaction.type) {
@@ -125,9 +125,9 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
 
   util::Print("%s: detected collision - idx=%zu damage_type=0x%x damage=%u attack_type=%u",
               __func__, std::distance(boss->collision, it), u8(boss->damage_type), boss->damage,
-              u8(it->info->GetType()));
+              u8(it->colliding_info->GetType()));
 
-  it->flags1.Clear(Collision::Flag1::Collided);
+  it->flags1.Clear(CollisionInfo::Flag1::Collided);
   switch (boss->damage_type) {
   case act::DamageType::Type1:
     OdolwaHandleCollisionFreeze(boss);
@@ -179,14 +179,14 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
     gctx->ChangeActorType(*moth_swarm, act::Type::Boss);
     sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_MIBOSS_DEAD);
     gctx->EmitLastDamageSound(*boss);
-    EmitDamageEffect(*it, CollisionResponse::Damage);
+    EmitDamageEffect(*it, DamageEffect::Damage);
     return;
   }
 
   if (damage == 0) {
-    EmitDamageEffect(*it, CollisionResponse::NoDamage);
+    EmitDamageEffect(*it, DamageEffect::NoDamage);
   } else {
-    EmitDamageEffect(*it, CollisionResponse::Damage);
+    EmitDamageEffect(*it, DamageEffect::Damage);
   }
   boss->field_364 *= 0.5f;
   boss->field_368 *= 0.5f;
@@ -216,7 +216,8 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
     case act::DamageType::Hookshot:
       break;
     default:
-      if (it->info->IsType(game::AttackType::DekuFlower) && boss->odolwa_calc == odolwa_charging) {
+      if (it->colliding_info->IsType(game::AttackType::DekuFlower) &&
+          boss->odolwa_calc == odolwa_charging) {
         boss->actor_util.PlayAnimFull(0x2D, -3.0);
         boss->anim_duration = boss->actor_util.GetAnimDuration(0x2D);
         boss->ChangeCalcFunction(odolwa_stunned_2);
@@ -224,7 +225,7 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
         if (boss->field_30C_delta == 0 && boss->field_30C == 0)
           boss->field_30C_delta = 2;
         if (boss->odolwa_calc != odolwa_weakened || boss->actor_util.state.id == 27) {
-          if (it->info->IsType(AttackType::Arrow) ||
+          if (it->colliding_info->IsType(AttackType::Arrow) ||
               (boss->odolwa_calc != odolwa_weakened && boss->actor_util.state.id != 27)) {
             boss->timer = 60;
           }
@@ -234,7 +235,7 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
         }
       }
       sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_MIBOSS_DAMAGE);
-      if (!it->info->IsType(AttackType::Arrow))
+      if (!it->colliding_info->IsType(AttackType::Arrow))
         EmitDamageFlash(*boss, 0x400000, 0x64, 0, 0x17);
       boss->invincibility_timer = 8;
       break;
@@ -245,7 +246,7 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
   boss->taunting_timer = 1800;
   // Clear the remaining collision flags.
   for (size_t i = 0; i < 11; ++i)
-    boss->collision[i].flags1.Clear(Collision::Flag1::Collided);
+    boss->collision[i].flags1.Clear(CollisionInfo::Flag1::Collided);
 }
 
 void FixOdolwa() {

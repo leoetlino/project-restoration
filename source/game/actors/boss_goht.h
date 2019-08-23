@@ -86,7 +86,7 @@ struct BossGoht : Actor {
   char field_FE5[1];
   char field_FE6[10];
   // 0x14 entries
-  Collision* collision;
+  CollisionInfo* collision;
   int field_FF4;
   u8 gap_FF8[1032];
   float field_1400;

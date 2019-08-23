@@ -11,11 +11,6 @@ namespace act {
 class Actor;
 }
 
-// FIXME: Incomplete.
-struct CollisionBody {
-  act::Actor* actor;
-};
-
 // https://wiki.cloudmodding.com/mm/Damage_Charts
 enum class AttackType : u32 {
   DekuNut = 0,
@@ -52,49 +47,123 @@ enum class AttackType : u32 {
   Keg = 31,
 };
 
+// https://wiki.cloudmodding.com/oot/Collision (some structures have been changed, though)
+
+struct CollisionBody;
+
 struct CollisionInfo {
-  AttackType GetType() const { return AttackType(__builtin_ctz(flags.GetStorage(0))); }
-  bool IsType(AttackType t) const { return flags.IsSet(t); }
-
-  rst::BitSet<32, u32, AttackType> flags;
-};
-
-struct Collision {
   enum class Flag0 : u8 {};
   enum class Flag1 : u8 {
     Collided = 2,
   };
-  u8 gap_0[14];
+
+  AttackType GetType() const { return AttackType(__builtin_ctz(attack_type.GetStorage(0))); }
+  bool IsType(AttackType t) const { return attack_type.IsSet(t); }
+
+  rst::BitSet<32, u32, AttackType> attack_type;
+  u8 gap_4[10];
   u16 field_E;
   u16 field_10;
   u16 field_12;
   u8 gap_14;
   rst::Flags<Flag0> flags0;
   rst::Flags<Flag1> flags1;
-  u8 field_17;
-  u8 gap_18[4];
-  CollisionBody* body;
-  u8 gap_20[4];
-  CollisionInfo* info;
-  u8 gap_28[0x20];
-  float field_48;
-  u8 gap_4C[4];
+  u8 flags2;
+  u32 field_18;
+  CollisionBody* colliding_body;
+  u32 field_20;
+  CollisionInfo* colliding_info;
 };
-static_assert(sizeof(Collision) == 0x50);
+static_assert(sizeof(CollisionInfo) == 0x28);
 
-enum class CollisionResponse : int {
+struct CollisionInfoCylinder : CollisionInfo {
+  u32 field_28;
+  u32 field_2C;
+  u32 field_30;
+  u32 field_34;
+  Vec3 field_38;
+  u32 field_44;
+  float scale;
+  u8 field_4C;
+};
+static_assert(sizeof(CollisionInfoCylinder) == 0x50);
+
+struct CollisionInfoTri : CollisionInfo {
+  Vec3 a, b, c, normal;
+  float normal_dist;
+};
+static_assert(sizeof(CollisionInfoTri) == 0x5C);
+
+// Base class for CollisionBody* structs.
+// Not to be confused with CollisionInfo structs.
+struct CollisionBody {
+  enum class Type : u8 {
+    CylinderCollection = 0,
+    Cylinder = 1,
+    TriCollection = 2,
+    Quad = 3,
+    // New to MM3D?
+    Type4 = 4,
+  };
+
+  act::Actor* actor;
+  act::Actor* unk_actor_1;
+  act::Actor* unk_actor_2;
+  act::Actor* unk_actor_3;
+  u8 collider_flags;
+  u8 collide_flags;
+  u8 mask_a;
+  u8 mask_b;
+  u8 field_14;
+  Type type;
+};
+static_assert(sizeof(CollisionBody) == 0x18);
+
+struct CollisionBodyCylinderCollection : CollisionBody {  // type 0
+  int count;
+  // Confusingly enough, this is quite different from CollisionBodyCylinder.
+  CollisionInfoCylinder* list;
+};
+static_assert(sizeof(CollisionBodyCylinderCollection) == 0x20);
+
+struct CollisionBodyCylinder : CollisionBody {  // type 1
+  CollisionInfo info;
+  // Note: these are now floats in the 3DS version.
+  float radius;
+  float height;
+  float y_shift;
+  Vec3 position;
+};
+static_assert(sizeof(CollisionBodyCylinder) == 0x58);
+
+struct CollisionBodyTriCollection : CollisionBody {  // type 2
+  int count;
+  CollisionInfoTri* list;
+};
+static_assert(sizeof(CollisionBodyTriCollection) == 0x20);
+
+struct CollisionBodyQuad : CollisionBody {
+  CollisionInfo info;
+  Vec3 a, b, c, d;
+  // Note: these are still integers in the 3DS version.
+  TVec3<s16> bounding_max;
+  TVec3<s16> bounding_min;
+};
+static_assert(sizeof(CollisionBodyQuad) == 0x7C);
+
+enum class DamageEffect : int {
   Damage = 0,
   NoDamage = 1,
   NoDamageYellow = 2,
 };
-void EmitDamageEffect(const Collision& col, CollisionResponse response);
-void EmitDamageEffectForBossCycle(const Collision& col);
+void EmitDamageEffect(const CollisionInfo& info, DamageEffect effect);
+void EmitDamageEffectForBossCycle(const CollisionInfo& info);
 void EmitDamageFlash(const act::Actor& actor, int a, int b, int c, int d);
 
-void PrintCollision(const Collision* col, size_t count, std::string_view description = "");
+void PrintCollision(const CollisionInfo* info, size_t count, std::string_view description = "");
 
-inline bool IsCollided(const Collision& collision) {
-  return collision.flags1.IsSet(Collision::Flag1::Collided);
+inline bool IsCollided(const CollisionInfo& info) {
+  return info.flags1.IsSet(CollisionInfo::Flag1::Collided);
 }
 
 }  // namespace game
