@@ -116,6 +116,11 @@ struct DamageTable {
 static_assert(sizeof(DamageTable) == 0x20);
 
 struct Actor {
+  enum class Flag : u32 {
+    Targetable = 0x1,
+    TalkInitiated = 0x100,
+  };
+
   enum class Flag94 : u16 {
     Grounded = 1,
   };
@@ -125,7 +130,7 @@ struct Actor {
   Id id;
   Type actor_type;
   u8 room_number;
-  u32 flags;
+  rst::Flags<Flag> flags;
   // Not the same as position.
   Vec3 some_pos;
   float field_14;

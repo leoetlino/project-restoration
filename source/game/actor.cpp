@@ -6,7 +6,7 @@ namespace game::act {
 
 void Actor::Free() {
   draw_fn = nullptr;
-  flags &= 0xFFFFFFFE;
+  flags.Clear(Flag::Targetable);
   calc_fn = nullptr;
 }
 

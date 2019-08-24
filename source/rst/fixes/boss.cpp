@@ -170,7 +170,7 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
     boss->timer2 = 0;
     boss->ChangeCalcFunction(odolwa_dying);
     sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_FANTOM_DEAD);
-    boss->flags &= ~1;
+    boss->flags.Clear(act::Actor::Flag::Targetable);
     boss->shield_timer_2 = 0x5DC;
     boss->intro_timer = 0;
     boss->intro_state = 0;
