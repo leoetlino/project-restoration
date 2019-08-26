@@ -122,6 +122,7 @@ struct CollisionBody {
 static_assert(sizeof(CollisionBody) == 0x18);
 
 struct CollisionBodyCylinderCollection : CollisionBody {  // type 0
+  using InfoType = CollisionInfoCylinder;
   int count;
   // Confusingly enough, this is quite different from CollisionBodyCylinder.
   CollisionInfoCylinder* list;
@@ -139,6 +140,7 @@ struct CollisionBodyCylinder : CollisionBody {  // type 1
 static_assert(sizeof(CollisionBodyCylinder) == 0x58);
 
 struct CollisionBodyTriCollection : CollisionBody {  // type 2
+  using InfoType = CollisionInfoTri;
   int count;
   CollisionInfoTri* list;
 };
@@ -167,6 +169,20 @@ struct CollisionBodyType4 : CollisionBody {
   u8 field_64;
 };
 static_assert(sizeof(CollisionBodyType4) == 0x68);
+
+// Helper class to make a common pattern in MM3D (storing body + info) less error prone.
+template <typename Body, int N>
+struct CollisionBodies {
+  Body body;
+  typename Body::InfoType info[N];
+
+  auto& operator[](size_t idx) { return info[idx]; }
+  const auto& operator[](size_t idx) const { return info[idx]; }
+  auto* begin() { return info; }
+  auto* begin() const { return info; }
+  auto* end() { return info + N; }
+  auto* end() const { return info + N; }
+};
 
 enum class DamageEffect : int {
   Damage = 0,

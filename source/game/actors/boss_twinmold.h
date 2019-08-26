@@ -3,9 +3,9 @@
 #include "common/types.h"
 #include "common/utils.h"
 #include "game/actor.h"
+#include "game/collision.h"
 
 namespace game {
-class CollisionInfo;
 class GlobalContext;
 }
 
@@ -105,21 +105,13 @@ struct BossTwinmold : Actor {
   /// Points to Blue Twinmold for Red Twinmold, and vice versa.
   BossTwinmold* other_twinmold_actor;
   int field_5E2C;
-  u8 gap_5E30[36];
-  /// 0x14 - one of each segment of Twinmold's body,
-  /// starting at the head (0) and ending at the tail (0x13)
-  u32 num_collision_entries2;
-  CollisionInfo* collision2;
-  u8 gap_5E5C[420];
-  u32 field_6000;
-  u8 gap_6004[720];
-  /// 0x14 - one of each segment of Twinmold's body,
-  /// starting at the head (0) and ending at the tail (0x13)
-  u32 main_collision_num_entries;
-  CollisionInfo* main_collision;
-  u8 gap_62DC[292];
-  u32 field_6400;
-  u8 gap_6404[920];
+  u8 gap_5E30[12];
+  /// one for each segment of Twinmold's body,
+  /// starting at the head (0) and ending at the tail (13)
+  CollisionBodies<CollisionBodyCylinderCollection, 14> collision_1;
+  CollisionBodies<CollisionBodyCylinderCollection, 14> collision_main;
+  CollisionBodyCylinder collision_2;
+  u8 gap_6794[8];
   u32 field_679C;
   u16 field_67A0;
   u8 gap_67A2[26];
@@ -164,11 +156,15 @@ struct BossTwinmold : Actor {
   u8 gap_9140[24];
   Vec3 field_9158;
   Vec3 field_9164;
-  u8 gap9170[60];
-  /// 1
-  u32 eye_collision_num_entries;
-  CollisionInfo* eye_collision;
-  u8 gap91B4[1040];
+  u8 gap9170[36];
+  CollisionBodies<CollisionBodyCylinderCollection, 1> collision_eye;
+  CollisionBodies<CollisionBodyCylinderCollection, 1> collision_3;
+  u32 field_9274;
+  u8 gap_9278[308];
+  u32 field_93AC;
+  u8 gap_93B0[308];
+  CollisionBodies<CollisionBodyCylinderCollection, 1> collision_4;
+  CollisionBodies<CollisionBodyCylinderCollection, 1> collision_5;
   Vec3 field_95C4;
   u8 gap_95D0[8];
   int field_95D8;
@@ -180,7 +176,6 @@ struct BossTwinmold : Actor {
 };
 static_assert(sizeof(BossTwinmold) == 0x9628);
 static_assert(rst::util::OffsetOf(&BossTwinmold::other_twinmold_actor) == 0x5E28);
-static_assert(rst::util::OffsetOf(&BossTwinmold::field_6400) == 0x6400);
-static_assert(rst::util::OffsetOf(&BossTwinmold::gap91B4) == 0x91B4);
+static_assert(rst::util::OffsetOf(&BossTwinmold::gap_93B0) == 0x93B0);
 
 }  // namespace game::act

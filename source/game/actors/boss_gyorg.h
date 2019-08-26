@@ -2,9 +2,9 @@
 
 #include "common/types.h"
 #include "game/actor.h"
+#include "game/collision.h"
 
 namespace game {
-struct CollisionInfo;
 struct GlobalContext;
 }  // namespace game
 
@@ -85,36 +85,10 @@ struct BossGyorg : Actor {
   u8 gap_AB0[12];
   u8 downcount4;
   u8 gap_ABD[3];
-  u32 field_AC0;
-  u8 gap_AC4[20];
-  u32 collision_eye_num_entries;
-  CollisionInfo* collision_eye;
-  int field_AE0;
-  u8 gap_AE4[76];
-  u32 field_B30;
-  u8 gap_B34[8];
-  Player* player;
-  u8 gap_B40[8];
-  u32 collision_armor_num_entries;
-  CollisionInfo* collision_armor;
-  int field_B50;
-  u8 gap_B54[156];
-  u32 field_BF0;
-  u8 gap_BF4[12];
-  u32 field_C00;
-  u8 gap_C04[12];
-  int field_C10;
-  u8 gap_C14[316];
-  u32 field_D50;
-  u8 gap_D54[16];
-  u8 field_D64;
-  u8 gap_D65[3];
-  u32 collision_num_entries;
-  CollisionInfo* collision;
-  int field_D70;
-  u8 gap_D74[140];
-  u32 field_E00;
-  u8 gap_E04[172];
+  CollisionBodies<CollisionBodyCylinderCollection, 1> collision_eye;
+  CollisionBodies<CollisionBodyCylinderCollection, 2> collision_armor;
+  CollisionBodies<CollisionBodyCylinderCollection, 4> collision_3;
+  CollisionBodies<CollisionBodyCylinderCollection, 4> collision;
   float field_EB0;
   u8 field_EB4;
   u8 field_EB5;
@@ -133,6 +107,11 @@ struct BossGyorg : Actor {
   int field_F20;
   int field_F24;
 };
+static_assert(rst::util::OffsetOf(&BossGyorg::collision_eye) == 0xAC0);
+static_assert(rst::util::OffsetOf(&BossGyorg::collision_armor) == 0xB30);
+static_assert(rst::util::OffsetOf(&BossGyorg::collision_3) == 0xBF0);
+static_assert(rst::util::OffsetOf(&BossGyorg::collision) == 0xD50);
+static_assert(rst::util::OffsetOf(&BossGyorg::field_EB0) == 0xEB0);
 static_assert(sizeof(BossGyorg) == 0xF28);
 
 }  // namespace game::act

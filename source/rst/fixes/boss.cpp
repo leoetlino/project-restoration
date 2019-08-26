@@ -67,7 +67,8 @@ extern "C" RST_HOOK bool rst_OdolwaCheckIsInvincible(game::act::BossOdolwa* odol
   static bool s_collided_last_time = false;
   if (odolwa->invincibility_timer == 0)
     return false;
-  const bool collided = std::any_of(odolwa->collision, odolwa->collision + 11, game::IsCollided);
+  const bool collided =
+      std::any_of(odolwa->collision.begin(), odolwa->collision.end(), game::IsCollided);
   if (s_collided_last_time) {
     s_collided_last_time = collided;
     return true;
@@ -119,13 +120,13 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
   if (boss->odolwa_calc == odolwa_stunned_eye_exposed_taking_damage)
     return;
 
-  const auto it = std::find_if(boss->collision, boss->collision + 11, IsCollided);
-  if (it == boss->collision + 11)
+  const auto it = std::find_if(boss->collision.begin(), boss->collision.end(), IsCollided);
+  if (it == boss->collision.end())
     return;
 
   util::Print("%s: detected collision - idx=%zu damage_type=0x%x damage=%u attack_type=%u",
-              __func__, std::distance(boss->collision, it), u8(boss->damage_type), boss->damage,
-              u8(it->colliding_info->GetType()));
+              __func__, std::distance(boss->collision.begin(), it), u8(boss->damage_type),
+              boss->damage, u8(it->colliding_info->GetType()));
 
   it->flags1.Clear(CollisionInfo::Flag1::Collided);
   switch (boss->damage_type) {
@@ -292,7 +293,7 @@ extern "C" RST_HOOK bool rst_IsGohtCollided(game::act::BossGoht* goht) {
       goht->field_3998) {
     return false;
   }
-  return std::any_of(goht->collision, goht->collision + 0x12, game::IsCollided);
+  return std::any_of(goht->collision.begin(), goht->collision.end(), game::IsCollided);
 }
 
 void FixGoht() {

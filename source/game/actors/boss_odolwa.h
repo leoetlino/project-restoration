@@ -3,9 +3,9 @@
 #include "common/types.h"
 #include "game/actor.h"
 #include "game/as.h"
+#include "game/collision.h"
 
 namespace game {
-class CollisionInfo;
 class GlobalContext;
 }  // namespace game
 
@@ -76,35 +76,11 @@ struct BossOdolwa : Actor {
     odolwa_calc_prev = odolwa_calc;
     odolwa_calc = new_handler;
   }
-  u32 field_13DC;
-  u8 gap_3E0[24];
-  // 3 entries
-  CollisionInfo* collision2;
-  int field_13FC;
-  u8 gap_1400[236];
-  u32 field_14EC;
-  u8 gap_4F0[24];
-  CollisionInfo* collision_shield;
-  int field_150C;
-  u8 gap_1510[76];
-  u32 field_155C;
-  u8 gap_560[24];
-  // 11 entries
-  CollisionInfo* collision;
-  int field_157C;
-  u8 gap_1580[876];
-  u32 field_18EC;
-  u8 gap_8F0[24];
-  // 1 entry
-  CollisionInfo* collision3;
-  int field_190C;
-  u8 gap_1910[156];
-  u32 field_19AC;
-  u8 gap_9B0[24];
-  // 2 entries
-  CollisionInfo* collision4;
-  int field_19CC;
-  u8 gap_9D0[156];
+  CollisionBodies<CollisionBodyCylinderCollection, 3> collision2;
+  CollisionBodies<CollisionBodyCylinderCollection, 1> collision_shield;
+  CollisionBodies<CollisionBodyCylinderCollection, 11> collision;
+  CollisionBodies<CollisionBodyCylinderCollection, 2> collision3;
+  CollisionBodies<CollisionBodyCylinderCollection, 2> collision4;
   Vec3 field_A6C[15];
   u32 intro_timer;
   u16 intro_state;
