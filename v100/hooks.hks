@@ -19,6 +19,12 @@ post_actor_calc_hook:
   addr: 0x174E08
   func: rst_PostActorCalcHook
 
+message_get_hook:
+  type: branch
+  link: false
+  addr: 0x1BDE78
+  func: rst_MessageDataGet
+
 zora_swim_1a:
   # Remove fast swim magic check
   type: patch

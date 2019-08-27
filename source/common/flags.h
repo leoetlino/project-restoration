@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <numeric>
 #include <type_traits>
 
 #include "common/debug.h"
@@ -56,6 +57,11 @@ public:
   }
 
   constexpr WordType GetStorage(size_t idx) const { return m_storage[idx]; }
+
+  constexpr size_t Count() const {
+    return std::accumulate(m_storage.begin(), m_storage.end(), 0,
+                           [](auto word) { return __builtin_popcount(word); });
+  }
 
 private:
   static_assert(std::is_arithmetic_v<WordType>);

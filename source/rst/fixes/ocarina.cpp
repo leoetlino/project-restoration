@@ -6,10 +6,7 @@
 #include "game/context.h"
 #include "game/player.h"
 #include "game/sound.h"
-
-namespace game::ui {
-class MessageWindow;
-};
+#include "game/ui/message_window.h"
 
 namespace rst {
 
@@ -64,7 +61,7 @@ bool HandleOcarinaSong(game::ui::MessageWindow* self, game::OcarinaSong song) {
     game::sound::PlayEffect(game::sound::EffectId::NA_SE_SY_TRE_BOX_APPEAR);
     gctx->ocarina_song = song;
     gctx->ocarina_state = game::OcarinaState::PlayingAndReplayDone;
-    util::Write<u32>(self, 0x428, u16(song));
+    self->song = u16(song);
     // This flag must always be false; otherwise the Song of Soaring handler will refuse
     // to show the map screen.
     util::Write<bool>(gctx, 0x83EC, false);

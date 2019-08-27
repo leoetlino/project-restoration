@@ -30,6 +30,8 @@ add_executable(newcode
   game/context.h
   game/items.cpp
   game/items.h
+  game/message.cpp
+  game/message.h
   game/pad.cpp
   game/pad.h
   game/player.cpp
@@ -41,6 +43,7 @@ add_executable(newcode
   game/sound.cpp
   game/ui.cpp
   game/ui.h
+  game/ui/message_window.h
   rst/fixes/boss.cpp
   rst/fixes/boss.h
   rst/fixes/boss.s
