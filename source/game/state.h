@@ -80,4 +80,16 @@ struct State {
 };
 static_assert(sizeof(State) == 0x148);
 
-}
+struct StateInfo {
+  u32 unused_0;
+  void (*init_fn)(State*);
+  void (*exit_fn)(State*);
+  u32 unused_1, unused_2, unused_3;
+  u32 instance_size;
+  StateType type;
+};
+static_assert(sizeof(StateInfo) == 0x20);
+
+const StateInfo* FindStateInfoByInit(void (*init_fn)(State*));
+
+}  // namespace game
