@@ -11,7 +11,7 @@ struct GlobalContext;
 namespace game::ui {
 
 #pragma pack(push, 4)
-class MessageWindow : Layout {
+class MessageWindow : public Layout {
 public:
   void* vtable_170;
   void* vtable_174;

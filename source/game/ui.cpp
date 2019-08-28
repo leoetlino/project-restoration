@@ -71,8 +71,51 @@ bool CheckCurrentScreen(ScreenType screen) {
   return GetScreenContext().active_screen == GetScreen(screen);
 }
 
-void UpdateLayout(Layout* layout) {
-  rst::util::GetPointer<void(Layout*)>(0x161AE8)(layout);
+void Layout::Calc() {
+  // ends up calling this->Calc(...) with a bunch of global arguments
+  rst::util::GetPointer<void(Layout*)>(0x161AE8)(this);
+}
+
+LayoutMgr& LayoutMgr::Instance() {
+  return rst::util::GetInstance<LayoutMgr>(std::tuple{0x7CDC9C}, std::tuple{0x6B0AFC},
+                                           std::tuple{0x16963C});
+}
+
+void LayoutMgr::FreeLayout(Layout* layout) {
+  rst::util::GetPointer<void(LayoutMgr&, Layout*)>(0x169634)(*this, layout);
+}
+
+Layout* LayoutMgr::MakeLayout(LayoutFile* file, int x) {
+  return rst::util::GetPointer<Layout*(LayoutMgr&, LayoutFile*, int)>(0x16962C)(*this, file, x);
+}
+
+Layout* LayoutMgr::MakeLayout(const char* name) {
+  LayoutFile* file = PackageMgr::Instance().GetLayoutFile(name);
+  return MakeLayout(file);
+}
+
+PackageMgr& PackageMgr::Instance() {
+  return *rst::util::GetPointer<PackageMgr>(0x7CDCA0);
+}
+
+LayoutFile* PackageMgr::GetLayoutFile(const char* name) {
+  return rst::util::GetPointer<LayoutFile*(PackageMgr&, const char*)>(0x16A014)(*this, name);
+}
+
+int PackageMgr::GetHandle(const char* name) {
+  return rst::util::GetPointer<int(PackageMgr&, const char*)>(0x15A86C)(*this, name);
+}
+
+bool PackageMgr::LoadPackage(int handle, bool x) {
+  return rst::util::GetPointer<bool(PackageMgr&, int, bool)>(0x15141C)(*this, handle, x);
+}
+
+bool PackageMgr::UnloadPackage(int handle) {
+  return rst::util::GetPointer<bool(PackageMgr&, int)>(0x161CB4)(*this, handle);
+}
+
+bool PackageMgr::IsLoading() const {
+  return rst::util::GetPointer<bool(const PackageMgr&)>(0x180190)(*this);
 }
 
 }  // namespace game::ui
