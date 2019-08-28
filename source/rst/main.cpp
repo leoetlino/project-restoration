@@ -32,7 +32,7 @@ void UpdateContext(game::GlobalContext* gctx) {
   Context& context = GetContext();
   context.gctx = gctx;
 
-  if (!context.has_initialised && gctx->type == game::GameStateType::FirstGame)
+  if (!context.has_initialised && gctx->type == game::StateType::FirstGame)
     Init(context);
 }
 
@@ -88,7 +88,7 @@ static void UiOcarinaScreenUpdate() {
 void Calc(game::GlobalContext* gctx) {
   UpdateContext(gctx);
 
-  if (gctx->type != game::GameStateType::Play)
+  if (gctx->type != game::StateType::Play)
     return;
 
   game::CalcCamera();
@@ -116,7 +116,7 @@ void PostActorCalcHook() {
 
 void UiScheduleTriggerHook() {
   auto* gctx = GetContext().gctx;
-  if (!gctx || gctx->type != game::GameStateType::Play)
+  if (!gctx || gctx->type != game::StateType::Play)
     return;
 
   const bool zr = gctx->pad_state.input.buttons.IsSet(game::pad::Button::ZR);

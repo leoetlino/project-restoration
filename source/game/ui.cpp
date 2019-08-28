@@ -47,7 +47,7 @@ bool OpenScreen(ScreenType screen) {
   GlobalContext* gctx = rst::GetContext().gctx;
   ScreenContext& ui_ctx = GetScreenContext();
 
-  if (!gctx || gctx->type != GameStateType::Play)
+  if (!gctx || gctx->type != StateType::Play)
     return false;
 
   ui_ctx.new_screen = GetScreen(screen);

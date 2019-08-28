@@ -7,6 +7,7 @@
 #include "game/actor.h"
 #include "game/camera.h"
 #include "game/pad.h"
+#include "game/state.h"
 
 namespace game {
 
@@ -20,31 +21,6 @@ enum class UiMenuState : u16 {
   Closed = 0,
   Opening = 1,
   Opened = 3,
-};
-
-enum class GameStateType : u8 {
-  /// Initial game state
-  Initial = 0,
-  /// Second game state after the initial game state
-  /// Responsible for allocating a 0x2aa0 byte structure.
-  FirstGame = 1,
-  /// Remnant of N64 "ovl_title" state?
-  Dummy = 2,
-  /// Sets several variables before changing to state 5.
-  PrepareTitleScreen = 3,
-  /// Main game. An instance of this type is unofficially called the "global context".
-  Play = 4,
-  /// Initialises player data (notably save data).
-  /// Responsible for setting time to 0x5555.
-  InitPlayer = 5,
-  /// File Select
-  FileSelect = 6,
-  /// 72/48/24 Hours Remaining / Dawn of a New Day
-  DayTelop = 7,
-  /// Majora's Mask 3D video hints
-  JokerHintMovie = 8,
-  /// Majora's Mask 3D credits (including THE END and save prompt)
-  JokerEnding = 9,
 };
 
 // Keeps track of spawned actors.
@@ -108,9 +84,7 @@ enum class OcarinaSong : u16 {
 };
 
 // Likely incomplete.
-// The "global context" is actually a game state, and the start of the structure
-// is common to all game states. But I haven't bothered looking at the other ones...
-struct GlobalContext {
+struct GlobalContext : State {
   bool IsUiMenuActive() const { return ui_menu_state != game::UiMenuState::Closed; }
 
   act::Actor* FindActorWithId(act::Id id, act::Type type) const;
@@ -135,26 +109,6 @@ struct GlobalContext {
 
   void EmitLastDamageSound(const act::Actor& actor);
 
-  int field_0;
-  u8 gap_4[36];
-  pad::State pad_state;
-  u8 gap_94[108];
-  u32 field_100;
-  int (*calc_fn)(GlobalContext*);
-  int (*exit_fn)(GlobalContext*);
-  void (*next_game_state_init_fn)(GlobalContext*);
-  u32 field_110;
-  u32 field_114;
-  u8 gap_118[12];
-  u32 field_124;
-  u8 gap_128[16];
-  /// Number of frames since the game state was initialised.
-  u32 frame_counter;
-  u8 field_13C;
-  GameStateType type;
-  u16 field_13E;
-  u32 field_140;
-  u32 field_144;
   u16 map_maybe;
   u16 field_14A;
   u8 gap_14C[200];

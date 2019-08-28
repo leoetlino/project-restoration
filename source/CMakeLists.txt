@@ -38,6 +38,8 @@ add_executable(newcode
   game/player.h
   game/random.cpp
   game/random.h
+  game/state.cpp
+  game/state.h
   game/static_context.cpp
   game/static_context.h
   game/sound.cpp
