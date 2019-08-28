@@ -41,6 +41,8 @@ add_executable(newcode
   game/state.cpp
   game/state.h
   game/state_ending.h
+  game/state_sot_save.cpp
+  game/state_sot_save.h
   game/static_context.cpp
   game/static_context.h
   game/sound.cpp

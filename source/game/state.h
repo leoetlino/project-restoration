@@ -28,6 +28,9 @@ enum class StateType : u8 {
   JokerHintMovie = 8,
   /// Majora's Mask 3D credits (including THE END and save prompt)
   JokerEnding = 9,
+
+  /// Extension: Save prompt for the Song of Time before telop.
+  SotSave = 10,
 };
 
 struct State {
@@ -59,6 +62,8 @@ struct State {
     void* bottom;
   };
 
+  void ChangeState(StateType new_type);
+
   int field_0;
   u8 gap_4[36];
   pad::State pad_state;
@@ -80,6 +85,15 @@ struct State {
 };
 static_assert(sizeof(State) == 0x148);
 
+template <typename T, typename Base = State>
+struct StateSimple : Base {
+  StateSimple() {
+    State::calc_fn = [](auto* state) { static_cast<T*>(state)->Calc(); };
+    State::exit_fn = [](auto* state) { static_cast<T*>(state)->~T(); };
+    State::status = State::Status::Running;
+  }
+};
+
 struct StateInfo {
   u32 unused_0;
   void (*init_fn)(State*);
@@ -91,5 +105,22 @@ struct StateInfo {
 static_assert(sizeof(StateInfo) == 0x20);
 
 const StateInfo* FindStateInfoByInit(void (*init_fn)(State*));
+const StateInfo* FindStateInfoByType(StateType type);
+
+class FileEntity;
+
+struct SaveFile {
+  void Open();
+  bool WriteAndFree();
+
+  FileEntity* file;
+  u16 field_4;
+  u16 field_6;
+  void* data;
+  u16 field_C;
+  u16 field_E;
+  u16 status;
+};
+static_assert(sizeof(SaveFile) == 0x14);
 
 }  // namespace game

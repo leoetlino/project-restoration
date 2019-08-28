@@ -75,6 +75,10 @@ float MoveScheduledNpcHook(float* schedule_position, float speed) {
 }
 
 void FixTime() {
+  if (GetContext().gctx->ocarina_state == game::OcarinaState::GoingBackInTime) {
+    GetContext().going_back_in_time = true;
+  }
+
   for (auto it = GetNpcSchedulePositions().begin(); it != GetNpcSchedulePositions().end();) {
     auto& [ptr, entry] = *it;
 

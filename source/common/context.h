@@ -12,6 +12,8 @@ struct Context {
   game::GlobalContext* gctx;
   bool has_initialised = false;
 
+  bool going_back_in_time = false;
+
   bool use_fast_swim = true;
 };
 
