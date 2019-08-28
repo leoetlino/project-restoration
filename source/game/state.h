@@ -31,6 +31,34 @@ enum class StateType : u8 {
 };
 
 struct State {
+  enum class Status : u8 {
+    /// Triggers a game state change. Make sure next_state_init_fn is set to a valid function
+    /// before setting status to Changing.
+    Changing = 0,
+    Initialising = 1,
+    Running = 2,
+  };
+
+  // "gamealloc" structures
+  struct SimpleHeap {
+    void* field_0;
+    void* field_4;
+    void* field_8;
+    void* field_C;
+    void* field_10;
+  };
+  struct SimpleAllocator {
+    void* Alloc(u32 size) {
+      bottom = (void*)(((uintptr_t(bottom) & ~0xF) - size) & ~0xF);
+      return bottom;
+    }
+
+    u32 size;
+    void* buffer;
+    void* top;
+    void* bottom;
+  };
+
   int field_0;
   u8 gap_4[36];
   pad::State pad_state;
@@ -39,14 +67,12 @@ struct State {
   void (*calc_fn)(State*);
   void (*exit_fn)(State*);
   void (*next_state_init_fn)(State*);
-  u32 field_110;
-  u32 field_114;
-  u8 gap_118[12];
-  u32 field_124;
-  u8 gap_128[16];
+  u32 next_state_instance_size;
+  SimpleAllocator allocator;
+  SimpleHeap heap;
   /// Number of frames since the game state was initialised.
   u32 frame_counter;
-  u8 field_13C;
+  Status status;
   StateType type;
   u16 field_13E;
   u32 field_140;
