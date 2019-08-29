@@ -7,6 +7,7 @@
 #include "game/pad.h"
 #include "game/player.h"
 #include "game/sound.h"
+#include "game/state.h"
 #include "game/ui.h"
 #include "rst/fixes.h"
 #include "rst/fixes/boss.h"
@@ -23,17 +24,6 @@ void Init(Context& context) {
   util::Print("Project Restoration initialised (" __DATE__ " " __TIME__ ")");
   game::sound::PlayEffect(game::sound::EffectId::NA_SE_SY_QUEST_CLEAR);
   context.has_initialised = true;
-}
-
-// Important: do NOT assume the player actor exists here.
-// This is called as soon as a game state is initialised,
-// not necessarily when the global context is initialised.
-void UpdateContext(game::GlobalContext* gctx) {
-  Context& context = GetContext();
-  context.gctx = gctx;
-
-  if (!context.has_initialised && gctx->type == game::StateType::FirstGame)
-    Init(context);
 }
 
 }  // anonymous namespace
@@ -85,12 +75,17 @@ static void UiOcarinaScreenUpdate() {
   }
 }
 
-void Calc(game::GlobalContext* gctx) {
-  UpdateContext(gctx);
+void Calc(game::State* state) {
+  Context& context = GetContext();
+  context.gctx = nullptr;
 
-  if (gctx->type != game::StateType::Play)
+  if (!context.has_initialised && state->type == game::StateType::FirstGame)
+    Init(context);
+
+  if (state->type != game::StateType::Play)
     return;
 
+  context.gctx = static_cast<game::GlobalContext*>(state);
   game::CalcCamera();
   link::HandleFastArrowSwitch();
   FixTime();
@@ -138,8 +133,8 @@ void UiScheduleTriggerHook() {
 }  // namespace rst
 
 extern "C" {
-RST_HOOK void rst_Calc(game::GlobalContext* gctx) {
-  rst::Calc(gctx);
+RST_HOOK void rst_Calc(game::State* state) {
+  rst::Calc(state);
 }
 
 RST_HOOK void rst_PreActorCalcHook() {
