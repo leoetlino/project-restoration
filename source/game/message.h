@@ -218,4 +218,7 @@ struct MessageMgr {
 };
 static_assert(sizeof(MessageMgr) == 0x20C);
 
+void PlayMessagePassSound();
+void PlayMessageCancelSound();
+
 }  // namespace game

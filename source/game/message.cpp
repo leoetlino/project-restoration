@@ -64,4 +64,12 @@ extern "C" RST_HOOK bool rst_MessageDataGet(MessageData* self, u16 id, Message* 
   return self->Get(id, out);
 }
 
+void PlayMessagePassSound() {
+  rst::util::GetPointer<void()>(0x1AF034)();
+}
+
+void PlayMessageCancelSound() {
+  rst::util::GetPointer<void()>(0x1AE498)();
+}
+
 }  // namespace game
