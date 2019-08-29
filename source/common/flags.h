@@ -36,7 +36,7 @@ public:
     return (... || IsSet(v));
   }
 
-  std::underlying_type_t<FlagType> flags = 0;
+  std::underlying_type_t<FlagType> flags;
 };
 
 // Super simple alternative to std::bitset with a guaranteed storage layout.
