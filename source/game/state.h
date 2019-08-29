@@ -13,13 +13,13 @@ enum class StateType : u8 {
   FirstGame = 1,
   /// Remnant of N64 "ovl_title" state?
   Dummy = 2,
-  /// Sets several variables before changing to state 5.
-  PrepareTitleScreen = 3,
+  /// Sets several variables before changing to state 5 (PrepareTitleScreen2).
+  PrepareTitleScreen1 = 3,
   /// Main game. An instance of this type is unofficially called the "global context".
   Play = 4,
-  /// Initialises player data (notably save data).
+  /// Initialises common data for the title screen cutscene.
   /// Responsible for setting time to 0x5555.
-  InitPlayer = 5,
+  PrepareTitleScreen2 = 5,
   /// File Select
   FileSelect = 6,
   /// 72/48/24 Hours Remaining / Dawn of a New Day
