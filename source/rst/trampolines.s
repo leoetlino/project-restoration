@@ -34,6 +34,8 @@ rst_dummy:
 TRAMPOLINE_R0_RESULT rst_link_ShouldUseZoraFastSwim
 TRAMPOLINE_R0_RESULT rst_link_SwitchToZoraFastSwim
 
+TRAMPOLINE_R0_RESULT rst_link_ShouldEndGoronRoll
+
 TRAMPOLINE_DECLARE rst_MoveScheduledNpcHook
   mov r4, r1 @ original instruction
   push {r0-r12, lr}

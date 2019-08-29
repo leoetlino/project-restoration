@@ -119,6 +119,17 @@ fast_transform_cutscene_skip_btns:
   data: 00 00 0c f3
   reverse: true
 
+goron_roll_classic_end_trigger:
+  type: patch
+  addr: 0x1F7A38
+  # mov r0, r4
+  data: 04 00 A0 E1
+goron_roll_classic_end_trigger:
+  type: branch
+  link: true
+  addr: 0x1F7A3C
+  func: rst_trampoline_rst_link_ShouldEndGoronRoll
+
 decouple_trigger_btns:
   type: patch
   data: 12 00 00 EA # skips over the ZL/ZR checks

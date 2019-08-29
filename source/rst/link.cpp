@@ -104,6 +104,11 @@ bool SwitchToZoraFastSwim(game::GlobalContext* gctx, game::act::Player* player, 
          do_switch(gctx, player, check_magic);
 }
 
+bool ShouldEndGoronRoll(game::act::Player* player) {
+  return player->controller_info.state->input.new_buttons.IsSet(game::pad::Button::A) ||
+         player->controller_info.state->input.released_buttons.IsSet(game::pad::Button::A);
+}
+
 struct FastArrowState {
   std::optional<game::Action> override_action;
   int magic_cost_update_timer = -1;
@@ -235,6 +240,10 @@ RST_HOOK void rst_TriggerItemUseHook() {
 
 RST_HOOK bool rst_link_ShouldUseZoraFastSwim() {
   return rst::link::ShouldUseZoraFastSwim();
+}
+
+RST_HOOK bool rst_link_ShouldEndGoronRoll(game::act::Player* player) {
+  return rst::link::ShouldEndGoronRoll(player);
 }
 
 RST_HOOK bool rst_link_SwitchToZoraFastSwim(game::GlobalContext* gctx, game::act::Player* player,
