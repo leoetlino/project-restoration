@@ -41,4 +41,8 @@ void ControlStream(StreamPlayer player, int a, int b) {
                                                                             a, b);
 }
 
+void ControlEnv(int index) {
+  rst::util::GetPointer<void(int)>(0x1883F0)(index);
+}
+
 }  // namespace game::sound

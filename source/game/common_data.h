@@ -566,7 +566,8 @@ struct CommonData {
   u16 field_13734;
   u16 field_13736;
   int field_13738;
-  int field_1373C;
+  // 0-19
+  int sound_env_index;
   /// see also UsableButton and ButtonIsUsable
   ButtonIsUsable usable_btns[9];
   char field_13749[15];
