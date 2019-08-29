@@ -4,6 +4,7 @@
 
 #include "common/context.h"
 #include "common/utils.h"
+#include "game/actors/boss_twinmold.h"
 #include "game/common_data.h"
 
 namespace game {
@@ -59,6 +60,14 @@ bool CanUseItem(ItemId item_id) {
   }
   if (item_id == ItemId::PictographBox) {
     return GetCommonData().usable_btns[u8(UsableButton::PictographBox)] != ButtonIsUsable::No;
+  }
+
+  // Work around a game bug that causes the player to be able to use items
+  // before the Twinmold intro cutscene starts and softlock the game.
+  const auto* twinmold = rst::GetContext().gctx->FindActorWithId<game::act::BossTwinmold>(
+      game::act::Id::BossTwinmold, game::act::Type::Boss);
+  if (twinmold && twinmold->status == game::act::BossTwinmold::Status::Inactive) {
+    return false;
   }
 
   // This is a terrible hack to use the official item usability logic.
