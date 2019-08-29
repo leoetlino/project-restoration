@@ -46,6 +46,8 @@ add_executable(newcode
   game/sound.cpp
   game/ui.cpp
   game/ui.h
+  game/ui/message_text.cpp
+  game/ui/message_text.h
   game/ui/message_window.h
   rst/fixes/boss.cpp
   rst/fixes/boss.h
