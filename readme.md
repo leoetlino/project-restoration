@@ -106,6 +106,8 @@ Let *GAME_FILE* be the path to the game file (3ds/cia/app). If you've installed 
 * Copy **code.ips** to that directory and rename the file to **code.ips**. (If you want faster aiming, copy **code_faster_aim.ips** instead and rename the patch to code.ips.)
 * Copy **exheader.bin** to the same folder as the game file, then rename it to ***GAME_FILE*.exheader**.
 
+**IMPORTANT: Read the instructions carefully again. If your game file is called _00000000.app_, the exefsdir folder and the exheader must be called _00000000.app.exefsdir_ and _00000000.app.exheader_ respectively.**
+
 **Example**: If your game is at /home/leo/games/3ds/zelda_mm.3ds, then:
 
 * create /home/leo/games/3ds/zelda_mm.3ds.exefsdir
