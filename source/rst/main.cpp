@@ -44,8 +44,8 @@ void Init(Context& context) {
     util::Print("%08lx %08lx %08lx %08lx %08x", player->flags1.flags, player->flags2.flags,
                 player->flags3.flags, player->flags4, player->flags_94.flags);
 
-    util::Print("state handler: %p - 92C: %u - 92D: %u", player->state_handler_fn,
-                player->fn1_idx, player->fn2_idx);
+    util::Print("state handler: %p - 92C: %u - 92D: %u", player->state_handler_fn, player->fn1_idx,
+                player->fn2_idx);
 
     auto* camera = &gctx->main_camera + gctx->camera_idx;
     util::Print("camera_idx=%u target=%p%s state=%04x mode=%04x", gctx->camera_idx,
@@ -96,9 +96,8 @@ void Calc(game::State* state) {
   FixFreeCameraReset();
   UiOcarinaScreenUpdate();
 
-#if 0
-  PrintDebug(gctx);
-#endif
+  if (false)
+    PrintDebug(context.gctx);
 }
 
 void PreActorCalcHook() {
