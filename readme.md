@@ -27,31 +27,47 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
   * *I*: ZR+X
   * *II*: ZR+Y
   * It is now possible to assign items to I and II with a single press.
+  * The Gears and Map menu can be opened with ZR+Start / ZR+Select respectively.
+  * For the ocarina screen, it is possible to switch between the instrument screen and the song list with Start/Select.
 
 * **More Fluid Bomber's Notebook**: Less annoyingly slow popups and transitions
   * The Bomber's Notebook screen now updates instantly when it's opened instead of waiting for 1.8 seconds just before starting the "new" text animation (!), followed by another 1.18s pause and another 1.56s delay until the main text box appears (!!).
 
 * **Fast Arrow Switching**: Press ZL to quickly switch between arrow types (Normal/Fire/Ice/Light).
 
+* **Song of Time Saving**: The Song of Time now optionally saves the game. Players will be greeted with the iconic *Dawn of the First Day* screen after loading a Song of Time save, just like in the original game.
+
 * **More Effective Inverted Song of Time**: Slow time to 1/3 speed (as in the original)
   * Makes some glitchless challenge runs possible again.
   * Gives the player more time in a three-day cycle.
 
-* **Improved Twinmold Battle**: Less tedious, less confusing
-  * Reduced the number of cycles to make it less repetitive.
-  * Red Twinmold no longer resets its hit counter every time it burrows back into the sand. As a result, the battle is much less confusing for new players.
+* **Improved Bosses**:
+  * Removes the eyeballs from Odolwa, Goht and Gyorg.
+  * Balances Odolwa's AI and attacks to improve gameplay.
+  * Fixes a game bug that caused Odolwa to be invulnerable to attacks and block excessively.
+  * **Improved Twinmold**: Less tedious, less confusing
+    * Reduced the number of cycles to make it less repetitive.
+    * Red Twinmold no longer resets its hit counter every time it burrows back into the sand. As a result, the battle is much less confusing for new players.
 
 * **Restored Ice Arrows**: Ice arrows that work in more locations
   * Ice arrows now work everywhere in Great Bay Temple, not just in Gyorg's room. This gives the player the freedom to experiment with ice arrows. Ice arrows also work in several other areas, just like in the original game.
   * Removed the sparkling water effects as they were an insult to the player's intelligence.
 
 * Other minor adjustments to improve the player's experience:
+  * Adjusted the speed of Stone Tower blocks for a more pleasant climbing experience.
   * The moving platforms in Deku Palace and Woodfall Temple now actually always move.
   * The Bombers will no longer distract the player from a particular cutscene.
   * The new Sheikah hint stone will also no longer distract the player during an important cutscene in the Clock Tower.
   * Captain Keeta now walks as fast as in the original game, which restores the challenge of the chasing mini-game.
   * Link no longer plays the Elegy of Emptiness a second time after it's been played once. This makes Stone Tower a lot less tedious, considering it needs to be played 10+ times to beat Stone Tower Temple normally.
   * For similar reasons, the Song of Soaring is only repeated once during a play session.
+  * Owl statues can now be activated by striking them with a sword.
+  * It is possible to control Goron Link rolling just like in the Nintendo 64 version: hold A and move to roll, release A to stop. The classic control scheme co-exists with the new one.
+  * Free camera mode can now be used more often, notably when targeting, talking or playing the ocarina.
+  * Link can now leave the Swordman's School during training if necessary to avoid wasting time.
+  * Fixed a game bug that caused the "heart container get" sound not to play after getting four heart pieces.
+  * Fixed a game bug that prevented the player from leaving free camera mode by targeting when Zora swimming or Goron rolling.
+  * Fixed a possible softlock during the Twinmold boss intro.
 
 For a list of planned changes, see the [project dashboard](https://github.com/leoetlino/project-restoration/projects/1).
 
