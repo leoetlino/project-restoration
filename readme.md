@@ -69,8 +69,6 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
   * Fixed a game bug that prevented the player from leaving free camera mode by targeting when Zora swimming or Goron rolling.
   * Fixed a possible softlock during the Twinmold boss intro.
 
-For a list of planned changes, see the [project dashboard](https://github.com/leoetlino/project-restoration/projects/1).
-
 ## Setup
 
 1. Download the [latest release](https://github.com/leoetlino/project-restoration/releases).
