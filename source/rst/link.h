@@ -8,7 +8,7 @@ namespace rst::link {
 
 void Init();
 
-void HandleFastArrowSwitch();
+void Calc();
 
 std::optional<game::Action> GetFastArrowAction();
 

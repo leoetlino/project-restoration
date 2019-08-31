@@ -87,7 +87,7 @@ void Calc(game::State* state) {
 
   context.gctx = static_cast<game::GlobalContext*>(state);
   game::CalcCamera();
-  link::HandleFastArrowSwitch();
+  link::Calc();
   FixTime();
   FixIceArrows();
   FixDekuMovingPlatforms();

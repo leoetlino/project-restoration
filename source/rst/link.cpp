@@ -162,15 +162,9 @@ static void SpawnArrowActor(game::GlobalContext* gctx, game::act::Player* player
     s_fast_arrow_state.magic_cost_update_timer = 2;
 }
 
-void HandleFastArrowSwitch() {
+void HandleFastArrowSwitch(game::act::Player* player) {
   game::CommonData& cdata = game::GetCommonData();
   game::GlobalContext* gctx = GetContext().gctx;
-  game::act::Player* player = gctx->GetPlayerActor();
-  if (!player)
-    return;
-
-  if (gctx->IsUiMenuActive())
-    return;
 
   // Reset the override action if the player is not using a bow.
   constexpr u8 first = u8(game::Action::Arrow);
@@ -225,6 +219,23 @@ void HandleFastArrowSwitch() {
       SpawnArrowActor(gctx, player);
     }
   }
+}
+
+void Calc() {
+  game::GlobalContext* gctx = GetContext().gctx;
+  game::act::Player* player = gctx->GetPlayerActor();
+  if (!player)
+    return;
+  if (gctx->IsUiMenuActive())
+    return;
+
+  if (player->controller_info.state) {
+    ++GetContext().a_press_duration;
+    if (!player->controller_info.state->input.buttons.IsSet(game::pad::Button::A))
+      GetContext().a_press_duration = 0;
+  }
+
+  HandleFastArrowSwitch(player);
 }
 
 std::optional<game::Action> GetFastArrowAction() {
