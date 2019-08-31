@@ -106,7 +106,8 @@ bool SwitchToZoraFastSwim(game::GlobalContext* gctx, game::act::Player* player, 
 
 bool ShouldEndGoronRoll(game::act::Player* player) {
   return player->controller_info.state->input.new_buttons.IsSet(game::pad::Button::A) ||
-         player->controller_info.state->input.released_buttons.IsSet(game::pad::Button::A);
+         (player->controller_info.state->input.released_buttons.IsSet(game::pad::Button::A) &&
+          GetContext().a_press_duration >= 15);
 }
 
 struct FastArrowState {
