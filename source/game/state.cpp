@@ -24,7 +24,7 @@ static constexpr StateInfo ex_state_info_table[] = {
 template <typename Predicate>
 static const StateInfo* FindStateInfo(Predicate predicate) {
   const auto* table = rst::util::GetPointer<StateInfo>(0x6883FC);
-  auto it = std::find_if(table, table + 9, predicate);
+  auto it = std::find_if(table, table + 10, predicate);
   if (it != table + 9)
     return it;
 
