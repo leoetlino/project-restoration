@@ -78,7 +78,7 @@ First, **determine which version of the game you have**. Because *Project Restor
 
 * If you have MM3D 1.0 (eShop or game card), you likely have v100 (FYI: v100 is the real, internal version number).
 * If you have MM3D 1.1 on a game card and it came with 1.1 preinstalled, you likely have v110.
-* If you have MM3D 1.1 (eShop or 1.0 game card), then you likely have v101. However for the rest of the instructions you should first
+* If you have MM3D 1.1 (eShop or 1.0 game card), then you likely have v101. However for the rest of the instructions you should first try the v100 patch. Only try v101 if v100 doesn't work.
 
 Using the incorrect patch will cause the console or Citra to abort and crash. If this happens, try the other two patches (after removing any file you copied to your SD/Citra folders while following this guide).
 
