@@ -100,6 +100,7 @@ Please note that:
 
 ### Console
 
+* If you are a first time Luma3DS user, follow [this guide](https://3ds.hacks.guide/).
 * Download [my version of Luma3DS](https://github.com/leoetlino/Luma3DS/releases)\* and put the `boot.firm` file at the root of your SD card.
 * [**Only** if you have ever copied boot.firm to your NAND] Also copy the new boot.firm to your NAND using a tool like godmode9.
 * [Enable game patching in Luma's menu](https://github.com/AuroraWright/Luma3DS/wiki/Optional-features).
