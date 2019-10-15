@@ -19,21 +19,8 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
   * Three of the four D-Pad buttons are now used to fast transform (*Left*: Zora, *Up*: Goron, *Down*: Deku)
   * This frees up as many as 3 buttons!
 
-* **Dedicated Physical Buttons** for more convenient access to items and menus
-  * Open the *Items* menu by pressing START.
-  * The *Bomber's Notebook* is now mapped to SELECT.
-  * *Ocarina of Time*: ZR+A
-  * *Pictograph Box*: ZL
-  * *I*: ZR+X
-  * *II*: ZR+Y
-  * It is now possible to assign items to I and II with a single press.
-  * The Gears and Map menu can be opened with ZR+Start / ZR+Select respectively.
-  * For the ocarina screen, it is possible to switch between the instrument screen and the song list with Start/Select.
-
 * **More Fluid Bomber's Notebook**: Less annoyingly slow popups and transitions
   * The Bomber's Notebook screen now updates instantly when it's opened instead of waiting for 1.8 seconds just before starting the "new" text animation (!), followed by another 1.18s pause and another 1.56s delay until the main text box appears (!!).
-
-* **Fast Arrow Switching**: Press ZL to quickly switch between arrow types (Normal/Fire/Ice/Light).
 
 * **Song of Time Saving**: The Song of Time now optionally saves the game. Players will be greeted with the iconic *Dawn of the First Day* screen after loading a Song of Time save, just like in the original game.
 
@@ -53,6 +40,19 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
   * Ice arrows now work everywhere in Great Bay Temple, not just in Gyorg's room. This gives the player the freedom to experiment with ice arrows. Ice arrows also work in several other areas, just like in the original game.
   * Removed the sparkling water effects as they were an insult to the player's intelligence.
 
+* **Fast Arrow Switching**: Press ZL to quickly switch between arrow types (Normal/Fire/Ice/Light).
+
+* **Dedicated Physical Buttons** for more convenient access to items and menus
+  * Open the *Items* menu by pressing START.
+  * The *Bomber's Notebook* is now mapped to SELECT.
+  * *Ocarina of Time*: ZR+A
+  * *Pictograph Box*: ZL
+  * *I*: ZR+X
+  * *II*: ZR+Y
+  * It is now possible to assign items to I and II with a single press.
+  * The Gears and Map menu can be opened with ZR+Start / ZR+Select respectively.
+  * For the ocarina screen, it is possible to switch between the instrument screen and the song list with Start/Select.
+
 * Other minor adjustments to improve the player's experience:
   * Adjusted the speed of Stone Tower blocks for a more pleasant climbing experience.
   * The moving platforms in Deku Palace and Woodfall Temple now actually always move.
@@ -71,48 +71,83 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
 
 ## Setup
 
-1. Download the [latest release](https://github.com/leoetlino/project-restoration/releases).
-2. Determine which patch to use.
-    * If you have MM3D 1.0, use v100 (which targets the MM3D 1.0 code).
-    * If you have MM3D 1.1, you need to try all three patches and choose whichever works. If your game card came with MM3D 1.1 preinstalled, use v110. Otherwise, try v100 even if you have the 1.1 update installed. If it still won't work, try v101.
-3. Determine what your game's Title ID is:
-    * MM3D EU: 0004000000125600
-    * MM3D US: 0004000000125500
-4. Follow the instructions (for console or Citra) below.
+*Project Restoration* works on both the 3DS console (both eShop and game card) and on the Citra emulator.
 
-Notes:
+First, **determine which version of the game you have**. Because *Project Restoration* works by patching game code and injecting new code, and because Grezzo has released three different versions of the game executable, it is essential that you figure out which version you have in order to use the appropriate Project Restoration patch for your situation.
 
-* If the Project Restoration patch is applied successfully, a sound effect will be played right before the title screen.
-* In order to use the new ZL/ZR buttons, the Circle Pad Pro must be enabled in MM3D's options even on a New 3DS.
+* If you have MM3D 1.0 (eShop or game card), you likely have v100 (FYI: v100 is the real, internal version number).
+* If you have MM3D 1.1 on a game card and it came with 1.1 preinstalled, you likely have v110.
+* If you have MM3D 1.1 (eShop or 1.0 game card), then you likely have v101. However for the rest of the instructions you should first
+
+Using the incorrect patch will cause the console or Citra to abort and crash. If this happens, try the other two patches (after removing any file you copied to your SD/Citra folders while following this guide).
+
+Now, download [the latest release of *Project Restoration*](https://github.com/leoetlino/project-restoration/releases) (**not** source code!) and open the 7z archive. Open the v100/v101/v110 folder in the archive and leave it open for the rest of the instructions.
+
+Second, **determine your game's title ID**. Because the 3DS is a region-locked console, several versions of the game were released for different regions. Each of them has its own title ID.
+
+* For the European release: 0004000000125600
+* For the American release: 0004000000125500
+* For the Japanese release: 00040000000D6E00
+
+Keep both the version number and the title ID in mind, then follow the instructions for your platform (console or Citra) below.
+
+Please note that:
+
+* If the patch is applied successfully, **a sound effect will be played** right before the title screen, even before the spinning mask appears.
+* In order to use the new ZL/ZR buttons, **the Circle Pad Pro must be enabled** in MM3D's options, even if you are playing on a New 3DS.
+* This project only directly supports v100. All other versions of MM3D will be temporarily and automatically downgraded to 1.0 (v100) to ensure the code patches work.
 
 ### Console
 
-A special version of [Luma3DS](https://github.com/AuroraWright/Luma3DS) that supports IPS and BPS patching is required. Download [it from my repository](https://github.com/leoetlino/Luma3DS/releases) and put the `boot.firm` file at the root of your SD card. (Upstreaming BPS patch support is planned once it has received enough testing.)
-
-You may also need to copy boot.firm to your NAND using a tool like godmode9.
-
-* [Enable game patching](https://github.com/AuroraWright/Luma3DS/wiki/Optional-features) in Luma's menu.
-* Create the /luma/titles/*TITLE_ID*/ directory on your SD card (if it doesn't already exist).
-* Copy **code.ips** or **code.bps** (whichever file exists) to that directory. (If you want faster aiming, copy **code_faster_aim.ips/bps** instead and rename the patch to code.ips/bps while keeping the same extension.)
+* Download [my version of Luma3DS](https://github.com/leoetlino/Luma3DS/releases)\* and put the `boot.firm` file at the root of your SD card.
+* [**Only** if you have ever copied boot.firm to your NAND] Also copy the new boot.firm to your NAND using a tool like godmode9.
+* [Enable game patching in Luma's menu](https://github.com/AuroraWright/Luma3DS/wiki/Optional-features).
+* Create the /luma/titles/`TITLE_ID`/ directory/folder on your SD card (if it doesn't already exist). Obviously, please replace `TITLE_ID` with the actual title ID.
+* Copy **code.ips** or **code.bps** (whichever file exists) to that directory.
+  * (If you want faster aiming, copy **code_faster_aim.ips** or **code_faster_aim.bps** instead and rename the patch to code.ips/bps while keeping the same extension.)
 * Copy **exheader_legacy.bin** to that directory and rename the file to **exheader.bin**.
+
+The relevant files on your SD card should look like this at the end:
+
+* SD card root
+  * boot.firm
+  * [Folder] luma
+    * [Folder] titles
+      * [Folder] (the Title ID you determined earlier)
+        * code.ips or code.bps
+        * exheader.bin
+
+\* *Why is a fork necessary?* As of Oct 2019, the latest Luma3DS has a critical bug in the loader code and missing support for BPS patching. Both issues are fixed in the fork, and a fix for the former has been upstreamed and merged. I plan to upstream the BPS patcher at some point when I am less busy and after cleaning it up a bit more. The fork is, of course, open source and you are free to take over the upstreaming effort (it'd be nice if you let me know when you do, though).
 
 ### Citra
 
-**Because Citra does not support BPS patches, only 1.0.0 is supported.** If you have another version, you need to extract the code.bin and apply the patch to code.bin yourself, then put the modified code.bin in exefsdir (see below).
+> **IMPORTANT:** Currently, only MM3D 1.0 (v100) is supported if you are playing on Citra. If you have MM3D 1.1 (v101 or v110), you will need to extract the ExeFS, extract the game executable, and patch it yourself.
 
-Let *GAME_FILE* be the path to the game file (3ds/cia/app). If you've installed the game, GAME_FILE is "sdmc/Nintendo 3DS/00000000000000000000000000000000/00000000000000000000000000000000/title/00040000/00125x00/content/xxxxxxxx.app" (where xxxxxxxx.app is the largest file in that directory).
+Let *GAME_PATH* be the path to the game file (3ds/cia/app), **including the file extension**. For simplicity reasons, do **NOT** install the game in Citra.
 
-* Create the ***GAME_FILE*.exefsdir** directory (if it doesn't already exist).
-* Copy **code.ips** to that directory and rename the file to **code.ips**. (If you want faster aiming, copy **code_faster_aim.ips** instead and rename the patch to code.ips.)
-* Copy **exheader.bin** to the same folder as the game file, then rename it to ***GAME_FILE*.exheader**.
-
-**IMPORTANT: Read the instructions carefully again. If your game file is called _00000000.app_, the exefsdir folder and the exheader must be called _00000000.app.exefsdir_ and _00000000.app.exheader_ respectively.**
+* Create the **`GAME_PATH`.exefsdir** directory/folder (if it doesn't already exist).
+* Copy **code.ips** to that directory and rename the file to **code.ips**.
+  * If you want faster aiming, copy **code_faster_aim.ips** instead and rename the patch to code.ips.
+* Copy **exheader.bin** to the same folder as the game file, then rename it to **`GAME_PATH`.exheader**. It is **very important that you keep the original file extension, and also add '.exheader' at the end**!
 
 **Example**: If your game is at /home/leo/games/3ds/zelda_mm.3ds, then:
 
 * create /home/leo/games/3ds/zelda_mm.3ds.exefsdir
 * copy **code.ips** to /home/leo/games/3ds/zelda_mm.3ds.exefsdir/**code.ips**
-* copy **exheader.bin** and place the file in /home/leo/games/3ds/, calling it **zelda_mm.3ds.exheader**
+* copy **exheader.bin** and place the file in /home/leo/games/3ds/, calling it **zelda_mm.3ds.exheader** (note the double extension!)
+
+**IMPORTANT: Read the instructions carefully again. It is all too common for people to make a mistake with file names.**
+
+* Example: If your game file is called _00000000.app_, the exefsdir folder and the exheader must be called _00000000.app.exefsdir_ and _00000000.app.exheader_ respectively.**
+* Example: If your game file is called _zelda_mm3d.cia_, the exefsdir folder and the exheader must be called _zelda_mm3d.cia.exefsdir_ and _zelda_mm3d.cia.exheader_ respectively.**
+
+The directory which contains your game file should look like this at the end:
+
+* [Folder] Containing directory
+  * yourgamefilenamehere.3ds
+  * yourgamefilenamehere.3ds.exheader
+  * [Folder] yourgamefilenamehere.3ds.exefsdir
+    * code.ips
 
 ## Rationale
 
@@ -141,18 +176,30 @@ as there is nothing in the game that indicates that the hit counter resets every
 and it's still frustrating on subsequent playthroughs.
 
 
-## Project information
+## About the project
+
+*Project Restoration* was born out of frustration with some of the changes in the remaster (regarding Zora Link in particular), with the realisation that I might be able to have my cake and eat it too, and get the best out of the original and MM3D's massively improved graphics and small quality of life improvements.
+
+I personally consider the project to be pretty much complete. The game is **playable with no game-breaking issues**, has been 100% completed several times by myself and others (now that the project is more than two months old!) and I have fixed everything I have most wanted to fix, so I probably will not be working on it very actively anymore. Future versions of *Project Restoration* will most likely only be bug fix releases, which may occasionally bring small new improvements.
+
+### Project structure
+
 * `source/` *Project Restoration*'s source code.
-  * `addresses.h`: Version-specific memory addresses.
-* `v100` and `v110`: Version-specific data.
+  * `build/`: build outputs.
+  * `common/`: small utilities.
+  * `game/`: implementation for the known parts of *Majora's Mask 3D*. Contains headers and some reimplementation of game functions.
+  * `rst/`: *Project Restoration* code.
+* `v100/`, `v101/` and `v110/`: Version-specific data.
     * `hooks.hks`: configuration for patches and hooks (for Magikoopa).
-    * `Version.cmake`: defines for our own code.
+    * `Version.cmake`: defines for *Project Restoration* code.
 * `loader/`: Code loader (from [Magikoopa](https://github.com/RicBent/Magikoopa)).
 
-To build the project:
+Sometimes you will find *Project Restoration* extensions and new code under `source/game`. Those extensions will always be clearly labelled as such.
 
-* Put the original code.bin and exheader.bin in v100 and v110.
-* Run make_release.sh. You need git and Magikoopa in your PATH.
-* Generated code patches (code.ips) and patched exheaders can be found in `release/`.
+### Build instructions
+
+* Put the original code.bin and exheader.bin in v100, v101 and v110.
+* Run make_release.sh. You need git and Magikoopa in your PATH. **Currently, a [fork](https://github.com/leoetlino/Magikoopa) is required**.
+* Generated code patches (code.ips or code.bps) and patched exheaders can be found in `release/`.
 
 PRs and help are welcome!
