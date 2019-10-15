@@ -52,6 +52,7 @@ so playing on a New 3DS/2DS or Citra is recommended for a better experience.
   * It is now possible to assign items to I and II with a single press.
   * The Gears and Map menu can be opened with ZR+Start / ZR+Select respectively.
   * For the ocarina screen, it is possible to switch between the instrument screen and the song list with Start/Select.
+  * Those are obviously optional and are primarily meant for Citra users.
 
 * Other minor adjustments to improve the player's experience:
   * Adjusted the speed of Stone Tower blocks for a more pleasant climbing experience.
