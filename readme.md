@@ -126,8 +126,8 @@ The relevant files on your SD card should look like this at the end:
 
 Let *GAME_PATH* be the path to the game file (3ds/cia/app), **including the file extension**. For simplicity reasons, do **NOT** install the game in Citra.
 
-* Create the **`GAME_PATH`.exefsdir** directory/folder (if it doesn't already exist).
-* Copy **code.ips** to that directory and rename the file to **code.ips**.
+* Create a directory/folder with the path **`GAME_PATH`.exefsdir** (if it doesn't already exist).
+* Copy **code.ips** to that directory.
   * If you want faster aiming, copy **code_faster_aim.ips** instead and rename the patch to code.ips.
 * Copy **exheader.bin** to the same folder as the game file, then rename it to **`GAME_PATH`.exheader**. It is **very important that you keep the original file extension, and also add '.exheader' at the end**!
 
@@ -139,8 +139,8 @@ Let *GAME_PATH* be the path to the game file (3ds/cia/app), **including the file
 
 **IMPORTANT: Read the instructions carefully again. It is all too common for people to make a mistake with file names.**
 
-* Example: If your game file is called _00000000.app_, the exefsdir folder and the exheader must be called _00000000.app.exefsdir_ and _00000000.app.exheader_ respectively.**
-* Example: If your game file is called _zelda_mm3d.cia_, the exefsdir folder and the exheader must be called _zelda_mm3d.cia.exefsdir_ and _zelda_mm3d.cia.exheader_ respectively.**
+* Example: If your game file is called _00000000.app_, the exefsdir folder and the exheader must be called _00000000.app.exefsdir_ and _00000000.app.exheader_ respectively.
+* Example: If your game file is called _zelda_mm3d.cia_, the exefsdir folder and the exheader must be called _zelda_mm3d.cia.exefsdir_ and _zelda_mm3d.cia.exheader_ respectively.
 
 The directory which contains your game file should look like this at the end:
 
