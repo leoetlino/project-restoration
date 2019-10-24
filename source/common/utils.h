@@ -21,11 +21,6 @@ constexpr uintptr_t GetAddr(Ts... addresses) {
   return std::get<Version>(std::forward_as_tuple(addresses...));
 }
 
-template <class... Ts>
-constexpr uintptr_t GetAddr(Ts...) {
-  return 0;
-}
-
 /// Returns a version-specific address from a list of addresses and casts it to Type*.
 template <typename Type, class... Ts>
 constexpr auto GetPointer(Ts... addresses) {
