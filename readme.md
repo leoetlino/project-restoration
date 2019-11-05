@@ -125,12 +125,11 @@ The relevant files on your SD card should look like this at the end:
 
 > **IMPORTANT:** Currently, only MM3D 1.0 (v100) is supported if you are playing on Citra. If you have MM3D 1.1 (v101 or v110), you will need to extract the ExeFS, extract the game executable, and patch it yourself.
 
-Let *GAME_PATH* be the path to the game file (3ds/cia/app), **including the file extension**. For simplicity reasons, do **NOT** install the game in Citra.
-
-* Create a directory/folder with the path **`GAME_PATH`.exefsdir** (if it doesn't already exist).
+* Open the folder containing your game file (3ds/cia/app).
+* Assuming your game file is called `GAME_FILE.extension` (full name including the file extension), create a directory/folder with the path **`GAME_FILE.extension`.exefsdir** (if it doesn't already exist).
 * Copy **code.ips** to that directory.
   * If you want faster aiming, copy **code_faster_aim.ips** instead and rename the patch to code.ips.
-* Copy **exheader.bin** to the same folder as the game file, then rename it to **`GAME_PATH`.exheader**. It is **very important that you keep the original file extension, and also add '.exheader' at the end**!
+* Copy **exheader.bin** to the folder containing your game file, then rename it to **`GAME_FILE.extension`.exheader**. It is **very important that you keep your game ROM's file extension, and also add '.exheader' at the end**!
 
 **Example**: If your game is at /home/leo/games/3ds/zelda_mm.3ds, then:
 
