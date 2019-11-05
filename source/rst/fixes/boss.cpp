@@ -246,8 +246,8 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
   boss->do_not_use_shield = 0;
   boss->taunting_timer = 1800;
   // Clear the remaining collision flags.
-  for (size_t i = 0; i < 11; ++i)
-    boss->collision[i].flags1.Clear(CollisionInfo::Flag1::Collided);
+  for (auto& collision : boss->collision)
+    collision.flags1.Clear(CollisionInfo::Flag1::Collided);
 }
 
 void FixOdolwa() {
