@@ -188,6 +188,8 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
     EmitDamageEffect(*it, DamageEffect::NoDamage);
   } else {
     EmitDamageEffect(*it, DamageEffect::Damage);
+    if (!it->colliding_info->IsType(AttackType::Arrow))
+      EmitDamageFlash(*boss, 0x400000, 0x64, 0, 0x17);
   }
   boss->field_364 *= 0.5f;
   boss->field_368 *= 0.5f;
@@ -236,8 +238,6 @@ extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa*
         }
       }
       sound::PlayEffect(*boss, sound::EffectId::NA_SE_EN_MIBOSS_DAMAGE);
-      if (!it->colliding_info->IsType(AttackType::Arrow))
-        EmitDamageFlash(*boss, 0x400000, 0x64, 0, 0x17);
       boss->invincibility_timer = 8;
       break;
     }
