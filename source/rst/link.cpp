@@ -212,7 +212,8 @@ void HandleFastArrowSwitch(game::act::Player* player) {
 
     s_fast_arrow_state.override_action = static_cast<game::Action>(idx + first);
     player->current_action = player->action = *s_fast_arrow_state.override_action;
-    cdata.save.equipment.data[0].item_btns[player->item_btn_slot] = s_arrow_types[idx].required_item;
+    cdata.save.equipment.data[0].item_btns[player->item_btn_slot] =
+        s_arrow_types[idx].required_item;
     util::Print("%s: override_action is now %u (%s)", __func__,
                 u8(*s_fast_arrow_state.override_action), s_arrow_types[idx].name);
 
