@@ -46,6 +46,7 @@ enum class ItemId : u8 {
   GoronMask = 0x33,
   ZoraMask = 0x34,
   FierceDeityMask = 0x35,
+  GiantMask = 0x49,
   None = 0xff,
 };
 
@@ -59,6 +60,8 @@ enum class Action : u8 {
   DekuBubble = 0x12,
   PictographBox = 0x13,
   Ocarina = 0x14,
+  GiantMask = 0x4F,
+  FierceDeityMask = 0x50,
   GoronMask = 0x51,
   ZoraMask = 0x52,
   DekuMask = 0x53,
