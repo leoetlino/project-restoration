@@ -40,12 +40,15 @@ struct __attribute__((packed)) __attribute__((aligned(2))) PlayerData {
 static_assert(sizeof(PlayerData) == 0x32);
 static_assert(rst::util::OffsetOf(&PlayerData::magic) == 0x1F);
 
-struct FormEquipmentData {
-  ItemId item_btn_b;
-  ItemId item_btn_y;
-  ItemId item_btn_x;
-  ItemId item_btn_i;
-  ItemId item_btn_ii;
+union FormEquipmentData {
+  std::array<ItemId, 5> item_btns;
+  struct {
+    ItemId item_btn_b;
+    ItemId item_btn_y;
+    ItemId item_btn_x;
+    ItemId item_btn_i;
+    ItemId item_btn_ii;
+  };
 };
 
 struct EquipmentData {

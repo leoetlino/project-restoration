@@ -158,7 +158,7 @@ struct Player : public Actor {
 
   char field_1F8;
   FormParamIndex form_param_idx;
-  char field_1FA;
+  u8 item_btn_slot;
   Action current_action;
   ItemId held_item;
   FormParamIndex form_param_idx2;
