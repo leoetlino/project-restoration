@@ -33,11 +33,15 @@ struct TransformAction {
   game::Action action;
   bool usable_in_water;
   const char* name;
+  bool require_zr = false;
 };
 static constexpr TransformAction s_actions[] = {
     {game::pad::Button::Left, game::ItemId::ZoraMask, game::Action::ZoraMask, true, "Zora"},
     {game::pad::Button::Up, game::ItemId::GoronMask, game::Action::GoronMask, false, "Goron"},
     {game::pad::Button::Down, game::ItemId::DekuMask, game::Action::DekuMask, false, "Deku"},
+    // Second-level mappings (make sure require_zr=true!)
+    {game::pad::Button::Up, game::ItemId::FierceDeityMask, game::Action::FierceDeityMask, false,
+     "Fierce Deity", true},
 };
 }  // namespace
 
@@ -51,7 +55,9 @@ void HandleFastTransform() {
   const bool in_water = player->flags1.IsSet(game::act::Player::Flag1::InWater);
   const auto it =
       std::find_if(std::begin(s_actions), std::end(s_actions), [&](const TransformAction& action) {
-        return player->controller_info.state->input.new_buttons.IsSet(action.trigger_btn) &&
+        return player->controller_info.state->input.buttons.IsSet(game::pad::Button::ZR) ==
+                   action.require_zr &&
+               player->controller_info.state->input.new_buttons.IsSet(action.trigger_btn) &&
                (!in_water || action.usable_in_water);
       });
   if (it == std::end(s_actions))
