@@ -9,7 +9,7 @@
 
 namespace game {
 
-Action ItemToAction(ItemId item) {
+Action GetActionForItem(ItemId item) {
   // 0x68F800 in Joker 1.0
   static constexpr Action table[] = {
       Action::Ocarina,    Action::Arrow,         Action::FireArrow, Action::IceArrow,
