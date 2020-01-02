@@ -105,8 +105,8 @@ Please note that:
 * [**Only** if you have ever copied boot.firm to your NAND] Also copy the new boot.firm to your NAND using a tool like godmode9.
 * [Enable game patching in Luma's menu](https://github.com/AuroraWright/Luma3DS/wiki/Optional-features).
 * Create the /luma/titles/`TITLE_ID`/ directory/folder on your SD card (if it doesn't already exist). Obviously, please replace `TITLE_ID` with the actual title ID.
-* Copy **code.ips** or **code.bps** (whichever file exists) to that directory.
-  * (If you want faster aiming, copy **code_faster_aim.ips** or **code_faster_aim.bps** instead and rename the patch to code.ips/bps while keeping the same extension.)
+* Copy **code.bps** to that directory.
+  * (If you want faster aiming, copy **code_faster_aim.bps** instead and rename the patch to code.bps.)
 * Copy **exheader_legacy.bin** to that directory and rename the file to **exheader.bin**.
 
 The relevant files on your SD card should look like this at the end:
@@ -116,25 +116,25 @@ The relevant files on your SD card should look like this at the end:
   * [Folder] luma
     * [Folder] titles
       * [Folder] (the Title ID you determined earlier)
-        * code.ips or code.bps
+        * code.bps
         * exheader.bin
 
-\* *Why is a fork necessary?* As of Oct 2019, the latest Luma3DS has a critical bug in the loader code and missing support for BPS patching. Both issues are fixed in the fork, and a fix for the former has been upstreamed and merged. I plan to upstream the BPS patcher at some point when I am less busy and after cleaning it up a bit more. The fork is, of course, open source and you are free to take over the upstreaming effort (it'd be nice if you let me know when you do, though).
+\* *Why is a fork necessary?* As of Jan 2020, the latest Luma3DS has a critical bug in the loader code and missing support for BPS patching. Both issues are fixed in the fork, and a fix for the former has been upstreamed. A [pull request](https://github.com/AuroraWright/Luma3DS/pull/1349) for BPS patch support has been submitted but not yet merged.
 
 ### Citra
 
-> **IMPORTANT:** Currently, only MM3D 1.0 (v100) is supported if you are playing on Citra. If you have MM3D 1.1 (v101 or v110), you will need to extract the ExeFS, extract the game executable, and patch it yourself.
+Note: Canary 1529+ is required until my [pull request](https://github.com/citra-emu/citra/pull/5036) for BPS patch support is merged.
 
 * Open the folder containing your game file (3ds/cia/app).
 * Assuming your game file is called `GAME_FILE.extension` (full name including the file extension), create a directory/folder with the path **`GAME_FILE.extension`.exefsdir** (if it doesn't already exist).
-* Copy **code.ips** to that directory.
-  * If you want faster aiming, copy **code_faster_aim.ips** instead and rename the patch to code.ips.
+* Copy **code.bps** to that directory.
+  * If you want faster aiming, copy **code_faster_aim.bps** instead and rename the patch to code.bps.
 * Copy **exheader.bin** to the folder containing your game file, then rename it to **`GAME_FILE.extension`.exheader**. It is **very important that you keep your game ROM's file extension, and also add '.exheader' at the end**!
 
 **Example**: If your game is at /home/leo/games/3ds/zelda_mm.3ds, then:
 
 * create /home/leo/games/3ds/zelda_mm.3ds.exefsdir
-* copy **code.ips** to /home/leo/games/3ds/zelda_mm.3ds.exefsdir/**code.ips**
+* copy **code.bps** to /home/leo/games/3ds/zelda_mm.3ds.exefsdir/**code.bps**
 * copy **exheader.bin** and place the file in /home/leo/games/3ds/, calling it **zelda_mm.3ds.exheader** (note the double extension!)
 
 **IMPORTANT: Read the instructions carefully again. It is all too common for people to make a mistake with file names.**
@@ -148,7 +148,7 @@ The directory which contains your game file should look like this at the end:
   * yourgamefilenamehere.3ds
   * yourgamefilenamehere.3ds.exheader
   * [Folder] yourgamefilenamehere.3ds.exefsdir
-    * code.ips
+    * code.bps
 
 ## Rationale
 
@@ -201,6 +201,6 @@ Sometimes you will find *Project Restoration* extensions and new code under `sou
 
 * Put the original code.bin and exheader.bin in v100, v101 and v110.
 * Run make_release.sh. You need git and Magikoopa in your PATH. **Currently, a [fork](https://github.com/leoetlino/Magikoopa) is required**.
-* Generated code patches (code.ips or code.bps) and patched exheaders can be found in `release/`.
+* Generated code patches (code.bps) and patched exheaders can be found in `release/`.
 
 PRs and help are welcome!
