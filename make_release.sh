@@ -39,10 +39,12 @@ build () {
 
   # Copy build output
   mkdir $RELEASE_DIR/$TARGET_VERSION
+  flips -i $RST_ROOT/bak/code.bin $RST_ROOT/code.bin $RELEASE_DIR/$TARGET_VERSION/code.ips
   flips -b $RST_ROOT/bak/code.bin $RST_ROOT/code.bin $RELEASE_DIR/$TARGET_VERSION/code.bps
   cp $RST_ROOT/code.bin $RST_ROOT/source/build/patched_code.bin
   cp $RST_ROOT/source/build/patched_code.bin $RST_ROOT/source/build/patched_code_faster_aim.bin
   $RST_ROOT/make_aiming_speed_patch.py $RST_ROOT/source/build/patched_code_faster_aim.bin 1.50
+  flips -i $RST_ROOT/bak/code.bin $RST_ROOT/source/build/patched_code_faster_aim.bin $RELEASE_DIR/$TARGET_VERSION/code_faster_aim.ips
   flips -b $RST_ROOT/bak/code.bin $RST_ROOT/source/build/patched_code_faster_aim.bin $RELEASE_DIR/$TARGET_VERSION/code_faster_aim.bps
   cp $RST_ROOT/exheader*.bin $RELEASE_DIR/$TARGET_VERSION/
 
