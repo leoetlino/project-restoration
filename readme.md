@@ -123,32 +123,17 @@ The relevant files on your SD card should look like this at the end:
 
 ### Citra
 
-Note: Canary 1529+ is required until my [pull request](https://github.com/citra-emu/citra/pull/5036) for BPS patch support is merged.
-
-* Open the folder containing your game file (3ds/cia/app).
-* Assuming your game file is called `GAME_FILE.extension` (full name including the file extension), create a directory/folder with the path **`GAME_FILE.extension`.exefsdir** (if it doesn't already exist).
+* Right click on the game in the game list and select `Open Mods Location`.
 * Copy **code.bps** to that directory.
   * If you want faster aiming, copy **code_faster_aim.bps** instead and rename the patch to code.bps.
-* Copy **exheader.bin** to the folder containing your game file, then rename it to **`GAME_FILE.extension`.exheader**. It is **very important that you keep your game ROM's file extension, and also add '.exheader' at the end**!
+* Copy **exheader.bin** to that directory.
 
-**Example**: If your game is at /home/leo/games/3ds/zelda_mm.3ds, then:
+The folder should look like this at the end:
 
-* create /home/leo/games/3ds/zelda_mm.3ds.exefsdir
-* copy **code.bps** to /home/leo/games/3ds/zelda_mm.3ds.exefsdir/**code.bps**
-* copy **exheader.bin** and place the file in /home/leo/games/3ds/, calling it **zelda_mm.3ds.exheader** (note the double extension!)
-
-**IMPORTANT: Read the instructions carefully again. It is all too common for people to make a mistake with file names.**
-
-* Example: If your game file is called _00000000.app_, the exefsdir folder and the exheader must be called _00000000.app.exefsdir_ and _00000000.app.exheader_ respectively.
-* Example: If your game file is called _zelda_mm3d.cia_, the exefsdir folder and the exheader must be called _zelda_mm3d.cia.exefsdir_ and _zelda_mm3d.cia.exheader_ respectively.
-
-The directory which contains your game file should look like this at the end:
-
-* [Folder] Containing directory
-  * yourgamefilenamehere.3ds
-  * yourgamefilenamehere.3ds.exheader
-  * [Folder] yourgamefilenamehere.3ds.exefsdir
+* [Folder] Citra's User Directory
+  * [Folder] load/mods/`TITLE ID` (This is the folder opened with `Open Mods Location`)
     * code.bps
+    * exheader.bin
 
 ## Rationale
 
