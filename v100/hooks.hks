@@ -19,6 +19,12 @@ post_actor_calc_hook:
   addr: 0x174E08
   func: rst_PostActorCalcHook
 
+ui_widget_create_hook:
+  type: softbranch
+  opcode: post
+  addr: 0x5C4430
+  func: rst_trampoline_rst_WidgetPostCreateHook
+
 main_loop_get_next_game_state_info:
   type: branch
   link: true

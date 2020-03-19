@@ -100,6 +100,8 @@ void Calc(game::State* state) {
     PrintDebug(context.gctx);
 }
 
+void WidgetPostCreateHook(game::ui::Widget&) {}
+
 void PreActorCalcHook() {
   FixOwlStatueActivationTrigger();
 }
@@ -134,6 +136,10 @@ void UiScheduleTriggerHook() {
 extern "C" {
 RST_HOOK void rst_Calc(game::State* state) {
   rst::Calc(state);
+}
+
+RST_HOOK void rst_WidgetPostCreateHook(game::ui::Widget& widget) {
+  rst::WidgetPostCreateHook(widget);
 }
 
 RST_HOOK void rst_PreActorCalcHook() {

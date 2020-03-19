@@ -15,6 +15,13 @@ public:
   constexpr void Set(FlagType v) { flags |= std::underlying_type_t<FlagType>(v); }
   constexpr void Clear(FlagType v) { flags &= ~std::underlying_type_t<FlagType>(v); }
 
+  constexpr void Set(FlagType v, bool condition) {
+    if (condition)
+      Set(v);
+    else
+      Clear(v);
+  }
+
   constexpr bool IsSet(FlagType v) const {
     return (flags & std::underlying_type_t<FlagType>(v)) != 0;
   }

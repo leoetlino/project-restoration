@@ -91,7 +91,6 @@ public:
   u8 gap_498[1432];
   u32 field_A30;
 };
-static_assert(rst::util::OffsetOf(&MessageWindow::song) == 0x428);
 static_assert(sizeof(MessageWindow) == 0xA34);
 #pragma pack(pop)
 

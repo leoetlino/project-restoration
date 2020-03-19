@@ -3,6 +3,8 @@
 #include <cmath>
 #include <cstdint>
 
+#include <Eigen/Dense>
+
 using u8 = std::uint8_t;
 using u16 = std::uint16_t;
 using u32 = std::uint32_t;
@@ -15,6 +17,11 @@ using size_t = std::size_t;
 
 static_assert(sizeof(u16) == sizeof(short));
 static_assert(sizeof(u32) == sizeof(int));
+
+using Matrix23 = Eigen::Matrix<float, 2, 3, Eigen::RowMajor | Eigen::DontAlign>;
+using Matrix34 = Eigen::Matrix<float, 3, 4, Eigen::RowMajor | Eigen::DontAlign>;
+using Vec2 = Eigen::Matrix<float, 2, 1, Eigen::DontAlign>;
+using Vec4 = Eigen::Matrix<float, 4, 1, Eigen::DontAlign>;
 
 template <typename T = float>
 struct TVec3 {

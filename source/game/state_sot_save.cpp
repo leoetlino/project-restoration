@@ -34,7 +34,7 @@ void StateSotSave::Calc() {
     sotsave_status = Status::WaitingForPackageLoad;
     break;
   case Status::WaitingForPackageLoad:
-    if (ui::PackageMgr::Instance().IsLoading())
+    if (ui::Project::Instance().IsLoading())
       return;
     layout = ui::LayoutMgr::Instance().MakeLayout("Joker.Main.Ending.Ending");
     press_start_layout = ui::LayoutMgr::Instance().MakeLayout("Joker.Main.Ending.EndingPressStart");

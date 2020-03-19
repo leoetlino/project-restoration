@@ -68,6 +68,8 @@ set_target_properties(newcode PROPERTIES SUFFIX ".elf")
 target_compile_options(newcode PRIVATE -fdiagnostics-color=always -Wall -Wextra -std=c++17 -fno-exceptions -fomit-frame-pointer -ffunction-sections)
 target_include_directories(newcode PRIVATE ./)
 
+target_include_directories(newcode SYSTEM PRIVATE lib/eigen/)
+
 if (NOT DEFINED CODEADDR)
   message(FATAL_ERROR "Set CODEADDR")
 endif()

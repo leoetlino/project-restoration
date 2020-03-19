@@ -124,3 +124,11 @@ TRAMPOLINE_DECLARE rst_GameStateGetNextStateInfo
   mov r8, r0 // state
   mov r0, r6 // original instruction
   pop {r1-r7, r9-r12, pc}
+
+TRAMPOLINE_DECLARE rst_WidgetPostCreateHook
+  push {r0-r12, lr}
+  vpush {d0-d15}
+  mov r0, r6 // widget
+  bl rst_WidgetPostCreateHook
+  vpop {d0-d15}
+  pop {r0-r12, pc}
