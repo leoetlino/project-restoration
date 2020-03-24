@@ -40,12 +40,16 @@ build () {
   # Copy build output
   mkdir $RELEASE_DIR/$TARGET_VERSION
   flips -i $RST_ROOT/bak/code.bin $RST_ROOT/code.bin $RELEASE_DIR/$TARGET_VERSION/code.ips
-  flips -b $RST_ROOT/bak/code.bin $RST_ROOT/code.bin $RELEASE_DIR/$TARGET_VERSION/code.bps
+  if [ -z ${RST_DEV+x} ]; then
+    flips -b $RST_ROOT/bak/code.bin $RST_ROOT/code.bin $RELEASE_DIR/$TARGET_VERSION/code.bps
+  fi
   cp $RST_ROOT/code.bin $RST_ROOT/source/build/patched_code.bin
   cp $RST_ROOT/source/build/patched_code.bin $RST_ROOT/source/build/patched_code_faster_aim.bin
   $RST_ROOT/make_aiming_speed_patch.py $RST_ROOT/source/build/patched_code_faster_aim.bin 1.50
-  flips -i $RST_ROOT/bak/code.bin $RST_ROOT/source/build/patched_code_faster_aim.bin $RELEASE_DIR/$TARGET_VERSION/code_faster_aim.ips
-  flips -b $RST_ROOT/bak/code.bin $RST_ROOT/source/build/patched_code_faster_aim.bin $RELEASE_DIR/$TARGET_VERSION/code_faster_aim.bps
+  if [ -z ${RST_DEV+x} ]; then
+    flips -i $RST_ROOT/bak/code.bin $RST_ROOT/source/build/patched_code_faster_aim.bin $RELEASE_DIR/$TARGET_VERSION/code_faster_aim.ips
+    flips -b $RST_ROOT/bak/code.bin $RST_ROOT/source/build/patched_code_faster_aim.bin $RELEASE_DIR/$TARGET_VERSION/code_faster_aim.bps
+  fi
   cp $RST_ROOT/exheader*.bin $RELEASE_DIR/$TARGET_VERSION/
 
   # Clean up
@@ -65,14 +69,14 @@ make_patch_for_secondary_version () {
   wait
 }
 
-if [ -z ${RST_SKIP_110+x} ]; then
+if [ -z ${RST_DEV+x} ]; then
   make_patch_for_secondary_version v101 &
   make_patch_for_secondary_version v110 &
   wait
+
+  print_status "packing"
+
+  pushd $RELEASE_DIR
+  7z a mm3d_project_restoration_${VERSION}.7z .
+  popd
 fi
-
-print_status "packing"
-
-pushd $RELEASE_DIR
-7z a mm3d_project_restoration_${VERSION}.7z .
-popd
