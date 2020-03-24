@@ -51,6 +51,8 @@ add_executable(newcode
   game/ui/message_text.cpp
   game/ui/message_text.h
   game/ui/message_window.h
+  game/ui/res.cpp
+  game/ui/res.h
   rst/fixes/boss.cpp
   rst/fixes/boss.h
   rst/fixes/boss.s

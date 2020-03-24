@@ -17,6 +17,10 @@ namespace game::ui {
 // joker::LayoutManager
 // joker::TextSprite
 
+class Layout;
+class LayoutBase;
+class LayoutClass;
+class ResAnimEntry;
 class Screen;
 
 enum class ScreenType {
@@ -205,9 +209,6 @@ private:
 
 static_assert(sizeof(WidgetPos) == 0x50);
 
-class Layout;
-class LayoutBase;
-
 enum class WidgetType {
   Group = 0,
   Layout = 1,
@@ -267,8 +268,48 @@ public:
   Widget widget;
 };
 
-class AnimPlayer;
-class LayoutClass;
+class AnimEntry {
+public:
+  virtual ~AnimEntry();
+
+  ResAnimEntry* GetData() { return data; }
+
+private:
+  ResAnimEntry* data;
+};
+
+class Anim {
+public:
+  virtual ~Anim();
+
+  const char* GetName() const { return name; }
+  Array<AnimEntry*>& GetEntries() { return entries; }
+
+private:
+  float fps = 60.0;
+  const char* name = nullptr;
+  int min_frame = 0;
+  Array<AnimEntry*> entries;
+};
+static_assert(sizeof(Anim) == 0x18);
+
+class AnimPlayer {
+public:
+  virtual ~AnimPlayer();
+
+  const char* GetName() const { return name; }
+  Anim* GetAnim() const { return anim; }
+
+private:
+  const char* name = nullptr;
+  bool x8 = false;
+  bool x9 = false;
+  bool xa = false;
+  Anim* anim = nullptr;
+  float frame = 0.0;
+  float speed = 1.0;
+};
+static_assert(sizeof(AnimPlayer) == 0x18);
 
 class LayoutBase {
 public:
@@ -284,6 +325,8 @@ public:
   const char* GetName() const { return name; }
   Widget* GetRootWidget() { return &root_widget; }
   const Array<Widget*>& GetWidgets() const { return widgets; }
+  const Array<AnimPlayer*>& GetAnimPlayers() const { return players; }
+  AnimPlayer* GetAnimPlayer(const char* name) const;
   Widget* GetWidget(const char* name) const;
   Pane* GetPane(const char* name) const;
 
