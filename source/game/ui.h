@@ -192,7 +192,7 @@ class Layout;
 class LayoutBase;
 
 enum class WidgetType {
-  Widget = 0,
+  Group = 0,
   Layout = 1,
   MainWidget = 2,
   Pane = 3,
