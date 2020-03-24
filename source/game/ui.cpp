@@ -79,14 +79,21 @@ void LayoutBase::calc(float speed) {
   rst::util::GetPointer<void(LayoutBase*, float)>(0x161AE8)(this, speed);
 }
 
-Widget* LayoutBase::GetWidget(const char* name) const {
-  return rst::util::GetPointer<Widget*(const LayoutBase*, const char*)>(0x13BE78)(this, name);
+AnimPlayer* LayoutBase::GetAnimPlayer(std::string_view name) const {
+  for (auto* player : players) {
+    if (player->GetName() == name)
+      return player;
+  }
+  return nullptr;
 }
 
-Pane* LayoutBase::GetPane(const char* name) const {
-  std::string_view name_sv = name;
+Widget* LayoutBase::GetWidget(std::string_view name) {
+  return root_widget.GetWidget(name);
+}
+
+Pane* LayoutBase::GetPane(std::string_view name) const {
   for (auto* pane : panes) {
-    if (pane->GetName() == name_sv)
+    if (pane->GetName() == name)
       return pane;
   }
   return nullptr;
@@ -100,6 +107,19 @@ WidgetType Widget::GetType() const {
   if (main_widget_idx != 0xffff)
     return WidgetType::MainWidget;
   return WidgetType::Pane;
+}
+
+Widget* Widget::GetWidget(std::string_view name) {
+  if (this->name == name)
+    return this;
+
+  // Search for the widget recursively.
+  for (auto* widget : widgets) {
+    if (auto* found = widget->GetWidget(name))
+      return found;
+  }
+
+  return nullptr;
 }
 
 void Widget::PrintDebug() {

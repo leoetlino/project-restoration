@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string_view>
+
 #include "common/flags.h"
 #include "common/types.h"
 
@@ -231,6 +233,8 @@ public:
   Layout* GetLayout() const { return layout; }
   Pane* GetPane() const { return pane; }
 
+  Widget* GetWidget(std::string_view name);
+
   Matrix34& GetMtx() { return mtx; }
   WidgetPos& GetPos() { return pos; }
   WidgetPos& GetOldPos() { return old_pos; }
@@ -326,9 +330,9 @@ public:
   Widget* GetRootWidget() { return &root_widget; }
   const Array<Widget*>& GetWidgets() const { return widgets; }
   const Array<AnimPlayer*>& GetAnimPlayers() const { return players; }
-  AnimPlayer* GetAnimPlayer(const char* name) const;
-  Widget* GetWidget(const char* name) const;
-  Pane* GetPane(const char* name) const;
+  AnimPlayer* GetAnimPlayer(std::string_view name) const;
+  Widget* GetWidget(std::string_view name);
+  Pane* GetPane(std::string_view name) const;
 
 private:
   LayoutClass* cl;
