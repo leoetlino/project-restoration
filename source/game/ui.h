@@ -139,6 +139,19 @@ struct WidgetPos {
 
     Visible2 = 0x20000,
 
+    DefaultField24_X = 0x40000,
+    DefaultField24_Y = 0x80000,
+
+    DefaultField2C_X = 0x100000,
+    DefaultField2C_Y = 0x200000,
+
+    DefaultField34 = 0x400000,
+
+    DefaultColorR = 0x800000,
+    DefaultColorG = 0x1000000,
+    DefaultColorB = 0x2000000,
+    DefaultColorA = 0x4000000,
+    // alias for DefaultColorA
     DefaultOpacity = 0x4000000,
   };
 
@@ -171,9 +184,13 @@ struct WidgetPos {
   Vec3 translate;
   Vec3 scale;
   Vec3 field_18;
+  // default (0.0, 0.0)
   Vec2 field_24;
+  // default (1.0, 1.0)
   Vec2 field_2C;
+  // default 0.0
   float field_34;
+  // RGBA, default #ffffffff
   Vec4 color;
   rst::Flags<Flag> flags;
   rst::Flags<Flag> active_flags;
