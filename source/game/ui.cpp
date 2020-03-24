@@ -94,7 +94,7 @@ Pane* LayoutBase::GetPane(const char* name) const {
 
 WidgetType Widget::GetType() const {
   if (widgets.data)
-    return WidgetType::Widget;
+    return WidgetType::Group;
   if (layout)
     return WidgetType::Layout;
   if (main_widget_idx != 0xffff)
