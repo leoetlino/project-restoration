@@ -180,7 +180,7 @@ bool Project::IsLoading() const {
 }
 
 LayoutDrawMgr& LayoutDrawMgr::Instance() {
-  return *rst::util::GetPointer<LayoutDrawMgr*()>(0x17EC58)();
+  return *rst::util::GetPointer<LayoutDrawMgr*()>(0x169824)();
 }
 
 void LayoutDrawMgr::ControlLayout(Layout* layout, int a, int b) {
