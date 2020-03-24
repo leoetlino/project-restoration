@@ -129,6 +129,14 @@ void Widget::PrintDebug() {
                    GetPos().active_flags.flags, vec4(3));
 }
 
+Anim* LayoutClass::GetAnim(std::string_view name) const {
+  for (auto& anim : GetAnims()) {
+    if (anim.GetName() == name)
+      return &anim;
+  }
+  return nullptr;
+}
+
 LayoutMgr& LayoutMgr::Instance() {
   return rst::util::GetInstance<LayoutMgr>(std::tuple{0x7CDC9C}, std::tuple{0x6B0AFC},
                                            std::tuple{0x16963C});

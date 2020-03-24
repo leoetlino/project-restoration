@@ -3,7 +3,12 @@
 #include <string_view>
 
 #include "common/flags.h"
+#include "common/span.h"
 #include "common/types.h"
+
+namespace game {
+class Allocator;
+}
 
 namespace game::ui {
 
@@ -22,7 +27,9 @@ namespace game::ui {
 class Layout;
 class LayoutBase;
 class LayoutClass;
+class PaneFactory;
 class ResAnimEntry;
+class ResLayout;
 class Screen;
 
 enum class ScreenType {
@@ -306,6 +313,9 @@ public:
   const char* GetName() const { return name; }
   Anim* GetAnim() const { return anim; }
 
+  float GetSpeed() const { return speed; }
+  void SetSpeed(float new_speed) { speed = new_speed; }
+
 private:
   const char* name = nullptr;
   bool x8 = false;
@@ -329,6 +339,7 @@ public:
   void calc(float speed = 0.033333);
 
   const char* GetName() const { return name; }
+  LayoutClass& GetCl() const { return *cl; }
   Widget* GetRootWidget() { return &root_widget; }
   const Array<Widget*>& GetWidgets() const { return widgets; }
   const Array<AnimPlayer*>& GetAnimPlayers() const { return players; }
@@ -353,6 +364,28 @@ private:
   void* field_16C;
 };
 static_assert(sizeof(Layout) == 0x170);
+
+class LayoutClass {
+public:
+  virtual ~LayoutClass();
+
+  const char* GetName() const { return name; }
+  Anim* GetAnim(std::string_view name) const;
+  tcb::span<Anim> GetAnims() const { return {anims, num_anims}; }
+
+private:
+  u16 package_idx;
+  u16 layout_id;
+  ResLayout* res_layout;
+  u32 res_layout_size;
+  u16 num_panes;
+  u16 num_anims;
+  Anim* anims;
+  const char* name;
+  Allocator* allocator;
+  PaneFactory* pane_factory;
+};
+static_assert(sizeof(LayoutClass) == 0x24);
 
 class LayoutMgr {
 public:
