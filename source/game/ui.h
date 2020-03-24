@@ -55,11 +55,13 @@ enum class PaneType : u16 {
 template <typename T>
 struct Array {
   T* data;
-  int size;
+  size_t size;
 
   auto begin() const { return data; }
   auto end() const { return data + size; }
   explicit operator bool() const { return data != nullptr; }
+  auto& operator[](size_t index) { return data[index]; }
+  const auto& operator[](size_t index) const { return data[index]; }
 };
 
 class Pane {
