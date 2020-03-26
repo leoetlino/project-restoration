@@ -35,7 +35,6 @@ static_assert(sizeof(ScreenContext) == 0x14);
 class Screen {
 public:
   virtual ~Screen() = default;
-  virtual void m1() {}
   virtual void Init(ScreenContext&) {}
   virtual void m3() {}
   virtual void PrepareOpen(ScreenContext&) {}

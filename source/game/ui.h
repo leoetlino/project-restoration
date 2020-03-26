@@ -76,7 +76,6 @@ struct Array {
 class Pane {
 public:
   virtual ~Pane();
-  virtual void m1();
   virtual void m2();
   virtual void m3();
   virtual void m4();
@@ -232,7 +231,6 @@ enum class WidgetType {
 class Widget {
 public:
   virtual ~Widget();
-  virtual void m1();
   virtual void init0(LayoutBase* layout, const char* name);
   virtual void init(LayoutBase* layout, const char* name);
   virtual void reset();
@@ -332,7 +330,6 @@ static_assert(sizeof(AnimPlayer) == 0x18);
 class LayoutBase {
 public:
   virtual ~LayoutBase();
-  virtual void m1();
   virtual void init(LayoutClass*, MainWidget** main_widgets, int num_main_widgets,
                     AnimPlayer** players, int num_players, const char* name);
   virtual void m3();
