@@ -25,8 +25,8 @@ struct ScreenContext {
   Screen* active_screen = nullptr;
   /// The screen that is soon to be opened and shown.
   Screen* new_screen = nullptr;
-  bool allow_open = true;
-  bool allow_close = true;
+  bool open_finished = true;
+  bool close_finished = true;
 };
 static_assert(sizeof(ScreenContext) == 0x14);
 
@@ -39,13 +39,17 @@ public:
   virtual void m3() {}
   virtual void PrepareOpen(ScreenContext&) {}
   virtual void m4() {}
-  virtual bool ShouldOpen(ScreenContext&) { return true; }
+  /// Called while opening the screen.
+  /// Return true when finished.
+  virtual bool CalcOpen(ScreenContext&) { return true; }
   virtual void Open(ScreenContext&) {}
   virtual void Calc(ScreenContext&) {}
   /// Called after game state calc.
   virtual void Draw(ScreenContext&) {}
   virtual void PrepareClose(ScreenContext&) {}
-  virtual bool ShouldClose(ScreenContext&) { return true; }
+  /// Called while closing the screen.
+  /// Return true when finished (typically, after animations have completed).
+  virtual bool CalcClose(ScreenContext&) { return true; }
   virtual void Close(ScreenContext&) {}
 };
 static_assert(sizeof(Screen) == 0x4);

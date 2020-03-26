@@ -25,7 +25,7 @@ void MainScreen::PrepareClose(ScreenContext& ctx) {
   rst::util::GetPointer<void(MainScreen*, ScreenContext&)>(0x59BC10)(this, ctx);
 }
 
-bool MainScreen::ShouldClose(ScreenContext& ctx) {
+bool MainScreen::CalcClose(ScreenContext& ctx) {
   return rst::util::GetPointer<bool(MainScreen*, ScreenContext&)>(0x59B3CC)(this, ctx);
 }
 

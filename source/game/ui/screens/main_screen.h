@@ -19,7 +19,7 @@ public:
   void Calc(ScreenContext&) override;
   void Draw(ScreenContext&) override;
   void PrepareClose(ScreenContext&) override;
-  bool ShouldClose(ScreenContext&) override;
+  bool CalcClose(ScreenContext&) override;
   void Close(ScreenContext&) override;
 
 protected:
