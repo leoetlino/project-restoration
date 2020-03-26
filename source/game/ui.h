@@ -31,6 +31,7 @@ class PaneFactory;
 class ResAnimEntry;
 class ResLayout;
 class Screen;
+struct ScreenContext;
 
 enum class ScreenType {
   Black,
@@ -45,8 +46,9 @@ enum class ScreenType {
 };
 Screen* GetScreen(ScreenType screen);
 bool OpenScreen(ScreenType screen);
-
 bool CheckCurrentScreen(ScreenType screen);
+
+ScreenContext& GetScreenContext();
 
 enum class PaneType : u16 {
   Null = 0,
