@@ -318,7 +318,7 @@ public:
 
 private:
   const char* name = nullptr;
-  bool x8 = false;
+  bool playing = false;
   bool x9 = false;
   bool xa = false;
   Anim* anim = nullptr;
