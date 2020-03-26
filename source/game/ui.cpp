@@ -7,18 +7,9 @@
 #include "common/utils.h"
 #include "game/context.h"
 #include "game/static_context.h"
+#include "game/ui/screens/screen.h"
 
 namespace game::ui {
-
-// Temporary name. Structure is also likely to be very incomplete.
-struct ScreenContext {
-  void* vtable;
-  void* state;
-  Screen* active_screen;
-  Screen* new_screen;
-  bool allow_open;
-  bool allow_close;
-};
 
 ScreenContext& GetScreenContext() {
   return *rst::util::GetPointer<ScreenContext>(0x72F5BC);
