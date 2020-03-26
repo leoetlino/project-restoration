@@ -35,18 +35,18 @@ static_assert(sizeof(ScreenContext) == 0x14);
 class Screen {
 public:
   virtual ~Screen() = default;
-  virtual void m1();
-  virtual void Init(ScreenContext& ctx);
-  virtual void m3();
-  virtual void PrepareOpen(ScreenContext& ctx);
-  virtual bool ShouldOpen(ScreenContext& ctx);
-  virtual void Open(ScreenContext& ctx);
-  virtual void Calc(ScreenContext& ctx);
+  virtual void m1() {}
+  virtual void Init(ScreenContext&) {}
+  virtual void m3() {}
+  virtual void PrepareOpen(ScreenContext&) {}
+  virtual bool ShouldOpen(ScreenContext&) { return true; }
+  virtual void Open(ScreenContext&) {}
+  virtual void Calc(ScreenContext&) {}
   /// Called after game state calc.
-  virtual void Draw(ScreenContext& ctx);
-  virtual void PrepareClose(ScreenContext& ctx);
-  virtual bool ShouldClose(ScreenContext& ctx);
-  virtual void Close(ScreenContext& ctx);
+  virtual void Draw(ScreenContext&) {}
+  virtual void PrepareClose(ScreenContext&) {}
+  virtual bool ShouldClose(ScreenContext&) { return true; }
+  virtual void Close(ScreenContext&) {}
 };
 static_assert(sizeof(Screen) == 0x4);
 
