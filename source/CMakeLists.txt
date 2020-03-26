@@ -53,6 +53,7 @@ add_executable(newcode
   game/ui/message_window.h
   game/ui/res.cpp
   game/ui/res.h
+  game/ui/screens/main_screen.cpp
   game/ui/screens/main_screen.h
   game/ui/screens/screen.h
   rst/fixes/boss.cpp

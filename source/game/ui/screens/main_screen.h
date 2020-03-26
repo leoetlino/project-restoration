@@ -13,7 +13,22 @@ class Widget;
 /// Used for normal gameplay most of the time; shows the touch panel (hearts, magic, etc.) on the
 /// bottom screen.
 class MainScreen : public Screen {
-private:
+public:
+  void Init(ScreenContext&) override;
+  void Open(ScreenContext&) override;
+  void Calc(ScreenContext&) override;
+  void Draw(ScreenContext&) override;
+  void PrepareClose(ScreenContext&) override;
+  bool ShouldClose(ScreenContext&) override;
+  void Close(ScreenContext&) override;
+
+protected:
+  void UpdateButtons(ScreenContext&);
+  void UpdateRupee(ScreenContext&);
+  void UpdateHeart(ScreenContext&);
+  void UpdateMagic(ScreenContext&);
+  void UpdateKey(ScreenContext&);
+
   /// Button press handler?
   void* vtable_4;
   Widget* field_8;
@@ -28,9 +43,9 @@ private:
   Widget* dispNoMapPane;
   Widget* rankTen;
   Widget* rankHundred;
-  Layout* playTouchPanel;
-  Layout* CommonBottomBg;
-  Layout* playBg;
+  Layout* playTouchPanel = nullptr;
+  Layout* CommonBottomBg = nullptr;
+  Layout* playBg = nullptr;
   Layout* btn_y_g;
   Layout* btn_x_g;
   Layout* btn_corner01_g;
@@ -51,10 +66,10 @@ private:
   Layout* rankHundred_l;
   Layout* numKey_l;
   Layout* numKeyRankTen_l;
-  AnimPlayer* transition;
-  AnimPlayer* gauge_value;
-  AnimPlayer* gauge_scale;
-  AnimPlayer* gauge_color;
+  AnimPlayer* transition = nullptr;
+  AnimPlayer* gauge_value = nullptr;
+  AnimPlayer* gauge_scale = nullptr;
+  AnimPlayer* gauge_color = nullptr;
   AnimPlayer* magic_gauge_position;
   AnimPlayer* magic_gauge_value;
   AnimPlayer* lupy_color;
@@ -70,15 +85,15 @@ private:
   u16 field_1E2;
   s16 shownRupeeCount;
   u8 numSmallKeys;
-  s8 magic_max;
-  s8 magic;
-  s8 magic_stuff;
-  s8 magic_anonymous_l;
-  s8 magic_stuff_2;
-  u8 field_1EC;
+  s8 magic_max = -1;
+  s8 magic = -1;
+  s8 magic_stuff = -1;
+  s8 magic_anonymous_l = -1;
+  s8 magic_stuff_2 = -1;
+  u8 field_1EC = 0;
   u8 field_1ED;
-  u8 field_1EE;
-  u8 field_1EF;
+  u8 field_1EE = 0;
+  u8 field_1EF = 0;
 };
 static_assert(sizeof(MainScreen) == 0x1F0);
 
