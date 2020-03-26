@@ -19,7 +19,7 @@ struct Context {
 static_assert(sizeof(Context) == 0x178);
 
 struct ScreenContext {
-  virtual ~ScreenContext();
+  virtual ~ScreenContext() = default;
   Context* ctx;
   /// The currently opened screen.
   Screen* active_screen = nullptr;
@@ -34,7 +34,7 @@ static_assert(sizeof(ScreenContext) == 0x14);
 // It is responsible for orchestrating layouts and handling transitions between game menus.
 class Screen {
 public:
-  virtual ~Screen();
+  virtual ~Screen() = default;
   virtual void m1();
   virtual void Init(ScreenContext& ctx);
   virtual void m3();
