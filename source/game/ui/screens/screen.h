@@ -38,6 +38,7 @@ public:
   virtual void Init(ScreenContext&) {}
   virtual void m3() {}
   virtual void PrepareOpen(ScreenContext&) {}
+  virtual void m4() {}
   virtual bool ShouldOpen(ScreenContext&) { return true; }
   virtual void Open(ScreenContext&) {}
   virtual void Calc(ScreenContext&) {}
