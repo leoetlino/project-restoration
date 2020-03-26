@@ -24,10 +24,10 @@ public:
 
 protected:
   void UpdateButtons(ScreenContext&);
-  void UpdateRupee(ScreenContext&);
-  void UpdateHeart(ScreenContext&);
-  void UpdateMagic(ScreenContext&);
-  void UpdateKey(ScreenContext&);
+  void UpdateRupee();
+  void UpdateHeart();
+  void UpdateMagic();
+  void UpdateKey(Context&);
 
   /// Button press handler?
   void* vtable_4;

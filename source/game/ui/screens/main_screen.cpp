@@ -37,20 +37,20 @@ void MainScreen::UpdateButtons(ScreenContext& ctx) {
   rst::util::GetPointer<void(MainScreen*, ScreenContext&)>(0x59A874)(this, ctx);
 }
 
-void MainScreen::UpdateRupee(ScreenContext& ctx) {
-  rst::util::GetPointer<void(MainScreen*, ScreenContext&)>(0x59AB38)(this, ctx);
+void MainScreen::UpdateRupee() {
+  rst::util::GetPointer<void(MainScreen*)>(0x59AB38)(this);
 }
 
-void MainScreen::UpdateHeart(ScreenContext& ctx) {
-  rst::util::GetPointer<void(MainScreen*, ScreenContext&)>(0x59ACBC)(this, ctx);
+void MainScreen::UpdateHeart() {
+  rst::util::GetPointer<void(MainScreen*)>(0x59ACBC)(this);
 }
 
-void MainScreen::UpdateMagic(ScreenContext& ctx) {
-  rst::util::GetPointer<void(MainScreen*, ScreenContext&)>(0x59AED0)(this, ctx);
+void MainScreen::UpdateMagic() {
+  rst::util::GetPointer<void(MainScreen*)>(0x59AED0)(this);
 }
 
-void MainScreen::UpdateKey(ScreenContext& ctx) {
-  rst::util::GetPointer<void(MainScreen*, ScreenContext&)>(0x59B040)(this, ctx);
+void MainScreen::UpdateKey(Context& ctx) {
+  rst::util::GetPointer<void(MainScreen*, Context&)>(0x59B040)(this, ctx);
 }
 
 }  // namespace game::ui
