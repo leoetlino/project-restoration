@@ -20,7 +20,7 @@ Player::ArrowInfo Player::GetArrowInfo(GlobalContext* gctx) const {
     info.item_id = ItemId::Arrow;
     // Extension: Nintendo directly uses current_action here.
     info.actor_param = u8(rst::link::GetFastArrowAction().value_or(current_action)) - 7;
-    if (flags1.IsSet(Player::Flag1::Unk800000))
+    if (flags1.IsSet(Player::Flag1::Riding))
       info.actor_param = 1;
   }
 
@@ -31,7 +31,7 @@ Player::ArrowInfo Player::GetArrowInfo(GlobalContext* gctx) const {
         cdata.save.player.magic >= 2 || ((cdata.save.anonymous_72 & 1) && gctx->scene == 0x11);
   } else {
     info.can_use = flags3.IsSet(Flag3::DekuStuffMaybe) ||
-                   (cdata.field_3696 == 1 && gctx->field_866C) || gctx->field_C531 ||
+                   (cdata.field_3696 == 1 && gctx->hud_state.field_244) || gctx->field_C531 ||
                    rst::util::GetPointer<bool(ItemId)>(0x224EF8)(info.item_id);
   }
 

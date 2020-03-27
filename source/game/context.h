@@ -83,6 +83,51 @@ enum class OcarinaSong : u16 {
   Invalid = 0xff,
 };
 
+struct HudState {
+  u32 field_0;
+  u8 gap_4[86];
+  u16 field_5A;
+  u8 gap_5C[380];
+  u32 field_1D8;
+  u8 gap_1DC[36];
+  u32 field_200;
+  u8 gap_204[28];
+  u16 field_220;
+  s16 a_btn_num;
+  s16 field_224;
+  u8 gap_226[2];
+  float field_228;
+  u8 gap_22C[4];
+  u16 field_230;
+  u8 gap_232[10];
+  s16 field_23C;
+  u8 num_carrots;
+  u8 gap_23F[5];
+  u16 field_244;
+  u16 field_246;
+  u16 field_248;
+  u16 field_24A;
+  u16 field_24C;
+  u16 buttonUsable[5];
+  u16 cameraUsable;
+  u16 field_25A;
+  u8 gap_25C[6];
+  u16 field_262;
+  u16 field_264;
+  char field_266;
+  char field_267;
+  u16 field_268;
+  u8 gap_26A[2];
+  char field_26C;
+  char field_26D;
+  u16 needLoadPerfectLayout;
+  int field_270;
+  int field_274;
+  int field_278;
+  int field_27C;
+};
+static_assert(sizeof(HudState) == 0x280);
+
 // Likely incomplete.
 struct GlobalContext : State {
   bool IsUiMenuActive() const { return ui_menu_state != game::UiMenuState::Closed; }
@@ -173,22 +218,8 @@ struct GlobalContext : State {
   u8 gap_8384[88];
   u32 field_83DC;
   u8 gap_83E0[72];
-  u32 field_8428;
-  u8 gap_842C[468];
-  u32 field_8600;
-  u8 gap_8604[68];
-  u16 field_8648;
-  u8 gap_864A[12];
-  u16 field_8656;
-  u8 gap_8658[16];
-  u16 field_8668;
-  u16 field_866A;
-  u16 field_866C;
-  u8 gap_866E[30];
-  char field_868C;
-  __attribute__((aligned(4))) u8 gap_8690[20];
-  bool field_86A4_involved_in_form_check;
-  __attribute__((aligned(4))) u8 gap_86A8[4];
+  HudState hud_state;
+  u8 gap_86A8[4];
   u16 field_86AC;
   __attribute__((aligned(4))) u8 gap_86B0[272];
   u32 field_87C0;
