@@ -23,6 +23,11 @@ public:
   void Close(ScreenContext&) override;
 
 protected:
+  struct AnimPlayerAndAnim {
+    AnimPlayer* player;
+    Anim* anim;
+  };
+
   void UpdateButtons(ScreenContext&);
   void UpdateRupee();
   void UpdateHeart();
@@ -80,7 +85,7 @@ protected:
   Layout* heartLayouts[20];
   AnimPlayer* heartBreakPlayers[20];
   AnimPlayer* heartBeatPlayers[20];
-  int field_1B0[12];
+  AnimPlayerAndAnim carrot_anims[6];
   u16 field_1E0;
   u16 field_1E2;
   s16 shownRupeeCount;
@@ -91,7 +96,7 @@ protected:
   s8 magic_anonymous_l = -1;
   s8 magic_stuff_2 = -1;
   u8 field_1EC = 0;
-  u8 field_1ED;
+  u8 num_carrots;
   u8 field_1EE = 0;
   u8 field_1EF = 0;
 };
