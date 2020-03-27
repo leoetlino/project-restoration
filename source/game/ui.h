@@ -310,59 +310,33 @@ class AnimPlayer {
 public:
   virtual ~AnimPlayer();
 
-  const char* GetName() const { return name; }
-  Anim* GetAnim() const { return anim; }
+  void Play(Anim* anim, float frame = 0.0, bool x9 = false);
+  void SetAnimAndPause(Anim* anim, float frame);
+  // The current play state (playing/paused and frame) is kept.
+  void ChangeAnim(Anim* anim);
+  void Stop();
+  void Reset();
 
-  float GetSpeed() const { return speed; }
-  void SetSpeed(float new_speed) { speed = new_speed; }
+  bool IsPlaying() const { return m_playing; }
+
+  const char* GetName() const { return m_name; }
+  Anim* GetAnim() const { return m_anim; }
+
+  float GetFrame() const { return m_frame; }
+  void SetFrame(float frame);
+  float GetSpeed() const { return m_speed; }
+  void SetSpeed(float speed) { m_speed = speed; }
 
 private:
-  const char* name = nullptr;
-  bool playing = false;
-  bool x9 = false;
-  bool xa = false;
-  Anim* anim = nullptr;
-  float frame = 0.0;
-  float speed = 1.0;
+  const char* m_name = nullptr;
+  bool m_playing = false;
+  bool m_x9 = false;
+  bool m_xa = false;
+  Anim* m_anim = nullptr;
+  float m_frame = 0.0;
+  float m_speed = 1.0;
 };
 static_assert(sizeof(AnimPlayer) == 0x18);
-
-class LayoutBase {
-public:
-  virtual ~LayoutBase();
-  virtual void init(LayoutClass*, MainWidget** main_widgets, int num_main_widgets,
-                    AnimPlayer** players, int num_players, const char* name);
-  virtual void m3();
-  virtual void calc(Matrix34& mtx, Vec4& vec, Matrix23& mtx2, int, float speed);
-
-  void calc(float speed = 0.033333);
-
-  const char* GetName() const { return name; }
-  LayoutClass& GetCl() const { return *cl; }
-  Widget* GetRootWidget() { return &root_widget; }
-  const Array<Widget*>& GetWidgets() const { return widgets; }
-  const Array<AnimPlayer*>& GetAnimPlayers() const { return players; }
-  AnimPlayer* GetAnimPlayer(std::string_view name) const;
-  Widget* GetWidget(std::string_view name);
-  Pane* GetPane(std::string_view name) const;
-
-private:
-  LayoutClass* cl;
-  Widget root_widget;
-  Array<Widget*> main_widgets;
-  Array<AnimPlayer*> players;
-  Array<Widget*> widgets;
-  Array<Pane*> panes;
-  u8 field_164;
-  const char* name;
-};
-static_assert(sizeof(LayoutBase) == 0x16C);
-
-class Layout : public LayoutBase {
-private:
-  void* field_16C;
-};
-static_assert(sizeof(Layout) == 0x170);
 
 class LayoutClass {
 public:
@@ -385,6 +359,44 @@ private:
   PaneFactory* pane_factory;
 };
 static_assert(sizeof(LayoutClass) == 0x24);
+
+class LayoutBase {
+public:
+  virtual ~LayoutBase();
+  virtual void init(LayoutClass*, MainWidget** main_widgets, int num_main_widgets,
+                    AnimPlayer** players, int num_players, const char* name);
+  virtual void m3();
+  virtual void calc(Matrix34& mtx, Vec4& vec, Matrix23& mtx2, int, float speed);
+
+  void calc(float speed = 0.033333);
+
+  const char* GetName() const { return name; }
+  LayoutClass& GetCl() const { return *cl; }
+  Widget* GetRootWidget() { return &root_widget; }
+  const Array<Widget*>& GetWidgets() const { return widgets; }
+  const Array<AnimPlayer*>& GetAnimPlayers() const { return players; }
+  AnimPlayer* GetAnimPlayer(std::string_view name) const;
+  Anim* GetAnim(std::string_view name) const { return cl->GetAnim(name); }
+  Widget* GetWidget(std::string_view name);
+  Pane* GetPane(std::string_view name) const;
+
+private:
+  LayoutClass* cl;
+  Widget root_widget;
+  Array<Widget*> main_widgets;
+  Array<AnimPlayer*> players;
+  Array<Widget*> widgets;
+  Array<Pane*> panes;
+  u8 field_164;
+  const char* name;
+};
+static_assert(sizeof(LayoutBase) == 0x16C);
+
+class Layout : public LayoutBase {
+private:
+  void* field_16C;
+};
+static_assert(sizeof(Layout) == 0x170);
 
 class LayoutMgr {
 public:

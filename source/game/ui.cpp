@@ -120,6 +120,49 @@ void Widget::PrintDebug() {
                    GetPos().active_flags.flags, vec4(3));
 }
 
+void AnimPlayer::Play(Anim* anim, float frame, bool x9) {
+  m_anim = anim;
+  m_x9 = x9;
+  SetFrame(frame);
+  if (m_anim)
+    m_playing = true;
+  m_xa = true;
+}
+
+void AnimPlayer::SetAnimAndPause(Anim* anim, float frame) {
+  m_anim = anim;
+  SetFrame(frame);
+  m_playing = false;
+  m_xa = true;
+}
+
+void AnimPlayer::ChangeAnim(Anim* anim) {
+  m_anim = anim;
+  SetFrame(m_frame);
+  if (!m_anim)
+    m_playing = false;
+  m_xa = true;
+}
+
+void AnimPlayer::Stop() {
+  SetFrame(0.0);
+  m_playing = false;
+  m_xa = true;
+}
+
+void AnimPlayer::Reset() {
+  m_anim = nullptr;
+  m_x9 = 0;
+  SetFrame(0.0);
+  m_playing = false;
+  m_speed = 1.0;
+  m_xa = true;
+}
+
+void AnimPlayer::SetFrame(float frame) {
+  rst::util::GetPointer<void(AnimPlayer*, float)>(0x192AE0)(this, frame);
+}
+
 Anim* LayoutClass::GetAnim(std::string_view name) const {
   for (auto& anim : GetAnims()) {
     if (anim.GetName() == name)
