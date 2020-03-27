@@ -88,7 +88,7 @@ struct Player : public Actor {
     FirstPersonMode = 0x100000,
     Unk200000 = 0x200000,
     Shielding = 0x400000,
-    Unk800000 = 0x800000,
+    Riding = 0x800000,
     LargeZoraFins = 0x1000000,
     ZoraFinsShot = 0x2000000,
     Unk4000000 = 0x4000000,
