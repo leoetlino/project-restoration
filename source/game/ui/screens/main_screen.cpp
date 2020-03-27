@@ -5,6 +5,7 @@
 #include "game/context.h"
 #include "game/player.h"
 #include "game/ui.h"
+#include "game/ui/num_all.h"
 #include "game/ui/screens/main_screen.h"
 
 namespace game::ui {
@@ -112,11 +113,11 @@ void MainScreen::UpdateKeyVisibility(game::GlobalContext& gctx) {
   if (iconKeyPane)
     iconKeyPane->GetPos().SetVisible(visible);
 
-  if (numKey_l)
-    numKey_l->GetRootWidget()->GetPos().SetVisible(visible);
+  if (num_key_l)
+    num_key_l->GetRootWidget()->GetPos().SetVisible(visible);
 
-  if (numKeyRankTen_l)
-    numKeyRankTen_l->GetRootWidget()->GetPos().SetVisible(visible && numSmallKeys >= 10);
+  if (num_key_rank_ten_l)
+    num_key_rank_ten_l->GetRootWidget()->GetPos().SetVisible(visible && numSmallKeys >= 10);
 }
 
 void MainScreen::UpdateCarrot(game::GlobalContext& gctx) {

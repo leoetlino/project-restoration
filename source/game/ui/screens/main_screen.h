@@ -12,6 +12,7 @@ namespace game::ui {
 class Anim;
 class AnimPlayer;
 class Layout;
+class NumAll;
 class Widget;
 
 /// Used for normal gameplay most of the time; shows the touch panel (hearts, magic, etc.) on the
@@ -80,11 +81,15 @@ protected:
   Layout* icon_c_btn01;
   Layout* icon_c_btn03;
   Layout* icon_c_btn02;
-  Layout* rankA_l;
-  Layout* rankTen_l;
-  Layout* rankHundred_l;
-  Layout* numKey_l;
-  Layout* numKeyRankTen_l;
+
+  // Rupee numbers.
+  NumAll* rank_a_l;
+  NumAll* rank_ten_l;
+  NumAll* rank_hundred_l;
+
+  NumAll* num_key_l;
+  NumAll* num_key_rank_ten_l;
+
   AnimPlayer* transition = nullptr;
   AnimPlayer* gauge_value = nullptr;
   AnimPlayer* gauge_scale = nullptr;
