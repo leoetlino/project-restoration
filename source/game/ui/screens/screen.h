@@ -20,6 +20,11 @@ static_assert(sizeof(Context) == 0x178);
 
 struct ScreenContext {
   virtual ~ScreenContext() = default;
+  template <typename T>
+  T* GetState() const {
+    return ctx ? static_cast<T*>(ctx->game_state) : nullptr;
+  }
+
   Context* ctx;
   /// The currently opened screen.
   Screen* active_screen = nullptr;
