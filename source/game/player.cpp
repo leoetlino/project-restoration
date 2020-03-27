@@ -28,7 +28,7 @@ Player::ArrowInfo Player::GetArrowInfo(GlobalContext* gctx) const {
 
   if (active_form == Player::Form::Deku) {
     info.can_use =
-        cdata.save.player.magic >= 2 || ((cdata.save.anonymous_72 & 1) && gctx->map_maybe == 0x11);
+        cdata.save.player.magic >= 2 || ((cdata.save.anonymous_72 & 1) && gctx->scene == 0x11);
   } else {
     info.can_use = flags3.IsSet(Flag3::DekuStuffMaybe) ||
                    (cdata.field_3696 == 1 && gctx->field_866C) || gctx->field_C531 ||

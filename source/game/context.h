@@ -109,7 +109,8 @@ struct GlobalContext : State {
 
   void EmitLastDamageSound(const act::Actor& actor);
 
-  u16 map_maybe;
+  /// Scene list: https://wiki.cloudmodding.com/mm/3D:Scene_List
+  u16 scene;
   u16 field_14A;
   u8 gap_14C[200];
   float field_214;
