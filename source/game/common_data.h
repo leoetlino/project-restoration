@@ -26,7 +26,7 @@ struct __attribute__((packed)) __attribute__((aligned(2))) PlayerData {
   u16 razor_sword_hp;
   u16 anonymous_k;
   char magic_stuff;
-  char anonymous_l;
+  s8 magic_num_upgrades;
   char anonymous_17;
   char anonymous_18;
   char anonymous_19;
@@ -533,7 +533,7 @@ struct CommonData {
   u16 field_3684;
   u16 field_3686;
   u16 field_3688;
-  u16 field_368A;
+  s16 magic_max;
   u16 field_368C;
   s16 magic_cost;
   u16 field_3690;

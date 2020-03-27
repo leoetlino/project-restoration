@@ -1,5 +1,11 @@
-#include "game/ui/screens/main_screen.h"
+#include <limits>
+
 #include "common/utils.h"
+#include "game/common_data.h"
+#include "game/context.h"
+#include "game/player.h"
+#include "game/ui.h"
+#include "game/ui/screens/main_screen.h"
 
 namespace game::ui {
 
@@ -51,6 +57,84 @@ void MainScreen::UpdateMagic() {
 
 void MainScreen::UpdateKey(Context& ctx) {
   rst::util::GetPointer<void(MainScreen*, Context&)>(0x59B040)(this, ctx);
+}
+
+void MainScreen::MagicPlayAndHideYellowGauge() {
+  if (magic_unlimited)
+    return;
+  magic_use->Play(magic_use_ani, std::numeric_limits<float>::infinity());
+  gaugeYellow_g->GetPos().SetVisible(false);
+}
+
+void MainScreen::MagicHideYellowGauge() {
+  if (!magic_unlimited)
+    gaugeYellow_g->GetPos().SetVisible(false);
+}
+
+void MainScreen::MagicStartUseAnim() {
+  if (!magic_unlimited && !magic_use->IsPlaying())
+    magic_use->Play(magic_use_ani, 0.0, true);
+}
+
+void MainScreen::MagicUpdateCost() {
+  if (magic_unlimited)
+    return;
+  const auto& data = game::GetCommonData();
+  const float multiplier = data.save.player.magic_num_upgrades == 0 ? 0.5f : 1.0f;
+  magic_gauge_position->SetFrame(multiplier * float(data.save.player.magic) / data.magic_max);
+  magic_gauge_value->SetFrame(multiplier * float(data.magic_cost) / data.magic_max);
+  gaugeYellow_g->GetPos().SetVisible(true);
+}
+
+void MainScreen::UpdateKeyVisibility(game::GlobalContext& gctx) {
+  float key_change_frame = 0;
+  switch (gctx.scene) {
+  case 0x21:
+  case 0x16:
+  case 0x18:
+  case 0x1B:
+  case 0x49:
+    key_change_frame = 1.0f;
+    break;
+  case 0x27:
+  case 0x28:
+    key_change_frame = 2.0f;
+    break;
+  default:
+    break;
+  }
+
+  const bool visible = key_change_frame != 0.0f;
+
+  if (key_change)
+    key_change->SetFrame(key_change_frame - 1);
+
+  if (iconKeyPane)
+    iconKeyPane->GetPos().SetVisible(visible);
+
+  if (numKey_l)
+    numKey_l->GetRootWidget()->GetPos().SetVisible(visible);
+
+  if (numKeyRankTen_l)
+    numKeyRankTen_l->GetRootWidget()->GetPos().SetVisible(visible && numSmallKeys >= 10);
+}
+
+void MainScreen::UpdateCarrot(game::GlobalContext& gctx) {
+  const auto* player = gctx.GetPlayerActor();
+  if (!player)
+    return;
+
+  carrotStatus->GetPos().SetVisible(player->flags1.IsSet(game::act::Player::Flag1::Riding));
+
+  for (u8 i = num_carrots; i < gctx.hud_state.num_carrots; ++i) {
+    carrot_anims[i].player->Stop();
+  }
+
+  for (u8 i = gctx.hud_state.num_carrots; i < num_carrots; ++i) {
+    carrot_anims[i].player->Play(carrot_anims[i].anim);
+  }
+
+  num_carrots = gctx.hud_state.num_carrots;
 }
 
 }  // namespace game::ui

@@ -3,6 +3,10 @@
 #include "common/types.h"
 #include "game/ui/screens/screen.h"
 
+namespace game {
+struct GlobalContext;
+}  // namespace game
+
 namespace game::ui {
 
 class Anim;
@@ -22,6 +26,15 @@ public:
   bool CalcClose(ScreenContext&) override;
   void Close(ScreenContext&) override;
 
+  void MagicPlayAndHideYellowGauge();
+  void MagicHideYellowGauge();
+  void MagicStartUseAnim();
+  /// Called from the global context.
+  void MagicUpdateCost();
+
+  /// This is supposed to be called from the global context on scene change.
+  void UpdateKeyVisibility(game::GlobalContext& gctx);
+
 protected:
   struct AnimPlayerAndAnim {
     AnimPlayer* player;
@@ -33,6 +46,7 @@ protected:
   void UpdateHeart();
   void UpdateMagic();
   void UpdateKey(Context&);
+  void UpdateCarrot(game::GlobalContext& gctx);
 
   /// Button press handler?
   void* vtable_4;
@@ -94,14 +108,13 @@ protected:
   s8 magic = -1;
   s8 magic_stuff = -1;
   s8 magic_anonymous_l = -1;
-  s8 magic_stuff_2 = -1;
+  /// Non-zero when magic is unlimited (after drinking Chateau Romani).
+  u8 magic_unlimited = 0xFF;
   u8 field_1EC = 0;
   u8 num_carrots;
   u8 field_1EE = 0;
   u8 field_1EF = 0;
 };
 static_assert(sizeof(MainScreen) == 0x1F0);
-
-
 
 }  // namespace game::ui
