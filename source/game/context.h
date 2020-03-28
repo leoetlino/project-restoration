@@ -274,7 +274,11 @@ struct GlobalContext : State {
   char field_CCA9;
   char field_CCAA;
   char field_CCAB;
-  bool field_CCAC;
+
+  /// If true, causes black borders (if configured) to be drawn on the top screen.
+  /// This is used to implement the letterbox effect when targeting and during some cutscenes.
+  bool enable_letterbox;
+
   u32 field_CCB0;
   u32 field_CCB4;
   u8 gap_CCB8[8];
