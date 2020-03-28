@@ -7,7 +7,7 @@
 #include "game/pad.h"
 #include "game/player.h"
 #include "game/sound.h"
-#include "game/state.h"
+#include "game/states/state.h"
 #include "game/ui.h"
 #include "rst/fixes.h"
 #include "rst/fixes/boss.h"

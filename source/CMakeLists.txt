@@ -38,21 +38,21 @@ add_executable(newcode
   game/player.h
   game/random.cpp
   game/random.h
-  game/state.cpp
-  game/state.h
-  game/state_ending.h
-  game/state_sot_save.cpp
-  game/state_sot_save.h
+  game/states/state.cpp
+  game/states/state.h
+  game/states/state_ending.h
+  game/states/state_sot_save.cpp
+  game/states/state_sot_save.h
   game/static_context.cpp
   game/static_context.h
   game/sound.cpp
   game/ui.cpp
   game/ui.h
+  game/ui/layouts/message_window.h
+  game/ui/layouts/num_all.cpp
+  game/ui/layouts/num_all.h
   game/ui/message_text.cpp
   game/ui/message_text.h
-  game/ui/message_window.h
-  game/ui/num_all.cpp
-  game/ui/num_all.h
   game/ui/res.cpp
   game/ui/res.h
   game/ui/screens/main_screen.cpp

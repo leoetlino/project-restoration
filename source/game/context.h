@@ -7,7 +7,7 @@
 #include "game/actor.h"
 #include "game/camera.h"
 #include "game/pad.h"
-#include "game/state.h"
+#include "game/states/state.h"
 
 namespace game {
 

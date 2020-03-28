@@ -5,7 +5,7 @@
 #include "game/context.h"
 #include "game/player.h"
 #include "game/ui.h"
-#include "game/ui/num_all.h"
+#include "game/ui/layouts/num_all.h"
 #include "game/ui/screens/main_screen.h"
 
 namespace game::ui {

@@ -6,7 +6,7 @@
 #include "game/context.h"
 #include "game/player.h"
 #include "game/sound.h"
-#include "game/ui/message_window.h"
+#include "game/ui/layouts/message_window.h"
 
 namespace rst {
 

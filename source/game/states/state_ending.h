@@ -1,7 +1,7 @@
 #pragma once
 
 #include "common/utils.h"
-#include "game/state.h"
+#include "game/states/state.h"
 
 namespace game {
 

@@ -1,10 +1,10 @@
-#include "game/state.h"
+#include "game/states/state.h"
 
 #include <algorithm>
 
 #include "common/debug.h"
 #include "common/utils.h"
-#include "game/state_sot_save.h"
+#include "game/states/state_sot_save.h"
 
 namespace game {
 

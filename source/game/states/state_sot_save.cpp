@@ -1,4 +1,4 @@
-#include "game/state_sot_save.h"
+#include "game/states/state_sot_save.h"
 
 #include "common/context.h"
 #include "common/utils.h"
@@ -6,7 +6,7 @@
 #include "game/sound.h"
 #include "game/ui.h"
 #include "game/ui/message_text.h"
-#include "game/ui/message_window.h"
+#include "game/ui/layouts/message_window.h"
 
 namespace game {
 

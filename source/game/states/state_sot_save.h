@@ -1,7 +1,7 @@
 #pragma once
 
-#include "game/state.h"
-#include "game/state_ending.h"
+#include "game/states/state.h"
+#include "game/states/state_ending.h"
 
 namespace game {
 
