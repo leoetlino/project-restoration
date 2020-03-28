@@ -106,11 +106,14 @@ struct HudState {
   u16 field_244;
   u16 field_246;
   u16 field_248;
-  u16 field_24A;
-  u16 field_24C;
-  u16 buttonUsable[5];
-  u16 cameraUsable;
+
+  // From 0 (invisible) to 0xFF (fully visible).
+  u16 a_btn_opacity;
+  u16 b_btn_opacity;
+  u16 item_btn_opacity[5];
+  u16 camera_opacity;
   u16 field_25A;
+
   u8 gap_25C[6];
   u16 field_262;
   u16 field_264;
