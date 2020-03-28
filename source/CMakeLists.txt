@@ -53,6 +53,7 @@ add_executable(newcode
   game/ui/layouts/message_window.h
   game/ui/layouts/num_all.cpp
   game/ui/layouts/num_all.h
+  game/ui/layouts/play_action_icon.h
   game/ui/message_text.cpp
   game/ui/message_text.h
   game/ui/res.cpp
