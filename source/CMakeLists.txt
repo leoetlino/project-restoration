@@ -48,6 +48,8 @@ add_executable(newcode
   game/sound.cpp
   game/ui.cpp
   game/ui.h
+  game/ui/layouts/item_icon.cpp
+  game/ui/layouts/item_icon.h
   game/ui/layouts/message_window.h
   game/ui/layouts/num_all.cpp
   game/ui/layouts/num_all.h
