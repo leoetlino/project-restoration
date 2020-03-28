@@ -394,6 +394,13 @@ private:
 static_assert(sizeof(LayoutBase) == 0x16C);
 
 class Layout : public LayoutBase {
+public:
+  virtual void m5();
+  virtual void m6();
+  virtual void DoInit();
+  virtual void m8();
+  virtual void m9();
+
 private:
   void* field_16C;
 };
