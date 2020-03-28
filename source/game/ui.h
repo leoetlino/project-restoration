@@ -28,6 +28,7 @@ class Layout;
 class LayoutBase;
 class LayoutClass;
 class PaneFactory;
+class PlayHud;
 class ResAnimEntry;
 class ResLayout;
 class Screen;
@@ -436,5 +437,60 @@ public:
 private:
   u8 data[0x140];
 };
+
+struct CommonLayouts {
+  Layout* touch_panel;
+  Layout* background;
+  PlayHud* hud;
+  Layout* common_bottom_bg;
+  Layout* sub_common_up_bg;
+  // Yeah, the naming isn't great. Blame Grezzo.
+  Layout* sub_up_common_bg;
+  Layout* sub_menu_title;
+  Layout* field_1C;
+  Layout* field_20;
+  Layout* field_24;
+  Layout* field_28;
+  Layout* field_2C;
+  Layout* field_30;
+  Layout* field_34;
+  Layout* field_38;
+  Layout* field_3C;
+  Layout* field_40;
+  Layout* field_44;
+  Layout* field_48;
+  Layout* field_4C;
+  Layout* field_50;
+  Layout* field_54;
+  Layout* field_58;
+  Layout* field_5C;
+  Layout* field_60;
+  Layout* field_64;
+  Layout* field_68;
+  Layout* field_6C;
+  Layout* field_70;
+  Layout* field_74;
+  Layout* field_78;
+  Layout* field_7C;
+  Layout* field_80;
+  Layout* field_84;
+  Layout* field_88;
+  Layout* field_8C;
+  Layout* field_90;
+  Layout* field_94;
+  Layout* field_98;
+  Layout* field_9C;
+  Layout* field_A0;
+  Layout* field_A4;
+  Layout* field_A8;
+  Layout* field_AC;
+  Layout* field_B0;
+  Layout* field_B4;
+  Layout* field_B8;
+  Layout* field_BC;
+  Layout* throbber;
+};
+
+CommonLayouts& GetCommonLayouts();
 
 }  // namespace game::ui

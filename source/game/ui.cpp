@@ -221,4 +221,8 @@ void LayoutDrawMgr::ControlLayout(Layout* layout, int a, int b) {
   rst::util::GetPointer<void(LayoutDrawMgr*, Layout*, int, int)>(0x17EC58)(this, layout, a, b);
 }
 
+CommonLayouts& GetCommonLayouts() {
+  return *rst::util::GetPointer<CommonLayouts>(0x6B7B8C);
+}
+
 }  // namespace game::ui
