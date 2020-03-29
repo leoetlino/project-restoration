@@ -33,16 +33,30 @@ public:
     MainScreen::Init(ctx);
     ui::GetCommonLayouts().touch_panel = touch_panel;
 
+    auto* hud = (ui::Layout*)ui::GetCommonLayouts().hud;
+
+    item_btn_group = playTouchPanel->GetWidget("item_button_g");
+    action_btn_group = hud->GetWidget("action_button_g");
     non_essential_group = playTouchPanel->GetWidget("non_essential_g");
     heart_group = playTouchPanel->GetWidget("heart_g");
 
-    for (auto* group : {non_essential_group, heart_group})
+    auto* item_icon_set = playTouchPanel->GetWidget("item_icon_set")->GetLayout();
+    icon_1 = item_icon_set->GetWidget("icon_item_1_g");
+    icon_2 = item_icon_set->GetWidget("icon_item_2_g");
+    icon_x = item_icon_set->GetWidget("icon_item_x_g");
+    icon_y = item_icon_set->GetWidget("icon_item_y_g");
+    icon_oca = playTouchPanel->GetWidget("icon_item_oca_g");
+    icon_a = hud->GetWidget("a_action_button");
+    icon_b = hud->GetWidget("b_action_button");
+
+    for (auto* group : {item_btn_group, action_btn_group, non_essential_group, heart_group})
       group->GetPos().SetOpacity(0.0f);
   }
 
   void Calc(ui::ScreenContext& ctx) override {
     auto* gctx = ctx.GetState<game::GlobalContext>();
     UpdateHudVisibility(gctx);
+    UpdateActionButtons(gctx);
     if (gctx) {
       UpdateKeyVisibility(*gctx);
       UpdateCarrot(*gctx);
@@ -66,6 +80,8 @@ public:
     transition->Play(playTouchPanel->GetAnim("out_menu_top_anim"));
   }
 
+  void UpdateButtonUsability(game::HudState& hud_state);
+
 private:
   void UpdateHudVisibility(const game::GlobalContext* gctx) {
     const bool hide_hud = !gctx || gctx->dim_overlay_alpha >= 0.50f ||
@@ -73,13 +89,33 @@ private:
                                                          game::act::Player::Flag1::FreezeLink,
                                                          game::act::Player::Flag1::Locked));
     constexpr float fade_step = 0.125f;
-    for (auto* group : {non_essential_group, heart_group}) {
-      auto& pos = group->GetPos();
-      if (gctx && gctx->undim_heart_status && group == heart_group)
-        pos.SetOpacity(std::clamp(pos.color(3) + fade_step, 0.0f, 1.0f));
-      else
-        pos.SetOpacity(std::clamp(pos.color(3) + (hide_hud ? -1 : 1) * fade_step, 0.0f, 1.0f));
+    for (auto* widget : {item_btn_group, action_btn_group, non_essential_group, heart_group}) {
+      bool should_hide = hide_hud;
+
+      if (widget == heart_group)
+        should_hide &= !gctx || !gctx->undim_heart_status;
+
+      if (widget == item_btn_group || widget == action_btn_group)
+        should_hide |= !gctx || gctx->hide_hud;
+
+      auto& pos = widget->GetPos();
+      pos.AddOpacity((should_hide ? -1 : 1) * fade_step);
     }
+  }
+
+  void UpdateActionButtons(const game::GlobalContext* gctx) {
+    const bool is_second_level = gctx && gctx->pad_state.input.buttons.IsSet(game::pad::Button::ZR);
+    for (auto icon : {icon_1, icon_2})
+      icon->GetPos().SetVisible(is_second_level);
+    for (auto icon : {icon_x, icon_y})
+      icon->GetPos().SetVisible(!is_second_level);
+
+    const auto* player = gctx ? gctx->GetPlayerActor() : nullptr;
+    const bool show_oca =
+        is_second_level && !(player && player->flags1.IsSet(game::act::Player::Flag1::InWater) &&
+                             !player->flags_94.IsSet(game::act::Actor::Flag94::Grounded));
+    icon_oca->GetPos().SetVisible(show_oca);
+    icon_a->GetPos().SetVisible(!show_oca);
   }
 
   void FixCounterTextColors() {
@@ -89,9 +125,36 @@ private:
     }
   }
 
+  /// X, Y, I, II, Ocarina
+  ui::Widget* item_btn_group;
+  /// A, B
+  ui::Widget* action_btn_group;
   ui::Widget* non_essential_group;
   ui::Widget* heart_group;
+
+  ui::Widget* icon_1;
+  ui::Widget* icon_2;
+  ui::Widget* icon_x;
+  ui::Widget* icon_y;
+  ui::Widget* icon_oca;
+  ui::Widget* icon_a;
+  ui::Widget* icon_b;
 };
+
+void Hud2::UpdateButtonUsability(game::HudState& hud_state) {
+  ui::Widget* const btns[] = {icon_y, icon_x, icon_1, icon_2, icon_oca};
+
+  for (size_t i = 0; i < std::size(btns); ++i) {
+    if (hud_state.a_btn_opacity >= 0x80 && hud_state.b_btn_opacity >= 0x80) {
+      btns[i]->GetPos().SetOpacity(std::max(hud_state.item_btn_opacity[i] / 255.0f, 0.5f));
+    } else {
+      btns[i]->GetPos().SetOpacity(hud_state.item_btn_opacity[i] / 255.0f);
+    }
+  }
+
+  for (auto* widget : {camChangePane, camPicturePane, camReturn})
+    widget->GetPos().SetOpacity(hud_state.camera_opacity / 255.0f);
+}
 
 Hud2 s_hud;
 
@@ -168,10 +231,8 @@ RST_HOOK void MainScreen_CalcClose(ui::MainScreen&, ui::ScreenContext& ctx) {
     s_hud.CalcClose(ctx);
 }
 
-RST_HOOK void rst_MainScreen_UpdateButtonUsability(ui::MainScreen&, void* hud_state) {
-  ScopedHookGuard guard;
-  if (!guard.AlreadyInHook())
-    util::GetPointer<decltype(rst_MainScreen_UpdateButtonUsability)>(0x191570)(s_hud, hud_state);
+RST_HOOK void MainScreen_UpdateButtonUsability(ui::MainScreen&, game::HudState& hud_state) {
+  s_hud.UpdateButtonUsability(hud_state);
 }
 
 RST_HOOK void MainScreen_MagicPlayAndHideYellowGauge(ui::MainScreen&) {
