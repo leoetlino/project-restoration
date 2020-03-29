@@ -246,6 +246,7 @@ public:
   Pane* GetPane() const { return pane; }
 
   Widget* GetWidget(std::string_view name);
+  const Array<Widget*>& GetWidgets() const { return widgets; }
 
   Matrix34& GetMtx() { return mtx; }
   WidgetPos& GetPos() { return pos; }
