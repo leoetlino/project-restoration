@@ -16,6 +16,10 @@ class Player;
 class BossTwinmold;
 }  // namespace act
 
+namespace ui {
+class PlayHud;
+}
+
 // based on a quick experiment - probably wrong
 enum class UiMenuState : u16 {
   Closed = 0,
@@ -282,12 +286,27 @@ struct GlobalContext : State {
   /// This is used to implement the letterbox effect when targeting and during some cutscenes.
   bool enable_letterbox;
 
-  u32 field_CCB0;
-  u32 field_CCB4;
-  u8 gap_CCB8[8];
-  u8 field_CCC0;
-  u8 field_CCC1;
-  u8 gap_CCC2[9236];
+  /// Opacity of the dimming overlay for the bottom screen.
+  /// This is automatically updated every frame depending on flags (see below).
+  ///
+  /// If this value is > 0.001 and dim_overlay_alpha == dim_heart_overlay_alpha, a semi-transparent
+  /// rectangle is drawn over the entire bottom screen. Otherwise, if this value is only > 0.001,
+  /// several rectangles are drawn over the screen to dim everything except the heart status widget.
+  float dim_overlay_alpha;
+
+  /// Opacity of the dimming overlay for the heart status widget on the bottom screen.
+  /// This is automatically updated every frame depending on flags (see below).
+  float dim_heart_overlay_alpha;
+
+  /// Non-zero if the heart status widget should be undimmed. Typically set to 211 when non-zero.
+  u8 undim_heart_status;
+  /// Whether the bottom screen should be undimmed.
+  u8 undim_bottom_screen;
+
+  u8 gap_CCBC[4];
+  u32 field_CCC0;
+  ui::PlayHud* play_hud;
+  u8 gap_CCC8[9230];
   u8 field_F0D6;
   u8 gap_F0D7;
   float field_F0D8;
