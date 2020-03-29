@@ -558,7 +558,7 @@ struct CommonData {
   u16 save_idx;
   u8 gap_1361A[2];
   int setup;
-  int field_13620;
+  int setup2;
   int field_13624;
   CommonDataSub13 sub13s[8];
   u32 field_13728;
@@ -571,9 +571,18 @@ struct CommonData {
   int field_13738;
   // 0-19
   int sound_env_index;
+
   /// see also UsableButton and ButtonIsUsable
   ButtonIsUsable usable_btns[9];
-  char field_13749[15];
+  u8 field_13749;
+  u16 alpha_type;
+  u16 alpha_type_2;
+  u16 alpha_type_flag;
+  u16 field_13750;
+  u16 field_13752;
+  u16 field_13754;
+  u16 field_13756;
+
   int field_13758;
   char field_1375C;
   char field_1375D;
