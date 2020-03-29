@@ -172,8 +172,10 @@ struct WidgetPos {
     DefaultOpacity = 0x4000000,
   };
 
+  bool IsVisible() const { return flags.IsSet(Flag::Visible); }
+
   void SetVisible(bool visible) {
-    if (flags.IsSet(Flag::Visible) == visible)
+    if (IsVisible() == visible)
       return;
     flags.Set(Flag::Visible, visible);
     ValueChanged(Flag::Visible2, visible, true);
