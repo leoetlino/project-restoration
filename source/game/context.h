@@ -205,7 +205,8 @@ struct GlobalContext : State {
   u8 gap_8004[28];
   u32 notebook_stuff;
   u8 gap_8024[570];
-  u16 field_825E;
+  u8 hide_hud;
+  u8 field_825F;
   u8 gap_8260[160];
   u32 field_8300;
   u8 gap_8304[96];
@@ -323,6 +324,7 @@ static_assert(rst::util::OffsetOf(&GlobalContext::ui_menu_state) == 0xAAC);
 static_assert(rst::util::OffsetOf(&GlobalContext::field_C000) == 0xc000);
 static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_state) == 0x8366);
 static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_song) == 0x836A);
+static_assert(rst::util::OffsetOf(&GlobalContext::hide_hud) == 0x825E);
 static_assert(rst::util::OffsetOf(&GlobalContext::field_836E) == 0x836E);
 static_assert(sizeof(GlobalContext) == 0x11030);
 
