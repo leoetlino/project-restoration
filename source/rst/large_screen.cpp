@@ -6,12 +6,15 @@
 #include "common/utils.h"
 #include "game/common_data.h"
 #include "game/context.h"
+#include "game/items.h"
 #include "game/player.h"
 #include "game/ui.h"
 #include "game/ui/layouts/item_icon.h"
 #include "game/ui/layouts/num_all.h"
 #include "game/ui/layouts/play_action_icon.h"
+#include "game/ui/layouts/play_hud.h"
 #include "game/ui/screens/main_screen.h"
+#include "rst/link.h"
 
 namespace rst {
 
@@ -33,7 +36,7 @@ public:
     MainScreen::Init(ctx);
     ui::GetCommonLayouts().touch_panel = touch_panel;
 
-    auto* hud = (ui::Layout*)ui::GetCommonLayouts().hud;
+    ui::PlayHud* hud = ui::GetCommonLayouts().hud;
 
     item_btn_group = playTouchPanel->GetWidget("item_button_g");
     action_btn_group = hud->GetWidget("action_button_g");
@@ -49,6 +52,13 @@ public:
     icon_a = hud->GetWidget("a_action_button");
     icon_b = hud->GetWidget("b_action_button");
 
+    dpad = item_btn_group->GetWidget("hud_dpad");
+    auto* dpad_l = dpad->GetLayout();
+    dpad_icon_l = dpad_l->GetWidget("icon_l");
+    dpad_icon_r = dpad_l->GetWidget("icon_r");
+    dpad_icon_u = dpad_l->GetWidget("icon_u");
+    dpad_icon_d = dpad_l->GetWidget("icon_d");
+
     for (auto* group : {item_btn_group, action_btn_group, non_essential_group, heart_group})
       group->GetPos().SetOpacity(0.0f);
   }
@@ -57,6 +67,7 @@ public:
     auto* gctx = ctx.GetState<game::GlobalContext>();
     UpdateHudVisibility(gctx);
     UpdateActionButtons(gctx);
+    UpdateDPad(gctx);
     if (gctx) {
       UpdateKeyVisibility(*gctx);
       UpdateCarrot(*gctx);
@@ -118,6 +129,67 @@ private:
     icon_a->GetPos().SetVisible(!show_oca);
   }
 
+  void UpdateDPad(const game::GlobalContext* gctx) {
+    struct DPadButton {
+      ui::Widget* widget;
+      game::pad::Button btn;
+      game::ItemId mask;
+      /// Mask to use for the second level mapping (when ZR is held).
+      game::ItemId mask2 = game::ItemId::None;
+    };
+    const DPadButton dpad_buttons[] = {
+        {dpad_icon_l, game::pad::Button::Left, game::ItemId::ZoraMask},
+        {dpad_icon_u, game::pad::Button::Up, game::ItemId::GoronMask,
+         game::HasMask(game::ItemId::FierceDeityMask) ? game::ItemId::FierceDeityMask :
+                                                        game::ItemId::None},
+        {dpad_icon_d, game::pad::Button::Down, game::ItemId::DekuMask},
+    };
+
+    const bool is_second_level = gctx && gctx->pad_state.input.buttons.IsSet(game::pad::Button::ZR);
+    const auto update_opacity = [](ui::WidgetPos& pos, bool can_use) {
+      pos.SetOpacity(std::clamp(pos.color(3) + (can_use ? 1 : -1) * 0.25f, 0.3f, 1.0f));
+    };
+    bool fade_out_dpad = true;
+
+    for (const DPadButton& btn : dpad_buttons) {
+      const auto mask = (btn.mask2 != game::ItemId::None && is_second_level) ? btn.mask2 : btn.mask;
+      bool can_use = game::CanUseItem(mask);
+      if (is_second_level && btn.mask2 == game::ItemId::None)
+        can_use = false;
+
+      auto* icon = btn.widget->AsLayout<ui::ItemIcon>();
+      const auto previous_icon = icon->GetIcon();
+      icon->SetCountVisible(false);
+      icon->SetIconForItem(int(mask));
+      const bool icon_changed = icon->GetIcon() != previous_icon;
+
+      ui::WidgetPos& pos = btn.widget->GetPos();
+      pos.SetVisible(game::HasMask(mask));
+      if (icon_changed)
+        pos.SetOpacity(can_use ? 1.0f : 0.3f);
+      else
+        update_opacity(pos, can_use);
+
+      fade_out_dpad &= !pos.IsVisible();
+    }
+
+    // If the Tatl prompt is visible, show the D-Pad icon and hide the ocarina.
+    if (ui::GetCommonLayouts().hud->tatl_state != ui::TatlHudState::Hidden) {
+      dpad_icon_r->GetPos().SetOpacity(0.0f);
+      fade_out_dpad = false;
+    } else if (gctx && icon_c_btn02->GetIcon() != 0xFF) {
+      // Otherwise, set the D-Pad right button icon and opacity.
+      update_opacity(dpad_icon_r->GetPos(), game::CanUseItem(game::ItemId::Ocarina));
+      dpad_icon_r->AsLayout<ui::ItemIcon>()->SetIcon(icon_c_btn02->GetIcon());
+      dpad_icon_r->AsLayout<ui::ItemIcon>()->SetCountVisible(false);
+      fade_out_dpad = false;
+    } else {
+      dpad_icon_r->GetPos().AddOpacity(-0.25f);
+    }
+
+    dpad->GetPos().AddOpacity((fade_out_dpad ? -1 : 1) * 0.25f);
+  }
+
   void FixCounterTextColors() {
     for (auto* num : {rank_a_l, rank_ten_l, rank_hundred_l, num_key_l, num_key_rank_ten_l}) {
       if (num->GetColor() == 2)  // grey
@@ -139,6 +211,12 @@ private:
   ui::Widget* icon_oca;
   ui::Widget* icon_a;
   ui::Widget* icon_b;
+
+  ui::Widget* dpad;
+  ui::Widget* dpad_icon_l;
+  ui::Widget* dpad_icon_r;
+  ui::Widget* dpad_icon_u;
+  ui::Widget* dpad_icon_d;
 };
 
 void Hud2::UpdateButtonUsability(game::HudState& hud_state) {
