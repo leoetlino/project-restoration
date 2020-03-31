@@ -245,6 +245,9 @@ public:
   Layout* GetLayout() const { return layout; }
   Pane* GetPane() const { return pane; }
 
+  template <typename T>
+  T* AsLayout() const { return static_cast<T*>(layout); }
+
   Widget* GetWidget(std::string_view name);
   const Array<Widget*>& GetWidgets() const { return widgets; }
 
