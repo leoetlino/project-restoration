@@ -6,6 +6,9 @@ namespace game::ui {
 
 class ItemIcon : public Layout {
 public:
+  int GetIcon() const { return icon_id; }
+  int GetItemCount() const { return item_count; }
+
   void SetIcon(int icon);
   void SetIconForItem(int item);
   void SetCount(int count);
