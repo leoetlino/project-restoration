@@ -11,6 +11,7 @@ namespace game::ui {
 
 class Anim;
 class AnimPlayer;
+class ItemIcon;
 class Layout;
 class NumAll;
 class Widget;
@@ -76,11 +77,17 @@ protected:
   Layout* btn_corner00_g;
   Layout* btn_collect_g;
   Layout* btn_corner02_g;
-  Layout* icon_y_btn;
-  Layout* icon_x_btn;
-  Layout* icon_c_btn01;
-  Layout* icon_c_btn03;
-  Layout* icon_c_btn02;
+
+  /// Y button icon.
+  ItemIcon* icon_y_btn;
+  /// X button icon.
+  ItemIcon* icon_x_btn;
+  /// I button icon.
+  ItemIcon* icon_c_btn01;
+  /// II button icon.
+  ItemIcon* icon_c_btn03;
+  /// Ocarina button icon.
+  ItemIcon* icon_c_btn02;
 
   // Rupee numbers.
   NumAll* rank_a_l;
