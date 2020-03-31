@@ -69,10 +69,22 @@ bool CanUseItem(ItemId item_id) {
     return GetCommonData().usable_btns[u8(UsableButton::PictographBox)] != ButtonIsUsable::No;
   }
 
+  auto* gctx = rst::GetContext().gctx;
+  if (!gctx)
+    return false;
+
+  // If the player is using the pictobox, return false since most items (other than the ocarina)
+  // cannot be used and because the game won't update item usability status properly.
+  auto* player = gctx->GetPlayerActor();
+  if (!player)
+    return false;
+  if (player->action_type == act::Player::ActionType::Type2)
+    return false;
+
   // Work around a game bug that causes the player to be able to use items
   // before the Twinmold intro cutscene starts and softlock the game.
-  const auto* twinmold = rst::GetContext().gctx->FindActorWithId<game::act::BossTwinmold>(
-      game::act::Id::BossTwinmold, game::act::Type::Boss);
+  const auto* twinmold = gctx->FindActorWithId<game::act::BossTwinmold>(game::act::Id::BossTwinmold,
+                                                                        game::act::Type::Boss);
   if (twinmold && twinmold->status == game::act::BossTwinmold::Status::Inactive) {
     return false;
   }
@@ -86,12 +98,12 @@ bool CanUseItem(ItemId item_id) {
 
   equipment.item_btn_i = item_id;
   const auto update_usability = rst::util::GetPointer<void(GlobalContext*)>(0x1884B0);
-  update_usability(rst::GetContext().gctx);
+  update_usability(gctx);
 
   const bool is_usable = GetCommonData().usable_btns[u8(UsableButton::I)] != ButtonIsUsable::No;
 
   equipment = equipment_copy;
-  update_usability(rst::GetContext().gctx);
+  update_usability(gctx);
   return is_usable;
 }
 
