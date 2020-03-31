@@ -118,14 +118,15 @@ protected:
   u8 numSmallKeys;
   s8 magic_max = -1;
   s8 magic = -1;
-  s8 magic_stuff = -1;
-  s8 magic_anonymous_l = -1;
+  s8 has_magic = -1;
+  s8 magic_num_upgrades = -1;
   /// Non-zero when magic is unlimited (after drinking Chateau Romani).
   u8 magic_unlimited = 0xFF;
   u8 field_1EC = 0;
   u8 num_carrots;
   u8 field_1EE = 0;
-  u8 field_1EF = 0;
+
+  bool resume_bgm_on_open = false;
 };
 static_assert(sizeof(MainScreen) == 0x1F0);
 
