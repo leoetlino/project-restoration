@@ -4,7 +4,6 @@
 
 #include "common/context.h"
 #include "common/utils.h"
-#include "game/actors/boss_twinmold.h"
 #include "game/common_data.h"
 
 namespace game {
@@ -80,14 +79,6 @@ bool CanUseItem(ItemId item_id) {
     return false;
   if (player->action_type == act::Player::ActionType::Type2)
     return false;
-
-  // Work around a game bug that causes the player to be able to use items
-  // before the Twinmold intro cutscene starts and softlock the game.
-  const auto* twinmold = gctx->FindActorWithId<game::act::BossTwinmold>(game::act::Id::BossTwinmold,
-                                                                        game::act::Type::Boss);
-  if (twinmold && twinmold->status == game::act::BossTwinmold::Status::Inactive) {
-    return false;
-  }
 
   // This is a terrible hack to use the official item usability logic.
   // Assign the item to an action button, then update item usability by calling
