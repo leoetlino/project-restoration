@@ -42,6 +42,7 @@ public:
     action_btn_group = hud->GetWidget("action_button_g");
     non_essential_group = playTouchPanel->GetWidget("non_essential_g");
     heart_group = playTouchPanel->GetWidget("heart_g");
+    timer_group = hud->GetWidget("timer_g");
 
     auto* item_icon_set = playTouchPanel->GetWidget("item_icon_set")->GetLayout();
     icon_1 = item_icon_set->GetWidget("icon_item_1_g");
@@ -59,7 +60,8 @@ public:
     dpad_icon_u = dpad_l->GetWidget("icon_u");
     dpad_icon_d = dpad_l->GetWidget("icon_d");
 
-    for (auto* group : {item_btn_group, action_btn_group, non_essential_group, heart_group})
+    for (auto* group :
+         {item_btn_group, action_btn_group, non_essential_group, heart_group, timer_group})
       group->GetPos().SetOpacity(0.0f);
   }
 
@@ -95,12 +97,16 @@ public:
 
 private:
   void UpdateHudVisibility(const game::GlobalContext* gctx) {
-    const bool hide_hud = !gctx || gctx->dim_overlay_alpha >= 0.50f ||
-                          (gctx->GetPlayerActor() && gctx->GetPlayerActor()->flags1.IsOneSet(
-                                                         game::act::Player::Flag1::FreezeLink,
-                                                         game::act::Player::Flag1::Locked));
+    bool hide_hud = !gctx || gctx->dim_overlay_alpha >= 0.50f;
+    if (auto* player = gctx->GetPlayerActor()) {
+      hide_hud |= player->flags1.IsOneSet(game::act::Player::Flag1::FreezeLink,
+                                          game::act::Player::Flag1::Locked);
+      hide_hud |= player->action_type == game::act::Player::ActionType::Type2;
+    }
+
     constexpr float fade_step = 0.125f;
-    for (auto* widget : {item_btn_group, action_btn_group, non_essential_group, heart_group}) {
+    for (auto* widget :
+         {item_btn_group, action_btn_group, non_essential_group, heart_group, timer_group}) {
       bool should_hide = hide_hud;
 
       if (widget == heart_group)
@@ -203,6 +209,7 @@ private:
   ui::Widget* action_btn_group;
   ui::Widget* non_essential_group;
   ui::Widget* heart_group;
+  ui::Widget* timer_group;
 
   ui::Widget* icon_1;
   ui::Widget* icon_2;
