@@ -120,9 +120,9 @@ void Widget::PrintDebug() {
                    GetPos().active_flags.flags, vec4(3));
 }
 
-void AnimPlayer::Play(Anim* anim, float frame, bool x9) {
+void AnimPlayer::Play(Anim* anim, float frame, bool loop) {
   m_anim = anim;
-  m_x9 = x9;
+  m_loop = loop;
   SetFrame(frame);
   if (m_anim)
     m_playing = true;
@@ -152,7 +152,7 @@ void AnimPlayer::Stop() {
 
 void AnimPlayer::Reset() {
   m_anim = nullptr;
-  m_x9 = 0;
+  m_loop = false;
   SetFrame(0.0);
   m_playing = false;
   m_speed = 1.0;

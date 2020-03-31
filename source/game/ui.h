@@ -317,12 +317,14 @@ class AnimPlayer {
 public:
   virtual ~AnimPlayer();
 
-  void Play(Anim* anim, float frame = 0.0, bool x9 = false);
+  void Play(Anim* anim, float frame = 0.0, bool loop = false);
   void SetAnimAndPause(Anim* anim, float frame);
   // The current play state (playing/paused and frame) is kept.
   void ChangeAnim(Anim* anim);
   void Stop();
   void Reset();
+  void Pause() { m_playing = false; }
+  void Resume() { m_playing = true; }
 
   bool IsPlaying() const { return m_playing; }
 
@@ -337,7 +339,7 @@ public:
 private:
   const char* m_name = nullptr;
   bool m_playing = false;
-  bool m_x9 = false;
+  bool m_loop = false;
   bool m_xa = false;
   Anim* m_anim = nullptr;
   float m_frame = 0.0;
