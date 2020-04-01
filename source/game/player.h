@@ -164,7 +164,7 @@ struct Player : public Actor {
   FormParamIndex form_param_idx2;
   Action action;
   Form active_form;
-  ItemId transform_mask_item_id;
+  Action transform_mask_action;
   char field_201;
   char field_202;
   u8 gap_203[4];
@@ -305,10 +305,10 @@ struct Player : public Actor {
   u32 flags4;
   int field_11DC0;
   u32 field_11DC4;
-  u8 gap_DC8[4];
-  u16 field_DCC;
+  Actor* tatl;
+  u16 tatl_msgid;
   char field_11DCE;
-  char active_item_id;
+  Action pending_action;
   Actor* talk_actor;
   int field_11DD4;
   int field_11DD8;
@@ -466,7 +466,7 @@ struct Player : public Actor {
   u8 gap_12C48[134];
   s16 field_12CCE;
 };
-static_assert(rst::util::OffsetOf(&Player::transform_mask_item_id) == 0x200);
+static_assert(rst::util::OffsetOf(&Player::transform_mask_action) == 0x200);
 static_assert(rst::util::OffsetOf(&Player::field_12CCE) == 0x12CCE);
 // TODO: complete the struct and add a size assertion.
 
