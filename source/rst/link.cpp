@@ -82,6 +82,9 @@ void HandleFastTransform() {
 
   player->action = it->action;
   player->action_type = game::act::Player::ActionType::OcarinaOrTransformation;
+  // Store the transform action in case the transformation cannot be done immediately.
+  // This allows the Mask Storage technique to work with the fast transform shortcuts as well.
+  player->transform_mask_action = it->action;
 }
 
 bool ShouldUseZoraFastSwim() {

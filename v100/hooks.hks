@@ -105,9 +105,8 @@ zora_in_water_state_start_fast_swim:
 fix_transformation_mask_equip_checks_1:
   # prevent forced transform when mask is not equipped
   type: patch
-  data: E12FFF1E
-  addr: 0x001E76B0
-  reverse: true
+  addr: 0x1DB31C
+  data: 00 F0 20 E3
 fix_transformation_mask_equip_checks_2a:
   # remove other checks (fix first-person mode, Goron rolling and potentially more)
   type: patch
