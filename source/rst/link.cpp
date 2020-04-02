@@ -97,14 +97,16 @@ bool ShouldUseZoraFastSwim() {
   if (!input.buttons.IsSet(game::pad::Button::A))
     return false;
 
-  // Toggle fast swim with D-Pad Up/Down
-  if (input.new_buttons.IsOneSet(game::pad::Button::Up, game::pad::Button::Down))
+  // Toggle fast swim with D-Pad Up/Down or ZL
+  if (input.new_buttons.IsOneSet(game::pad::Button::Up, game::pad::Button::Down,
+                                 game::pad::Button::ZL)) {
     GetContext().use_fast_swim ^= true;
+  }
 
   // Overrides
   if (input.buttons.IsSet(game::pad::Button::R))
     return true;
-  if (input.buttons.IsSet(game::pad::Button::ZL))
+  if (input.buttons.IsSet(game::pad::Button::ZR))
     return false;
 
   return GetContext().use_fast_swim;

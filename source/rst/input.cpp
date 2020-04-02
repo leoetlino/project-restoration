@@ -1,6 +1,8 @@
+#include "common/context.h"
 #include "game/common_data.h"
 #include "game/context.h"
 #include "game/pad.h"
+#include "game/player.h"
 #include "game/ui.h"
 
 namespace rst {
@@ -21,14 +23,28 @@ void UpdatePadState() {
     if (state.input.new_buttons.TestAndClear(trigger))
       s_touchscreen_state.new_buttons.Set(btn);
   };
+  const auto set_touch_btn_without_clear = [&](pad::Button trigger, pad::TouchscreenButton btn) {
+    if (state.input.buttons.IsSet(trigger))
+      s_touchscreen_state.buttons.Set(btn);
+    if (state.input.new_buttons.IsSet(trigger))
+      s_touchscreen_state.new_buttons.Set(btn);
+  };
 
-  if (state.input.buttons.IsSet(pad::Button::ZL))
-    s_touchscreen_state.buttons.Set(pad::TouchscreenButton::PictographBox);
-  if (state.input.new_buttons.IsSet(pad::Button::ZL))
-    s_touchscreen_state.new_buttons.Set(pad::TouchscreenButton::PictographBox);
+  set_touch_btn_without_clear(pad::Button::ZL, pad::TouchscreenButton::PictographBox);
 
   if (state.input.buttons.IsSet(pad::Button::ZR)) {
-    set_touch_btn(pad::Button::A, pad::TouchscreenButton::Ocarina);
+    // XXX: This shouldn't be here...
+    auto* gctx = rst::GetContext().gctx;
+    auto* player = gctx ? gctx->GetPlayerActor() : nullptr;
+    if (player && player->flags1.IsSet(game::act::Player::Flag1::InWater) &&
+        !player->flags_94.IsSet(game::act::Actor::Flag94::Grounded)) {
+      // If Link is swimming (as Zora Link most likely but that doesn't matter),
+      // do not unset the A button.
+      set_touch_btn_without_clear(pad::Button::A, pad::TouchscreenButton::Ocarina);
+    } else {
+      set_touch_btn(pad::Button::A, pad::TouchscreenButton::Ocarina);
+    }
+
     set_touch_btn(pad::Button::X, pad::TouchscreenButton::I);
     set_touch_btn(pad::Button::Y, pad::TouchscreenButton::II);
   }
