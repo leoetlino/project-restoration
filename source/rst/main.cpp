@@ -118,7 +118,7 @@ void UiScheduleTriggerHook() {
   const bool zr = gctx->pad_state.input.buttons.IsSet(game::pad::Button::ZR);
   const bool start = gctx->pad_state.input.new_buttons.IsSet(game::pad::Button::Start);
   const bool select = gctx->pad_state.input.new_buttons.IsSet(game::pad::Button::Select);
-  if (!zr && start)
+  if (!zr && select)
     game::ui::OpenScreen(game::ui::ScreenType::Items);
   if (zr && start)
     game::ui::OpenScreen(game::ui::ScreenType::Quest);
