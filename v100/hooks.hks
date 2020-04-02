@@ -429,3 +429,8 @@ stone_tower_block_faster_movement:
   type: patch
   addr: 0x2D0C0C
   data: 00 00 A0 42
+
+ocarina_dive_restore:
+  type: patch
+  addr: 0x1E1F0C
+  data: 00 F0 20 E3
