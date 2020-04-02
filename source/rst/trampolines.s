@@ -101,6 +101,7 @@ TRAMPOLINE_DECLARE rst_GetGyorgCollisionResponse
   mov r0, r4 // this
   bl rst_GetGyorgCollisionResponse
   mov r10, r0
+  mov lr, #36 // 0x2A0664
   vpop {d0-d15}
   pop {r0-r9, r11-r12, pc}
 
