@@ -323,6 +323,8 @@ void FixGyorg() {
       gctx->FindActorWithId<game::act::BossGyorg>(game::act::Id::BossGyorg, game::act::Type::Boss);
   if (!gyorg)
     return;
+  // Disable the first stun cutscene, which is known to be buggy.
+  gyorg->field_F24 |= 1;
   gyorg->eyeball_flags = 0;
   gyorg->eyeball_scale = {0.0, 0.0, 0.0};
 }
