@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <string_view>
 
 #include "common/flags.h"
@@ -186,6 +187,10 @@ struct WidgetPos {
       return;
     color(3) = opacity;
     ValueChanged(Flag::DefaultOpacity, opacity, 1.0f);
+  }
+
+  void AddOpacity(float delta) {
+    SetOpacity(std::clamp(color(3) + delta, 0.0f, 1.0f));
   }
 
   void TranslateChanged() {
