@@ -82,8 +82,8 @@ struct InventoryData {
   std::array<u8, 24> item_counts;
   u8 field_48[24];
   u8 field_60[24];
-  int anonymous_31;
-  int anonymous_32;
+  int non_equip_register;
+  int collect_register;
   char anonymous_33[1];
   char anonymous_34[3];
   u8 gap200[6];
@@ -99,6 +99,8 @@ struct InventoryData {
   char anonymous_43;
   char gap98[60];
 };
+static_assert(sizeof(InventoryData) == 0xD4);
+static_assert(offsetof(InventoryData, non_equip_register) == 0x78);
 
 struct SaveData {
   MaskId mask;

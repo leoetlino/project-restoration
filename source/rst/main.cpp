@@ -3,6 +3,7 @@
 #include "common/types.h"
 #include "common/utils.h"
 #include "game/camera.h"
+#include "game/common_data.h"
 #include "game/context.h"
 #include "game/pad.h"
 #include "game/player.h"
@@ -120,6 +121,8 @@ void UiScheduleTriggerHook() {
   const bool select = gctx->pad_state.input.new_buttons.IsSet(game::pad::Button::Select);
   if (!zr && select)
     game::ui::OpenScreen(game::ui::ScreenType::Items);
+  if (!zr && start && game::GetCommonData().save.inventory.collect_register & 0x40000)
+    game::ui::OpenScreen(game::ui::ScreenType::Schedule);
   if (zr && start)
     game::ui::OpenScreen(game::ui::ScreenType::Quest);
   if (zr && select) {

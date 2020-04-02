@@ -184,6 +184,10 @@ ui_schedule_trigger_hook:
   opcode: post
   func: rst_UiScheduleTriggerHook
   addr: 0x59BA10
+ui_schedule_disable_existing_trigger:
+  type: patch
+  data: 51 00 00 EA
+  addr: 0x59BA14
 ui_item_close_on_select:
   type: patch
   data: 06 00 11 E3 # tst r1, (Button::B | Button::Select)
