@@ -412,6 +412,11 @@ boss_gyorg_no_auto_rotate:
   addr: 0x2803FC
   data: 00 F0 20 E3 00 F0 20 E3 00 F0 20 E3
 
+boss_twinmold_consistent_damage:
+  type: patch
+  addr: 0x28E540
+  data: 00 F0 20 E3
+
 stone_tower_block_faster_movement:
   type: patch
   addr: 0x2AC634
