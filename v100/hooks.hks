@@ -107,6 +107,10 @@ fix_transformation_mask_equip_checks_1:
   type: patch
   addr: 0x1DB31C
   data: 00 F0 20 E3
+fix_transformation_mask_equip_checks_1b:
+  type: patch
+  addr: 0x1E770C
+  data: 15 00 00 EA
 fix_transformation_mask_equip_checks_2a:
   # remove other checks (fix first-person mode, Goron rolling and potentially more)
   type: patch
