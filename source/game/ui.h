@@ -40,6 +40,7 @@ enum class ScreenType {
   Main,
   Schedule,
   Quest,
+  Gear = Quest,
   Items,
   Map,
   Masks,

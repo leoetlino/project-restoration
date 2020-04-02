@@ -10,6 +10,7 @@
 #include "game/sound.h"
 #include "game/states/state.h"
 #include "game/ui.h"
+#include "game/ui/screens/gear_screen.h"
 #include "rst/fixes.h"
 #include "rst/fixes/boss.h"
 #include "rst/fixes/time.h"
@@ -56,14 +57,27 @@ void Init(Context& context) {
   }
 }
 
+static bool IsStartOrSelectPressed() {
+  return GetContext().gctx && GetContext().gctx->pad_state.input.new_buttons.IsOneSet(
+                                  game::pad::Button::Start, game::pad::Button::Select);
+}
+
+static void UiGearScreenUpdate() {
+  if (!game::ui::CheckCurrentScreen(game::ui::ScreenType::Gear))
+    return;
+  auto* screen =
+      static_cast<game::ui::GearScreen*>(game::ui::GetScreen(game::ui::ScreenType::Gear));
+  if (IsStartOrSelectPressed()) {
+    screen->pressed_btn_option = 1;
+  }
+}
+
 static void UiOcarinaScreenUpdate() {
   if (!game::ui::CheckCurrentScreen(game::ui::ScreenType::Ocarina))
     return;
   auto* screen = game::ui::GetScreen(game::ui::ScreenType::Ocarina);
 
-  const bool toggle_requested = GetContext().gctx->pad_state.input.new_buttons.IsOneSet(
-      game::pad::Button::Start, game::pad::Button::Select);
-  if (toggle_requested) {
+  if (IsStartOrSelectPressed()) {
     util::Write<bool>(screen, 0x41, true);  // is transitioning
     auto* layout_ocarina = util::BitCastPtr<game::ui::Layout*>(screen, 0x10);
     auto* layout_music_list = util::BitCastPtr<game::ui::Layout*>(screen, 0x14);
@@ -95,6 +109,8 @@ void Calc(game::State* state) {
   FixBombers();
   FixHintStone();
   FixFreeCameraReset();
+
+  UiGearScreenUpdate();
   UiOcarinaScreenUpdate();
 
   if (false)
