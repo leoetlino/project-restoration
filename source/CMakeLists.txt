@@ -59,6 +59,7 @@ add_executable(newcode
   game/ui/message_text.h
   game/ui/res.cpp
   game/ui/res.h
+  game/ui/screens/gear_screen.h
   game/ui/screens/main_screen.cpp
   game/ui/screens/main_screen.h
   game/ui/screens/screen.h
