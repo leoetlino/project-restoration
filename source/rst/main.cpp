@@ -11,6 +11,7 @@
 #include "game/states/state.h"
 #include "game/ui.h"
 #include "game/ui/screens/gear_screen.h"
+#include "game/ui/screens/schedule_screen.h"
 #include "rst/fixes.h"
 #include "rst/fixes/boss.h"
 #include "rst/fixes/time.h"
@@ -90,6 +91,35 @@ static void UiOcarinaScreenUpdate() {
   }
 }
 
+static void UiScheduleScreenUpdate() {
+  if (!game::ui::CheckCurrentScreen(game::ui::ScreenType::Schedule))
+    return;
+  auto* screen =
+      static_cast<game::ui::ScheduleScreen*>(game::ui::GetScreen(game::ui::ScreenType::Schedule));
+
+  // Allow several touch buttons to be activated with physical button presses.
+  // Conveniently enough, it looks like this is already partially implemented by Grezzo,
+  // so all we have to do is copy over the pad button flags.
+  const auto& input = rst::GetContext().gctx->pad_state.input;
+  const auto copy_btn_flag = [&input, screen](game::pad::Button btn) {
+    if (input.new_buttons.IsSet(btn))
+      screen->btn_press_flags |= u32(btn);
+  };
+  copy_btn_flag(game::pad::Button::X);
+  copy_btn_flag(game::pad::Button::Y);
+
+  if (input.new_buttons.IsSet(game::pad::Button::Select) &&
+      screen->btn_map_anim_player->GetAnim() == screen->disp_btn_map_anim) {
+    auto& ctx = game::ui::GetScreenContext();
+    auto& handler = screen->GetTouchHandler();
+    for (auto* btn : {screen->btn_map_l, screen->base1_btn_map_l}) {
+      handler.UpdateState(btn, ctx, 0, 0);
+      handler.OnActivate(btn, false, ctx, 0, 0);
+      handler.OnRelease(btn, false, false, ctx, 0, 0);
+    }
+  }
+}
+
 void Calc(game::State* state) {
   Context& context = GetContext();
   context.gctx = nullptr;
@@ -112,6 +142,7 @@ void Calc(game::State* state) {
 
   UiGearScreenUpdate();
   UiOcarinaScreenUpdate();
+  UiScheduleScreenUpdate();
 
   if (false)
     PrintDebug(context.gctx);
