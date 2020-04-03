@@ -7,6 +7,10 @@ namespace game::ui {
 class PlayAActionIcon;
 class PlayBActionIcon;
 
+enum class TatlHudState : u8 {
+  Hidden = 4,
+};
+
 class PlayHud : public Layout {
 public:
   Widget* chat_alert;
@@ -21,7 +25,7 @@ public:
   AnimPlayer* main_player;
   AnimPlayer* btn_ab_pos_player;
   bool gyro_group_visible;
-  u8 gap_19D[3];
+  TatlHudState tatl_state;
   Layout* layout_chat_alert;
   Layout* layout_event_timer;
   PlayAActionIcon* a_action_btn_l;
