@@ -189,9 +189,7 @@ struct WidgetPos {
     ValueChanged(Flag::DefaultOpacity, opacity, 1.0f);
   }
 
-  void AddOpacity(float delta) {
-    SetOpacity(std::clamp(color(3) + delta, 0.0f, 1.0f));
-  }
+  void AddOpacity(float delta) { SetOpacity(std::clamp(color(3) + delta, 0.0f, 1.0f)); }
 
   void TranslateChanged() {
     ValueChanged(Flag::DefaultTranslateX, translate.x, 1.0f);
@@ -251,7 +249,9 @@ public:
   Pane* GetPane() const { return pane; }
 
   template <typename T>
-  T* AsLayout() const { return static_cast<T*>(layout); }
+  T* AsLayout() const {
+    return static_cast<T*>(layout);
+  }
 
   Widget* GetWidget(std::string_view name);
   const Array<Widget*>& GetWidgets() const { return widgets; }
