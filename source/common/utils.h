@@ -64,6 +64,11 @@ void Write(T* ptr, size_t offset, const ValueType& value) {
   std::memcpy(reinterpret_cast<u8*>(ptr) + offset, &value, sizeof(value));
 }
 
+template <typename First, typename... T>
+constexpr inline bool IsAnyOf(const First& first, const T&... t) {
+  return ((first == t) || ...);
+}
+
 template <class InputIt, class T>
 bool Contains(InputIt first, InputIt last, const T& value) {
   return std::find(first, last, value) != last;

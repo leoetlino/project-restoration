@@ -40,7 +40,10 @@ static_assert(sizeof(ActorList) == 0xc);
 struct ActorLists {
   ActorList& GetList(act::Type type) { return lists[u8(type)]; }
   const ActorList& GetList(act::Type type) const { return lists[u8(type)]; }
-  u8 gap_0[0xe];
+  u8 gap_0[4];
+  u8 field_4;
+  u8 field_5;
+  u8 gap_6[6];
   u8 num_actors;
   std::array<ActorList, 12> lists;
 };
@@ -129,10 +132,16 @@ struct HudState {
   char field_26C;
   char field_26D;
   u16 needLoadPerfectLayout;
-  int field_270;
+  u8 field_270;
+  u8 field_271;
+  u8 field_272;
+  bool prohibit_gear_or_bottles;
   int field_274;
-  int field_278;
-  int field_27C;
+  u8 field_278;
+  bool prohibit_masks;
+  bool prohibit_ocarina;
+  bool prohibit_regular_items;
+  u8 field_27C;
 };
 static_assert(sizeof(HudState) == 0x280);
 
@@ -258,9 +267,11 @@ struct GlobalContext : State {
   u8 gap_C500[40];
   u8 field_C528;
   u8 field_C529_one_to_clear_input;
-  u8 gap_C52A[7];
-  bool field_C531;
-  char field_C532;
+  u8 gap_C52A[4];
+  u16 next_entrance;
+  u8 field_C530;
+  u8 field_C531;
+  u8 field_C532;
   u8 gap_C533[5];
   int field_C538;
   u8 gap_C53C[798];

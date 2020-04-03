@@ -509,6 +509,15 @@ enum class ButtonIsUsable : u8 {
 
 /// Common gameplay data, also known as the Save Context (unofficially).
 struct CommonData {
+  FormEquipmentData& GetFormEquipment() {
+    const auto idx = save.player_form == act::Player::Form::Human ? 0 : u8(save.player_form);
+    return save.equipment.data[idx];
+  }
+  const FormEquipmentData& GetFormEquipment() const {
+    const auto idx = save.player_form == act::Player::Form::Human ? 0 : u8(save.player_form);
+    return save.equipment.data[idx];
+  }
+
   int start;
   int scene;
   SaveData save;
