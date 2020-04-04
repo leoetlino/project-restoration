@@ -7,6 +7,7 @@
 #include "game/actor.h"
 #include "game/camera.h"
 #include "game/pad.h"
+#include "game/scene.h"
 #include "game/states/state.h"
 
 namespace game {
@@ -161,8 +162,7 @@ struct GlobalContext : State {
 
   void EmitLastDamageSound(const act::Actor& actor);
 
-  /// Scene list: https://wiki.cloudmodding.com/mm/3D:Scene_List
-  u16 scene;
+  SceneId scene;
   u16 field_14A;
   u8 gap_14C[200];
   float field_214;

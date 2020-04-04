@@ -38,6 +38,7 @@ add_executable(newcode
   game/player.h
   game/random.cpp
   game/random.h
+  game/scene.h
   game/states/state.cpp
   game/states/state.h
   game/states/state_ending.h

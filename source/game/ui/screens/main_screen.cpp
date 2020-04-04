@@ -90,15 +90,15 @@ void MainScreen::MagicUpdateCost() {
 void MainScreen::UpdateKeyVisibility(game::GlobalContext& gctx) {
   float key_change_frame = 0;
   switch (gctx.scene) {
-  case 0x21:
-  case 0x16:
-  case 0x18:
-  case 0x1B:
-  case 0x49:
+  case SceneId::SnowheadTemple:
+  case SceneId::StoneTowerTemple:
+  case SceneId::StoneTowerTempleInverted:
+  case SceneId::WoodfallTemple:
+  case SceneId::GreatBayTemple:
     key_change_frame = 1.0f;
     break;
-  case 0x27:
-  case 0x28:
+  case SceneId::SwampSpiderHouse:
+  case SceneId::OceansideSpiderHouse:
     key_change_frame = 2.0f;
     break;
   default:

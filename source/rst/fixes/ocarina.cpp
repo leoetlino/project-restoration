@@ -27,7 +27,14 @@ static void EndOcarinaSession(game::ui::MessageWindow* window) {
 }
 
 static bool IsElegyOfEmptinessAllowed() {
-  constexpr u16 allowed_scenes[] = {0x58, 0x59, 0x53, 0x1D, 0x56, 0x13, 0x16, 0x18, 0x60, 0x4B, 0x51};
+  constexpr game::SceneId allowed_scenes[] = {
+      game::SceneId::StoneTower,       game::SceneId::StoneTowerInverted,
+      game::SceneId::RoadToIkana,      game::SceneId::IkanaCastle,
+      game::SceneId::IgosDuIkanaLair,  game::SceneId::IkanaCanyon,
+      game::SceneId::StoneTowerTemple, game::SceneId::StoneTowerTempleInverted,
+      game::SceneId::SecretShrine,     game::SceneId::BeneathTheWell,
+      game::SceneId::GhostHut,
+  };
   return util::Contains(allowed_scenes, GetContext().gctx->scene);
 }
 
