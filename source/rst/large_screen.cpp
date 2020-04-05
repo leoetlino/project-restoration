@@ -183,7 +183,7 @@ private:
     if (ui::GetCommonLayouts().hud->tatl_state != ui::TatlHudState::Hidden) {
       dpad_icon_r->GetPos().SetOpacity(0.0f);
       fade_out_dpad = false;
-    } else if (gctx && icon_c_btn02->GetIcon() != 0xFF) {
+    } else if (gctx && game::HasOcarina()) {
       // Otherwise, set the D-Pad right button icon and opacity.
       update_opacity(dpad_icon_r->GetPos(), game::CanUseItem(game::ItemId::Ocarina));
       dpad_icon_r->AsLayout<ui::ItemIcon>()->SetIcon(icon_c_btn02->GetIcon());
