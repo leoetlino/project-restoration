@@ -190,7 +190,9 @@ struct WidgetPos {
     ValueChanged(Flag::DefaultOpacity, opacity, 1.0f);
   }
 
-  void AddOpacity(float delta) { SetOpacity(std::clamp(color(3) + delta, 0.0f, 1.0f)); }
+  void AddOpacity(float delta, float min = 0.0f, float max = 1.0f) {
+    SetOpacity(std::clamp(color(3) + delta, min, max));
+  }
 
   void TranslateChanged() {
     ValueChanged(Flag::DefaultTranslateX, translate.x, 1.0f);
