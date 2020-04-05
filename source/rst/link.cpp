@@ -240,26 +240,21 @@ void HandleFastArrowSwitch(game::act::Player* player) {
   }
 }
 
-// Extension of MainScreen to bind the ocarina to D-Pad Right.
-class MainScreenEx : public game::ui::MainScreen {
-public:
-  void HandleFastOcarina(game::GlobalContext* gctx) {
-    // If the Tatl prompt is visible, do not enable the ocarina D-Pad button.
-    if (game::ui::GetCommonLayouts().hud->main_player->IsPlaying())
-      return;
+static void HandleFastOcarina(game::GlobalContext* gctx) {
+  // If the Tatl prompt is visible, do not enable the ocarina D-Pad button.
+  if (game::ui::GetCommonLayouts().hud->tatl_state != game::ui::TatlHudState::Hidden)
+    return;
 
-    if (icon_c_btn02->GetIcon() == 0xFF)
-      return;
+  if (!game::HasOcarina())
+    return;
 
-    if (auto* player = gctx->GetPlayerActor();
-        player && gctx->hud_state.item_btn_opacity[4] == 0xFF &&
-        player->controller_info.state->input.new_buttons.IsSet(game::pad::Button::Right)) {
-      player->action_type = game::act::Player::ActionType::OcarinaOrTransformation;
-      player->action = game::Action::Ocarina;
-    }
+  if (auto* player = gctx->GetPlayerActor();
+      player && gctx->hud_state.item_btn_opacity[4] == 0xFF &&
+      player->controller_info.state->input.new_buttons.IsSet(game::pad::Button::Right)) {
+    player->action_type = game::act::Player::ActionType::OcarinaOrTransformation;
+    player->action = game::Action::Ocarina;
   }
-};
-static_assert(sizeof(MainScreenEx) == sizeof(game::ui::MainScreen), "do not add member variables");
+}
 
 void Calc() {
   game::GlobalContext* gctx = GetContext().gctx;
@@ -276,9 +271,7 @@ void Calc() {
   }
 
   HandleFastArrowSwitch(player);
-
-  auto* main_screen = static_cast<MainScreenEx*>(game::ui::GetScreen(game::ui::ScreenType::Main));
-  main_screen->HandleFastOcarina(gctx);
+  HandleFastOcarina(gctx);
 }
 
 std::optional<game::Action> GetFastArrowAction() {
