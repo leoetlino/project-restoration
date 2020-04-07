@@ -183,22 +183,15 @@ struct WidgetPos {
     ValueChanged(Flag::Visible2, visible, true);
   }
 
-  void SetOpacity(float opacity) {
-    if (color(3) == opacity)
-      return;
-    color(3) = opacity;
-    ValueChanged(Flag::DefaultOpacity, opacity, 1.0f);
-  }
+  void SetOpacity(float opacity) { Set(&color(3), opacity, Flag::DefaultOpacity, 1.0f); }
 
   void AddOpacity(float delta, float min = 0.0f, float max = 1.0f) {
     SetOpacity(std::clamp(color(3) + delta, min, max));
   }
 
-  void TranslateChanged() {
-    ValueChanged(Flag::DefaultTranslateX, translate.x, 1.0f);
-    ValueChanged(Flag::DefaultTranslateY, translate.y, 1.0f);
-    ValueChanged(Flag::DefaultTranslateZ, translate.z, 1.0f);
-  }
+  void SetTranslateX(float x) { Set(&translate.x, x, Flag::DefaultTranslateX, 0.0f); }
+  void SetTranslateY(float y) { Set(&translate.y, y, Flag::DefaultTranslateY, 0.0f); }
+  void SetTranslateZ(float z) { Set(&translate.z, z, Flag::DefaultTranslateZ, 0.0f); }
 
   void ScaleChanged() {
     ValueChanged(Flag::DefaultScaleX, scale.x, 1.0f);
@@ -221,6 +214,14 @@ struct WidgetPos {
   rst::Flags<Flag> active_flags;
 
 private:
+  template <typename T>
+  void Set(T* variable, const T& value, Flag flag, const T& default_value) {
+    if (*variable == value)
+      return;
+    *variable = value;
+    ValueChanged(flag, value, default_value);
+  }
+
   template <typename T>
   void ValueChanged(Flag flag, const T& value, const T& default_value) {
     flags.Set(flag);

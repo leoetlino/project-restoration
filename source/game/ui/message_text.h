@@ -8,6 +8,8 @@ struct State;
 
 namespace game::ui {
 
+class Widget;
+
 // XXX: Incomplete.
 struct MessageTextState {
   int GetChoicePositionY(int choice) const;
@@ -28,27 +30,9 @@ struct MessageTextState {
   int field_2F4;
 };
 
-// XXX: Incomplete.
-struct BranchArrowData {
-  void SetPositionY(float y);
-
-  u32 field_0;
-  float pos_y;
-  u8 gap_8[64];
-  u32 flags2;
-  u32 flags;
-};
-
-// XXX: Incomplete. This is a UI widget.
-struct BranchArrow {
-  u8 gap_0[60];
-  BranchArrowData data;
-};
-
 void MessageHandleChoice(int* current_choice, const pad::State& pad,
-                         const MessageTextState& text_state, BranchArrow& arrow,
-                         bool play_sound = true);
+                         const MessageTextState& text_state, Widget& arrow, bool play_sound = true);
 void MessageHandleChoice(int* current_choice, int new_choice, const MessageTextState& text_state,
-                         BranchArrow& arrow, bool play_sound = true);
+                         Widget& arrow, bool play_sound = true);
 
 }  // namespace game::ui

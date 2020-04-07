@@ -6,10 +6,10 @@
 namespace game {
 
 namespace ui {
-class BranchArrow;
 class Layout;
 class MessageTextState;
 class MessageWindow;
+class Widget;
 }  // namespace ui
 
 struct StateEnding : State {
@@ -24,7 +24,7 @@ struct StateEnding : State {
   ui::Layout* press_start_layout;
   ui::MessageWindow* message_window;
   ui::MessageTextState* text_state;
-  ui::BranchArrow* branch_arrow;
+  ui::Widget* branch_arrow;
   int ending_status;
   int message_choice;
   float timer;
