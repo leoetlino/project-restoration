@@ -318,15 +318,28 @@ extern "C" RST_HOOK int rst_GetGyorgCollisionResponse(game::act::BossGyorg* gyor
 }
 
 void FixGyorg() {
-  const auto* gctx = GetContext().gctx;
+  auto* gctx = GetContext().gctx;
   auto* gyorg =
       gctx->FindActorWithId<game::act::BossGyorg>(game::act::Id::BossGyorg, game::act::Type::Boss);
   if (!gyorg)
     return;
+
   // Disable the first stun cutscene, which is known to be buggy.
   gyorg->field_F24 |= 1;
   gyorg->eyeball_flags = 0;
   gyorg->eyeball_scale = {0.0, 0.0, 0.0};
+
+  // Dying while being inhaled by Gyorg causes Link to exit the "held (by Gyorg or Majora's whips)"
+  // state. After the fairy revival cutscene, Link enters the Zora swim state (0x21d5b8) and then
+  // switches to the frozen state (0x20d96c), even though he's supposed to be in the "held" state.
+  // If this situation is detected, clear the FreezeLink flag.
+  const auto player = gctx->GetPlayerActor();
+  const auto gyorg_eating_link = (decltype(gyorg->gyorg_calc))util::GetAddr(0x557900);
+  const auto link_handle_frozen = (decltype(player->state_handler_fn))util::GetAddr(0x20D96C);
+  if (gyorg->gyorg_calc == gyorg_eating_link && player->state_handler_fn == link_handle_frozen &&
+      player->flags1.TestAndClear(game::act::Player::Flag1::FreezeLink)) {
+    util::Print("%s: clearing FreezeLink flag", __func__);
+  }
 }
 
 struct TwinmoldFixState {
