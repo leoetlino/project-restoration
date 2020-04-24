@@ -317,12 +317,31 @@ extern "C" RST_HOOK int rst_GetGyorgCollisionResponse(game::act::BossGyorg* gyor
   return util::Contains(std::array{stunned, stunned_2, stunned_attacked}, calc_fn) ? 2 : 1;
 }
 
+struct GyorgFixState {
+  std::optional<u32> frames_since_inhale_attack_end;
+};
+
 void FixGyorg() {
+  static std::optional<GyorgFixState> state{};
   auto* gctx = GetContext().gctx;
   auto* gyorg =
       gctx->FindActorWithId<game::act::BossGyorg>(game::act::Id::BossGyorg, game::act::Type::Boss);
-  if (!gyorg)
+  if (!gyorg) {
+    state.reset();
     return;
+  }
+
+  if (!state) {
+    util::Print("%s: initialising state", __func__);
+    state.emplace();
+  }
+
+  if (state->frames_since_inhale_attack_end.has_value())
+    ++*state->frames_since_inhale_attack_end;
+
+  const auto gyorg_eating_link = (decltype(gyorg->gyorg_calc))util::GetAddr(0x557900);
+  if (gyorg->gyorg_calc == gyorg_eating_link)
+    state->frames_since_inhale_attack_end = 0;
 
   // Disable the first stun cutscene, which is known to be buggy.
   gyorg->field_F24 |= 1;
@@ -334,11 +353,18 @@ void FixGyorg() {
   // switches to the frozen state (0x20d96c), even though he's supposed to be in the "held" state.
   // If this situation is detected, clear the FreezeLink flag.
   const auto player = gctx->GetPlayerActor();
-  const auto gyorg_eating_link = (decltype(gyorg->gyorg_calc))util::GetAddr(0x557900);
   const auto link_handle_frozen = (decltype(player->state_handler_fn))util::GetAddr(0x20D96C);
   if (gyorg->gyorg_calc == gyorg_eating_link && player->state_handler_fn == link_handle_frozen &&
       player->flags1.TestAndClear(game::act::Player::Flag1::FreezeLink)) {
     util::Print("%s: clearing FreezeLink flag", __func__);
+  }
+
+  // Hacky workaround for a very rare bug that causes Link to be frozen *after* being spit out of
+  // Gyorg, despite the fact that a state handler change is supposed to clear the FreezeLink flag...
+  // This forces the flag to be cleared after an inhale attack has ended.
+  if (state->frames_since_inhale_attack_end && *state->frames_since_inhale_attack_end <= 30 &&
+      player->flags1.TestAndClear(game::act::Player::Flag1::FreezeLink)) {
+    util::Print("%s: clearing FreezeLink flag after inhale attack", __func__);
   }
 }
 
