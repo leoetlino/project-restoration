@@ -259,7 +259,21 @@ struct GlobalContext : State {
   u16 field_C2BC;
   u8 gap_C2BE[355];
   __attribute__((packed)) __attribute__((aligned(1))) u32 field_C421;
-  u8 gap_C425[163];
+  u8 gap_C425[7];
+  void (*player_init)(act::Player*, GlobalContext*, int);
+  void (*player_update)(act::Player*, GlobalContext*, pad::State*, pad::TouchscreenState*);
+  void (*player_switch_to_held_state_0)(GlobalContext*, act::Player*);
+  void (*player_use_fishing_rod)(GlobalContext*);
+  bool (*player_switch_to_held_state)(GlobalContext*, act::Player*, bool is_gyorg);
+  void* player_fn_x4;
+  void* player_switch_to_still;
+  void* player_fn_x5;
+  void* player_talk;
+  void* player_fn_x6;
+  void* player_fn_x7;
+  void* player_fn_x8;
+  void* player_fn_x9;
+  u8 gap_C460[0x68];
   char field_C4C8[4];
   u16 field_C4CC;
   u8 gap_C4CE[46];
@@ -337,6 +351,7 @@ static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_state) == 0x8366);
 static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_song) == 0x836A);
 static_assert(rst::util::OffsetOf(&GlobalContext::hide_hud) == 0x825E);
 static_assert(rst::util::OffsetOf(&GlobalContext::field_836E) == 0x836E);
+static_assert(rst::util::OffsetOf(&GlobalContext::field_C4C8) == 0xC4C8);
 static_assert(sizeof(GlobalContext) == 0x11030);
 
 }  // namespace game

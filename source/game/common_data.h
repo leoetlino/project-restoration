@@ -18,8 +18,8 @@ struct __attribute__((packed)) __attribute__((aligned(2))) PlayerData {
   int anonymous_f;
   int anonymous_g;
   u8 anonymous_h[2];
-  u16 anonymous_i;
-  u16 anonymous_j;
+  u16 health_max;
+  u16 health_current;
   char magic_size_type;
   char magic;
   u16 rupee_count;

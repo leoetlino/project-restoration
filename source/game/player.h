@@ -72,7 +72,7 @@ struct Player : public Actor {
     IsUsingZoraBarrier = 0x10,
     Unk20 = 0x20,
     Unk40 = 0x40,
-    Unk80 = 0x80,
+    Dead = 0x80,
     Unk100 = 0x100,
     Unk200 = 0x200,
     Unk400 = 0x400,
@@ -101,6 +101,10 @@ struct Player : public Actor {
 
   enum class Flag2 : u32 {
     Moving = 0x20,
+    // Set when in the "held" state.
+    Unk40 = 0x40,
+    // Set when the player can stay in the hold state.
+    Held = 0x80,
     Underwater = 0x400,
     TatlFlying = 0x0010'0000,
     PlayingIdleAnimation = 0x1000'0000,
