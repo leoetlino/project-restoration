@@ -62,7 +62,8 @@ bool OpenScreen(ScreenType screen) {
 }
 
 bool CheckCurrentScreen(ScreenType screen) {
-  return GetScreenContext().active_screen == GetScreen(screen);
+  auto& ctx = GetScreenContext();
+  return ctx.active_screen == GetScreen(screen) && !ctx.new_screen;
 }
 
 void LayoutBase::calc(float speed) {

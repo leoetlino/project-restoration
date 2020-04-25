@@ -49,6 +49,7 @@ enum class ScreenType {
 };
 Screen* GetScreen(ScreenType screen);
 bool OpenScreen(ScreenType screen);
+/// Check whether the specified screen is active and not closing.
 bool CheckCurrentScreen(ScreenType screen);
 
 ScreenContext& GetScreenContext();
