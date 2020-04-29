@@ -6,6 +6,13 @@
 
 namespace game::act {
 
+namespace {
+static void PlayerChangeStateToStill(Player* player, GlobalContext* gctx) {
+  constexpr float speed_maybe = -6.0;
+  rst::util::GetPointer<void(Player*, GlobalContext*, float)>(0x1E6500)(player, gctx, speed_maybe);
+}
+}  // namespace
+
 FormParam& GetFormParam(FormParamIndex idx) {
   return rst::util::GetPointer<FormParam>(0x7AE9E8, 0x7AF9E8)[u8(idx) % 8];
 }
@@ -54,6 +61,26 @@ bool PlayerUpdateMagicCost(game::GlobalContext* gctx, int cost, int mode,
                            AllowExistingMagicUsage allow_existing_usage) {
   return rst::util::GetPointer<bool(game::GlobalContext*, int, int, bool)>(0x2264CC)(
       gctx, cost, mode, allow_existing_usage == AllowExistingMagicUsage::Yes);
+}
+
+RST_HOOK void PlayerStateSpawningElegyStatue(Player* player, GlobalContext* gctx) {
+  auto& pad = gctx->pad_state;
+  player->controller_info.state = &pad;
+
+  ++player->timer;
+
+  if (player->timer == 15) {
+    auto spawn_elegy_statue = rst::util::GetPointer<void(GlobalContext*, Player*)>(0x1F0758);
+    spawn_elegy_statue(gctx, player);
+  } else {
+    const bool skip_requested =
+        player->timer > 15 && pad.input.new_buttons.IsOneSet(pad::Button::X, pad::Button::Y,
+                                                             pad::Button::A, pad::Button::B);
+    if (skip_requested || player->timer > 135) {
+      gctx->ocarina_state = OcarinaState::StoppedPlaying;
+      PlayerChangeStateToStill(player, gctx);
+    }
+  }
 }
 
 extern "C" {

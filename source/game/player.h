@@ -359,7 +359,9 @@ struct Player : public Actor {
   u8 gap_11E42[10];
   char field_11E4C;
   char field_11E4D;
-  u16 field_11E4E;
+  /// General purpose timer.
+  /// Reset to 0 on every state handler change.
+  u16 timer;
   u8 gap_11E50[4];
   u16 field_11E54;
   u8 gap_11E56[22];
