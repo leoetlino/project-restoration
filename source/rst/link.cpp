@@ -169,7 +169,7 @@ static void SpawnArrowActor(game::GlobalContext* gctx, game::act::Player* player
   util::Print("%s: spawning %s (param=%u)", __func__, s_arrow_types[type].name, param);
 
   auto* arrow =
-      gctx->SpawnActor(player, game::act::Id::Arrow, 0, player->angle, 0, param, player->position);
+      gctx->SpawnActor(player, game::act::Id::Arrow, 0, player->angle, 0, param, player->pos.pos);
   player->projectile_actor = arrow;
   cdata.magic_cost = 0;
   // For some reason, updating the magic cost immediately doesn't work,

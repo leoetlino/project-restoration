@@ -23,7 +23,7 @@ bool PlayEffect(const Vec3& position, EffectId id) {
 }
 
 bool PlayEffect(const act::Actor& actor, EffectId id) {
-  return PlayEffect(actor.position, id);
+  return PlayEffect(actor.pos.pos, id);
 }
 
 StreamId GetCurrentStreamId(StreamPlayer player) {

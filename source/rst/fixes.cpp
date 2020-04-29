@@ -20,7 +20,7 @@ void FixIceArrows() {
   while (actor) {
     // Hide the new sparkle actors by moving them.
     if (actor->id == game::act::Id::BgSeaFreezablePoint) {
-      actor->position.y = -100000.0;
+      actor->pos.pos.y = -100000.0;
     }
     actor = actor->next;
   }
@@ -57,7 +57,7 @@ void FixBombers() {
       gctx->FindActorWithId(game::act::Id::NpcRosaSisters, game::act::Type::Npc);
   const bool is_player_around_rosa_sisters =
       npc_rosa_sister &&
-      gctx->GetPlayerActor()->position.Distance(npc_rosa_sister->position) <= 200;
+      gctx->GetPlayerActor()->pos.pos.Distance(npc_rosa_sister->pos.pos) <= 200;
 
   const auto& npcs = gctx->actors.GetList(game::act::Type::Npc);
 

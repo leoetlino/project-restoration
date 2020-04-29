@@ -6,6 +6,7 @@
 #include "common/flags.h"
 #include "common/types.h"
 #include "common/utils.h"
+#include "game/sound.h"
 
 namespace game {
 struct GlobalContext;
@@ -117,6 +118,12 @@ struct DamageTable {
 };
 static_assert(sizeof(DamageTable) == 0x20);
 
+struct PosRot {
+  Vec3 pos;
+  Vec3s rot;
+};
+static_assert(sizeof(PosRot) == 0x14);
+
 struct Actor {
   enum class Flag : u32 {
     Targetable = 0x1,
@@ -133,25 +140,16 @@ struct Actor {
   Type actor_type;
   u8 room_number;
   rst::Flags<Flag> flags;
-  // Not the same as position.
-  Vec3 some_pos;
-  float field_14;
-  u16 field_18;
-  u16 field_1A;
+  PosRot initial_pos;
   u16 params;
   u8 field_1E;
   u8 field_1F;
   u16 field_20;
   u16 field_22;
-  Vec3 position;
-  float field_34;
-  u8 gap_36[6];
-  Vec3 target_pos;
-  u16 angle_ud;
-  u16 angle_lr;
-  u16 field_4C;
-  u8 gap_4E[2];
-  u32 field_50;
+  PosRot pos;
+  u8 gap_38[4];
+  PosRot target_pos;
+  sound::EffectId sound_effect;
   u8 gap_54[4];
   Vec3 model_scale;
   Vec3 vel;
