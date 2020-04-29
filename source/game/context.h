@@ -13,8 +13,9 @@
 namespace game {
 
 namespace act {
-class Player;
 class BossTwinmold;
+class ObjElegyStatue;
+class Player;
 }  // namespace act
 
 namespace ui {
@@ -198,7 +199,10 @@ struct GlobalContext : State {
   u32 field_2000;
   u8 gap_2004[172];
   ActorLists actors;
-  u8 gap_2150[600];
+  u8 gap_2150[128];
+  Vec3 field_21D0;
+  u8 gap_21DC[0x2394 - 0x21DC];
+  std::array<act::ObjElegyStatue*, 5> elegy_statues;
   char field_23A8;
   u8 gap_23A9[3];
   pad::State pad_state_copy;
@@ -346,6 +350,7 @@ struct GlobalContext : State {
 };
 static_assert(rst::util::OffsetOf(&GlobalContext::main_camera) == 0x408);
 static_assert(rst::util::OffsetOf(&GlobalContext::ui_menu_state) == 0xAAC);
+static_assert(rst::util::OffsetOf(&GlobalContext::elegy_statues) == 0x2394);
 static_assert(rst::util::OffsetOf(&GlobalContext::field_C000) == 0xc000);
 static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_state) == 0x8366);
 static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_song) == 0x836A);

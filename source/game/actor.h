@@ -21,6 +21,8 @@ enum class Id : u16 {
   Player = 0,
   // Arrow
   Arrow = 0xf,
+  // Elegy of Emptiness statue
+  ObjElegyStatue = 0x1F,
   // Clear Tag (?)
   ClearTag = 0x73,
   // [1] Deku Palace / Woodfall Temple moving platforms (after player lands on them)
