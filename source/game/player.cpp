@@ -1,6 +1,7 @@
 #include "game/player.h"
 
 #include "common/utils.h"
+#include "game/actors/obj_elegy_statue.h"
 #include "game/common_data.h"
 #include "rst/link.h"
 
@@ -69,16 +70,21 @@ RST_HOOK void PlayerStateSpawningElegyStatue(Player* player, GlobalContext* gctx
 
   ++player->timer;
 
-  if (player->timer == 15) {
+  // Spawn the statue as soon as possible.
+  if (player->timer == 1) {
     auto spawn_elegy_statue = rst::util::GetPointer<void(GlobalContext*, Player*)>(0x1F0758);
     spawn_elegy_statue(gctx, player);
-  } else {
-    const bool skip_requested =
-        player->timer > 15 && pad.input.new_buttons.IsOneSet(pad::Button::X, pad::Button::Y,
-                                                             pad::Button::A, pad::Button::B);
-    if (skip_requested || player->timer > 135) {
+    auto* statue = gctx->elegy_statues[u8(player->active_form)];
+    statue->timer = 0;
+  } else if (player->timer > 5) {
+    auto* statue = gctx->elegy_statues[u8(player->active_form)];
+    const bool statue_ready = !statue || statue->pos.pos == player->pos.pos;
+    if (player->timer > 135 || statue_ready) {
       gctx->ocarina_state = OcarinaState::StoppedPlaying;
       PlayerChangeStateToStill(player, gctx);
+    } else if (statue && !statue_ready) {
+      // Speed up the statue fadeout. (0x18 + 8 = 0x20 per game tick)
+      statue->opacity = std::max(int(statue->opacity) - 0x18, 0);
     }
   }
 }

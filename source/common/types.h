@@ -29,6 +29,11 @@ struct TVec3 {
   T y;
   T z;
 
+  constexpr bool operator==(const TVec3& rhs) const {
+    return x == rhs.x && y == rhs.y && z == rhs.z;
+  }
+  constexpr bool operator!=(const TVec3& rhs) const { return !(*this == rhs); }
+
   T Distance(const TVec3& other) const {
     const T delta_x = x - other.x;
     const T delta_y = y - other.y;
