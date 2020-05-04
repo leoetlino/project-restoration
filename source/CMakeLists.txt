@@ -19,6 +19,7 @@ add_executable(newcode
   game/actors/boss_gyorg.h
   game/actors/boss_twinmold.h
   game/actors/obj_elegy_statue.h
+  game/actors/obj_stone_tower_block.h
   game/as.cpp
   game/as.h
   game/camera.cpp

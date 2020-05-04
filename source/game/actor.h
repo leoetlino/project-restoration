@@ -69,7 +69,11 @@ enum class Type : u8 {
   Chest = 11,
 };
 
-using MainFunction = void(*)(Actor* self, GlobalContext* gctx);
+using MainFunc = void(Actor* self, GlobalContext* gctx);
+
+// Typically used in derived actors to implement states ("modes") for actor state machines.
+template <typename ActorType>
+using ActionFunc = void(ActorType* self, GlobalContext* gctx);
 
 struct ActorInfo {
   Id id;
@@ -79,10 +83,10 @@ struct ActorInfo {
   u16 object_id;
   u8 anonymous_3[2];
   size_t inst_size;
-  MainFunction init_fn;
-  MainFunction deinit_fn;
-  MainFunction calc_fn;
-  MainFunction draw_fn;
+  MainFunc* init_fn;
+  MainFunc* deinit_fn;
+  MainFunc* calc_fn;
+  MainFunc* draw_fn;
 };
 
 // Actor overlay info. Same structure as Majora's Mask, though most fields are now unused.
@@ -206,10 +210,10 @@ struct Actor {
   Actor* prev;
   /// Next actor of the same type in the linked list.
   Actor* next;
-  MainFunction init_fn;
-  MainFunction deinit_fn;
-  MainFunction calc_fn;
-  MainFunction draw_fn;
+  MainFunc* init_fn;
+  MainFunc* deinit_fn;
+  MainFunc* calc_fn;
+  MainFunc* draw_fn;
   ActorOverlayInfo* overlay_info;
   float field_14C;
   float field_150;
@@ -241,5 +245,16 @@ static_assert(rst::util::OffsetOf(&Actor::field_80) == 0x80);
 static_assert(rst::util::OffsetOf(&Actor::field_B4) == 0xB4);
 static_assert(rst::util::OffsetOf(&Actor::field_F0) == 0xF0);
 static_assert(rst::util::OffsetOf(&Actor::field_11C) == 0x11C);
+
+// Name courtesy of the OoT decomp project.
+struct DynaPolyActor : Actor {
+  u32 dyna_poly_id;
+  float field_1FC;
+  float field_200;
+  u16 field_204;
+  u8 field_206;
+  u32 dyna_poly_flags;
+};
+static_assert(sizeof(DynaPolyActor) == 0x20C);
 
 }  // namespace game::act
