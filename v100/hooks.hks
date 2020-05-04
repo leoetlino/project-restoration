@@ -434,6 +434,14 @@ stone_tower_block_prepare_move:
   addr: 0x416DDC
   sym: rst::ObjStoneTowerBlock_MoveAfterDelay1(game::act::ObjStoneTowerBlock*, game::GlobalContext*)
 
+elegy_statue_no_dark_effect:
+  type: patch
+  addr: 0x5187A4 # EffChange::calc_main
+  data: 00 F0 20 E3
+elegy_statue_no_dark_effect_2:
+  type: patch
+  addr: 0x5187D0 # EffChange::calc_main
+  data: 00 F0 20 E3
 player_state_spawning_elegy_statue:
   type: branch
   link: false
