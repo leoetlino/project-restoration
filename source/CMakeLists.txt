@@ -70,6 +70,7 @@ add_executable(newcode
   rst/fixes/boss.cpp
   rst/fixes/boss.h
   rst/fixes/boss.s
+  rst/fixes/obj_stone_tower_block.cpp
   rst/fixes/ocarina.cpp
   rst/fixes/time.cpp
   rst/fixes.cpp
