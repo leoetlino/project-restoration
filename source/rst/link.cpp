@@ -278,13 +278,13 @@ std::optional<game::Action> GetFastArrowAction() {
   return s_fast_arrow_state.override_action;
 }
 
+RST_HOOK void TriggerItemUseHook() {
+  HandleFastTransform();
+}
+
 }  // namespace rst::link
 
 extern "C" {
-RST_HOOK void rst_TriggerItemUseHook() {
-  rst::link::HandleFastTransform();
-}
-
 RST_HOOK bool rst_link_ShouldUseZoraFastSwim() {
   return rst::link::ShouldUseZoraFastSwim();
 }

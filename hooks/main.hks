@@ -36,12 +36,12 @@ message_get_hook:
 pad_update_hook:
   type: softbranch
   opcode: post
-  func: rst_UpdatePadState
+  func: rst::UpdatePadState()
   addr: 0x116A30
 pad_update_hook:
   type: softbranch
   opcode: post
-  func: rst_UpdatePadStateForOcarina
+  func: rst::UpdatePadStateForOcarina()
   addr: 0x116900
 decouple_trigger_btns:
   type: patch
@@ -67,7 +67,7 @@ trigger_item_use_hook:
   type: softbranch
   opcode: post
   addr: 0x1DB744
-  func: rst_TriggerItemUseHook
+  func: rst::link::TriggerItemUseHook()
 
 # UI menu triggers
 ui_schedule_trigger_hook:

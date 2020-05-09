@@ -1,7 +1,7 @@
 player_get_arrow_info:
   type: branch
   link: false
-  func: rst_PlayerGetArrowInfo
+  func: game::act::PlayerGetArrowInfo(game::GlobalContext*, game::act::Player*, game::ItemId*, int*)
   addr: 0x22F7B0
 
 # State handlers

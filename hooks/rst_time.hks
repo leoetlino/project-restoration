@@ -1,7 +1,7 @@
 update_time_hook:
   type: softbranch
   opcode: pre
-  func: rst_UpdateTimeHook
+  func: rst::UpdateTimeHook()
   addr: 0x172A64
 
 move_scheduled_npc_hook:

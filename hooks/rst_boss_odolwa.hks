@@ -7,7 +7,7 @@ boss_odolwa_collision_hook:
   type: branch
   link: true
   addr: 0x29E5E4
-  func: rst_OdolwaHandleRegularCollision
+  func: rst::OdolwaHandleRegularCollision(game::act::BossOdolwa*)
 boss_odolwa_no_crippling_weakness_to_deku_nuts:
   type: patch
   addr: 0x65e52c

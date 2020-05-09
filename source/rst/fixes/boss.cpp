@@ -113,7 +113,7 @@ static void OdolwaJumpAway(game::act::BossOdolwa* boss) {
   jump_away(boss, GetContext().gctx, 2);
 }
 
-extern "C" RST_HOOK void rst_OdolwaHandleRegularCollision(game::act::BossOdolwa* boss) {
+RST_HOOK void OdolwaHandleRegularCollision(game::act::BossOdolwa* boss) {
   using namespace game;
   auto* gctx = GetContext().gctx;
 

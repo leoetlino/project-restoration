@@ -114,7 +114,7 @@ void FixTime() {
   }
 }
 
-void UpdateTimeHook() {
+RST_HOOK void UpdateTimeHook() {
   game::CommonData& cdata = game::GetCommonData();
 
   // Restore the effectiveness of the Inverted Song of Time.
@@ -140,9 +140,5 @@ extern "C" {
 RST_HOOK float rst_MoveScheduledNpcHook(u32, float*, float* schedule_position, u32, u32, u32*,
                                         Vec3*, u32, float speed) {
   return rst::MoveScheduledNpcHook(schedule_position, speed);
-}
-
-RST_HOOK void rst_UpdateTimeHook() {
-  rst::UpdateTimeHook();
 }
 }

@@ -10,7 +10,7 @@ namespace rst {
 /// Modified touchscreen state, ignoring item usability checks.
 static game::pad::TouchscreenState s_touchscreen_state;
 
-void UpdatePadState() {
+RST_HOOK void UpdatePadState() {
   using namespace game;
 
   auto& controller_mgr = pad::GetControllerMgr();
@@ -65,7 +65,7 @@ void UpdatePadState() {
   unset_if_not_usable(pad::TouchscreenButton::PictographBox, UsableButton::PictographBox);
 }
 
-void UpdatePadStateForOcarina() {
+RST_HOOK void UpdatePadStateForOcarina() {
   using namespace game;
   auto& controller_mgr = pad::GetControllerMgr();
   auto& state = controller_mgr.state;
@@ -114,12 +114,6 @@ int GetItemAssignIndex() {
 }  // namespace rst
 
 extern "C" {
-RST_HOOK void rst_UpdatePadState() {
-  rst::UpdatePadState();
-}
-RST_HOOK void rst_UpdatePadStateForOcarina() {
-  rst::UpdatePadStateForOcarina();
-}
 RST_HOOK bool rst_ui_items_IsItemAssignRequested() {
   return rst::ui::items::IsItemAssignRequested();
 }

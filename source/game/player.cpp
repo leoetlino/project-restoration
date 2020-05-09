@@ -89,14 +89,12 @@ RST_HOOK void PlayerStateSpawningElegyStatue(Player* player, GlobalContext* gctx
   }
 }
 
-extern "C" {
-RST_HOOK bool rst_PlayerGetArrowInfo(game::GlobalContext* gctx, Player* player, ItemId* item_id,
-                                     int* actor_param) {
+RST_HOOK bool PlayerGetArrowInfo(GlobalContext* gctx, Player* player, ItemId* item_id,
+                                 int* actor_param) {
   const Player::ArrowInfo info = player->GetArrowInfo(gctx);
   *item_id = info.item_id;
   *actor_param = info.actor_param;
   return info.can_use;
-}
 }
 
 }  // namespace game::act
