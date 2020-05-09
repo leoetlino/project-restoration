@@ -6,24 +6,18 @@ start_hook:
 pre_calc_hook:
   type: softbranch
   opcode: post
-  func: rst_Calc
+  func: rst::Calc(game::State*)
   addr: 0x0010676C
 pre_actor_calc_hook:
   type: softbranch
   opcode: post
   addr: 0x174A6C
-  func: rst_PreActorCalcHook
+  func: rst::PreActorCalcHook()
 post_actor_calc_hook:
   type: softbranch
   opcode: post
   addr: 0x174E08
-  func: rst_PostActorCalcHook
-
-ui_widget_create_hook:
-  type: softbranch
-  opcode: post
-  addr: 0x5C4430
-  func: rst_trampoline_rst_WidgetPostCreateHook
+  func: rst::PostActorCalcHook()
 
 main_loop_get_next_game_state_info:
   type: branch
@@ -182,7 +176,7 @@ update_time_hook:
 ui_schedule_trigger_hook:
   type: softbranch
   opcode: post
-  func: rst_UiScheduleTriggerHook
+  func: rst::UiScheduleTriggerHook()
   addr: 0x59BA10
 ui_schedule_disable_existing_trigger:
   type: patch

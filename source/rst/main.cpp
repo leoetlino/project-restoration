@@ -120,7 +120,7 @@ static void UiScheduleScreenUpdate() {
   }
 }
 
-void Calc(game::State* state) {
+RST_HOOK void Calc(game::State* state) {
   Context& context = GetContext();
   context.gctx = nullptr;
 
@@ -148,17 +148,15 @@ void Calc(game::State* state) {
     PrintDebug(context.gctx);
 }
 
-void WidgetPostCreateHook(game::ui::Widget&) {}
-
-void PreActorCalcHook() {
+RST_HOOK void PreActorCalcHook() {
   FixOwlStatueActivationTrigger();
 }
 
-void PostActorCalcHook() {
+RST_HOOK void PostActorCalcHook() {
   FixBosses();
 }
 
-void UiScheduleTriggerHook() {
+RST_HOOK void UiScheduleTriggerHook() {
   auto* gctx = GetContext().gctx;
   if (!gctx || gctx->type != game::StateType::Play)
     return;
@@ -184,26 +182,6 @@ void UiScheduleTriggerHook() {
 }  // namespace rst
 
 extern "C" {
-RST_HOOK void rst_Calc(game::State* state) {
-  rst::Calc(state);
-}
-
-RST_HOOK void rst_WidgetPostCreateHook(game::ui::Widget& widget) {
-  rst::WidgetPostCreateHook(widget);
-}
-
-RST_HOOK void rst_PreActorCalcHook() {
-  rst::PreActorCalcHook();
-}
-
-RST_HOOK void rst_PostActorCalcHook() {
-  rst::PostActorCalcHook();
-}
-
-RST_HOOK void rst_UiScheduleTriggerHook() {
-  rst::UiScheduleTriggerHook();
-}
-
 extern char* fake_heap_start;
 extern char* fake_heap_end;
 extern void (*__init_array_start[])(void) __attribute__((weak));
