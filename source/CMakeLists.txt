@@ -81,6 +81,7 @@ add_executable(newcode
   rst/link.cpp
   rst/link.h
   rst/main.cpp
+  rst/message.cpp
   rst/trampolines.s
 )
 set_target_properties(newcode PROPERTIES SUFFIX ".elf")

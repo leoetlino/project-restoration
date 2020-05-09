@@ -30,7 +30,7 @@ message_get_hook:
   type: branch
   link: false
   addr: 0x1BDE78
-  func: rst_MessageDataGet
+  func: rst::MessageDataGet(game::MessageData*, unsigned short, game::Message*)
 
 # Input
 pad_update_hook:
