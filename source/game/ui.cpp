@@ -173,8 +173,7 @@ Anim* LayoutClass::GetAnim(std::string_view name) const {
 }
 
 LayoutMgr& LayoutMgr::Instance() {
-  return rst::util::GetInstance<LayoutMgr>(std::tuple{0x7CDC9C}, std::tuple{0x6B0AFC},
-                                           std::tuple{0x16963C});
+  return rst::util::GetInstance<LayoutMgr>(0x7CDC9C, 0x6B0AFC, 0x16963C);
 }
 
 void LayoutMgr::FreeLayout(Layout* layout) {

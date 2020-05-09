@@ -45,16 +45,14 @@ I personally consider the project to be pretty much complete. The game is **play
   * `common/`: small utilities.
   * `game/`: implementation for the known parts of *Majora's Mask 3D*. Contains headers and some reimplementation of game functions.
   * `rst/`: *Project Restoration* code.
-* `v100/`, `v101/` and `v110/`: Version-specific data.
-    * `hooks.hks`: configuration for patches and hooks (for Magikoopa).
-    * `Version.cmake`: defines for *Project Restoration* code.
+* `hooks/`: configuration for patches and hooks (for Magikoopa).
 * `loader/`: Code loader (from [Magikoopa](https://github.com/RicBent/Magikoopa)).
 
 Sometimes you will find *Project Restoration* extensions and new code under `source/game`. Those extensions will always be clearly labelled as such.
 
 ### Build instructions
 
-* Put the original code.bin and exheader.bin in v100, v101 and v110.
+* Put the original code.bin and exheader.bin files in the v100, v101 and v110 folders respectively. You must dump those binaries from the ExeFS yourself; those are **not** provided in this repository for copyright reasons.
 * Run make_release.sh. You need git and Magikoopa in your PATH. **Currently, a [fork](https://github.com/leoetlino/Magikoopa) is required**.
 * Generated code patches (code.bps) and patched exheaders can be found in `release/`.
 

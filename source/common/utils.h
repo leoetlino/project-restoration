@@ -9,23 +9,14 @@
 
 namespace rst::util {
 
-#if defined(RST_VER)
-constexpr u32 Version = RST_VER;
-#else
-constexpr u32 Version = 0;
-#endif
-static_assert(Version == 0 || Version == 1, "Unknown version");
-
-template <class... Ts, typename std::enable_if_t<(Version < sizeof...(Ts))>* = nullptr>
-constexpr uintptr_t GetAddr(Ts... addresses) {
-  return std::get<Version>(std::forward_as_tuple(addresses...));
+constexpr uintptr_t GetAddr(uintptr_t addr) {
+  return addr;
 }
 
 /// Returns a version-specific address from a list of addresses and casts it to Type*.
-template <typename Type, class... Ts>
-constexpr auto GetPointer(Ts... addresses) {
-  static_assert(Version < sizeof...(Ts), "Missing address!");
-  return reinterpret_cast<Type*>(GetAddr(addresses...));
+template <typename Type>
+inline auto GetPointer(uintptr_t addr) {
+  return reinterpret_cast<Type*>(GetAddr(addr));
 }
 
 template <typename T>
@@ -36,11 +27,10 @@ static void InitIfNeeded(T* instance, bool* init_flag, void (*init_fn)(T*)) {
   init_fn(instance);
 }
 
-template <class T, class... A, class... B, class... C>
-static T& GetInstance(std::tuple<A...> ptrs, std::tuple<B...> flags, std::tuple<C...> fns) {
-  T* instance = std::apply([](auto&&... a) { return GetPointer<T>(a...); }, ptrs);
-  InitIfNeeded(instance, std::apply([](auto&&... a) { return GetPointer<bool>(a...); }, flags),
-               std::apply([](auto&&... a) { return GetPointer<void(T*)>(a...); }, fns));
+template <class T>
+static T& GetInstance(uintptr_t ptr, uintptr_t init_flag, uintptr_t init_fn) {
+  T* instance = GetPointer<T>(ptr);
+  InitIfNeeded(instance, GetPointer<bool>(init_flag), GetPointer<void(T*)>(init_fn));
   return *instance;
 }
 

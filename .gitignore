@@ -9,9 +9,7 @@
 *.map
 newcodeinfo.h
 build/
-hooks/
 bak/
-/source/Version.cmake
 
 # IDA
 *.id*

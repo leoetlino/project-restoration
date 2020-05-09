@@ -97,5 +97,3 @@ add_custom_target(newcode_product ALL
   COMMAND sh -c "${CMAKE_OBJDUMP} -t newcode.elf>newcode.sym"
   BYPRODUCTS newcode.bin newcode.sym
 )
-
-include(Version.cmake)

@@ -10,8 +10,7 @@ namespace game::sound {
 class StreamMgr;
 
 static StreamMgr& GetStreamMgr() {
-  return rst::util::GetInstance<StreamMgr>(std::tuple{0x7CB49C}, std::tuple{0x6B0A3C},
-                                           std::tuple{0x1E11F8});
+  return rst::util::GetInstance<StreamMgr>(0x7CB49C, 0x6B0A3C, 0x1E11F8);
 }
 
 bool PlayEffect(EffectId id) {

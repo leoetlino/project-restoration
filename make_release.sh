@@ -22,14 +22,8 @@ build () {
 
   print_status "building for $TARGET_VERSION"
 
-  # Copy the version-specific hooks
-  rm -r $RST_ROOT/hooks/ || true
-  mkdir $RST_ROOT/hooks
-  cp $RST_ROOT/$TARGET_VERSION/hooks.hks $RST_ROOT/hooks/
-
   # Copy the version-specific build files
   cp $RST_ROOT/$TARGET_VERSION/*.bin $RST_ROOT/
-  cp $RST_ROOT/$TARGET_VERSION/Version.cmake $RST_ROOT/source/
 
   # Touch main.cpp to get an up-to-date build time
   touch $RST_ROOT/source/rst/main.cpp
@@ -55,7 +49,7 @@ build () {
   # Clean up
   rm -r $RST_ROOT/loader/*.bin $RST_ROOT/loader/*.sym || true
   rm -r $RST_ROOT/*.bin $RST_ROOT/*.sym || true
-  rm -r $RST_ROOT/bak $RST_ROOT/hooks || true
+  rm -r $RST_ROOT/bak || true
 }
 
 build v100

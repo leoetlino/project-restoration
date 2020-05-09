@@ -15,7 +15,7 @@ static void PlayerChangeStateToStill(Player* player, GlobalContext* gctx) {
 }  // namespace
 
 FormParam& GetFormParam(FormParamIndex idx) {
-  return rst::util::GetPointer<FormParam>(0x7AE9E8, 0x7AF9E8)[u8(idx) % 8];
+  return rst::util::GetPointer<FormParam>(0x7AE9E8)[u8(idx) % 8];
 }
 
 Player::ArrowInfo Player::GetArrowInfo(GlobalContext* gctx) const {

@@ -5,7 +5,7 @@
 namespace game {
 
 StaticContext& GetStaticContext() {
-  return *rst::util::GetPointer<StaticContext>(0x7892D0, 0x78A2D0);
+  return *rst::util::GetPointer<StaticContext>(0x7892D0);
 }
 
 }  // namespace game
