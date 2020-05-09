@@ -12,6 +12,10 @@ namespace rst {
 template <typename FlagType, typename = typename std::enable_if_t<std::is_enum_v<FlagType>, void>>
 class Flags {
 public:
+  constexpr auto& operator=(FlagType v) {
+    flags = std::underlying_type_t<FlagType>(v);
+    return *this;
+  }
   constexpr void Set(FlagType v) { flags |= std::underlying_type_t<FlagType>(v); }
   constexpr void Clear(FlagType v) { flags &= ~std::underlying_type_t<FlagType>(v); }
 

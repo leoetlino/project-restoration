@@ -261,7 +261,7 @@ void Calc() {
   game::act::Player* player = gctx->GetPlayerActor();
   if (!player)
     return;
-  if (gctx->IsUiMenuActive())
+  if (gctx->IsPaused())
     return;
 
   if (player->controller_info.state) {

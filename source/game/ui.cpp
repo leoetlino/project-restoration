@@ -45,7 +45,7 @@ bool OpenScreen(ScreenType screen) {
     return false;
 
   ui_ctx.new_screen = GetScreen(screen);
-  gctx->ui_menu_state = UiMenuState::Opening;
+  gctx->pause_flags = PauseFlag::PauseCalc;
   gctx->enable_letterbox = false;
 
   if (GetStaticContext().field_D38) {

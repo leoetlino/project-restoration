@@ -22,11 +22,10 @@ namespace ui {
 class PlayHud;
 }
 
-// based on a quick experiment - probably wrong
-enum class UiMenuState : u16 {
-  Closed = 0,
-  Opening = 1,
-  Opened = 3,
+enum class PauseFlag : u16 {
+  PauseCalc = 1 << 0,
+  PauseDraw = 1 << 1,
+  PauseAll = PauseCalc | PauseDraw,
 };
 
 // Keeps track of spawned actors.
@@ -148,7 +147,7 @@ static_assert(sizeof(HudState) == 0x280);
 
 // Likely incomplete.
 struct GlobalContext : State {
-  bool IsUiMenuActive() const { return ui_menu_state != game::UiMenuState::Closed; }
+  bool IsPaused() const { return pause_flags.IsOneSet(PauseFlag::PauseCalc, PauseFlag::PauseDraw); }
 
   act::Actor* FindActorWithId(act::Id id, act::Type type) const;
   template <typename T>
@@ -191,7 +190,7 @@ struct GlobalContext : State {
   u8 gap_A7C[12];
   u32 field_A88;
   u8 gap_A8C[32];
-  UiMenuState ui_menu_state;
+  rst::Flags<PauseFlag> pause_flags;
   u32 field_AB0;
   u8 gap_AB4[76];
   int field_B00;
@@ -349,7 +348,7 @@ struct GlobalContext : State {
   u8 gap_F0F4[7996];
 };
 static_assert(rst::util::OffsetOf(&GlobalContext::main_camera) == 0x408);
-static_assert(rst::util::OffsetOf(&GlobalContext::ui_menu_state) == 0xAAC);
+static_assert(rst::util::OffsetOf(&GlobalContext::pause_flags) == 0xAAC);
 static_assert(rst::util::OffsetOf(&GlobalContext::elegy_statues) == 0x2394);
 static_assert(rst::util::OffsetOf(&GlobalContext::field_C000) == 0xc000);
 static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_state) == 0x8366);
