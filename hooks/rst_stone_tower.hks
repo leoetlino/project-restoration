@@ -1,0 +1,21 @@
+stone_tower_block_faster_movement:
+  type: patch
+  addr: 0x2AC634
+  data: 00 00 48 42 # 50.0, was 20.0
+stone_tower_block_faster_movement:
+  type: patch
+  addr: 0x2D0C0C
+  data: 00 00 70 42 # 60.0, was 40.0
+stone_tower_block_prepare_move:
+  type: symbol
+  addr: 0x416DDC
+  sym: rst::ObjStoneTowerBlock_MoveAfterDelay1(game::act::ObjStoneTowerBlock*, game::GlobalContext*)
+
+elegy_statue_no_dark_effect:
+  type: patch
+  addr: 0x5187A4 # EffChange::calc_main
+  data: 00 F0 20 E3
+elegy_statue_no_dark_effect_2:
+  type: patch
+  addr: 0x5187D0 # EffChange::calc_main
+  data: 00 F0 20 E3

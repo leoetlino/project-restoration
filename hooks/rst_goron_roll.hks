@@ -1,0 +1,20 @@
+goron_roll_classic_end_trigger:
+  type: patch
+  addr: 0x1F7A38
+  # mov r0, r4
+  data: 04 00 A0 E1
+goron_roll_classic_end_trigger:
+  type: branch
+  link: true
+  addr: 0x1F7A3C
+  func: rst_trampoline_rst_link_ShouldEndGoronRoll
+goron_roll_classic_end_trigger_fast:
+  type: patch
+  addr: 0x1F7DCC
+  # mov r0, r4
+  data: 04 00 A0 E1
+goron_roll_classic_end_trigger_fast:
+  type: branch
+  link: true
+  addr: 0x1F7DD0
+  func: rst_trampoline_rst_link_ShouldEndGoronRoll

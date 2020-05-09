@@ -1,0 +1,4 @@
+boss_twinmold_consistent_damage:
+  type: patch
+  addr: 0x28E540
+  data: 00 F0 20 E3

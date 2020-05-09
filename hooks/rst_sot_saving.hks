@@ -1,0 +1,5 @@
+daytimer_game_state:
+  type: patch
+  addr: 0x3A8EF0
+  # mov r1, 10; str r1, [r4, GameState::status]
+  data: 0A 10 A0 E3 3D 11 84 E5

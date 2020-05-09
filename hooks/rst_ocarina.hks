@@ -1,0 +1,5 @@
+messagewindow_handle_ocarina_song_hook:
+  type: branch
+  link: true
+  func: rst_trampoline_rst_HandleOcarinaSong
+  addr: 0x604D8C

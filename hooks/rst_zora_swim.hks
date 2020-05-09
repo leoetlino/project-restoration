@@ -1,0 +1,58 @@
+zora_swim_1a:
+  # Remove fast swim magic check
+  type: patch
+  data: E3A00001
+  addr: 0x00220F60
+  reverse: true
+zora_swim_1b:
+  # Remove fast swim magic check
+  type: patch
+  data: E3A00001
+  addr: 0x002210DC
+  reverse: true
+zora_swim_1c:
+  # Remove fast swim magic check
+  type: patch
+  data: E3A00001
+  addr: 0x001FFDBC
+  reverse: true
+zora_swim_2:
+  # Change fast swim start trigger (A+R -> A)
+  type: branch
+  link: true
+  func: rst_trampoline_rst_link_ShouldUseZoraFastSwim
+  addr: 0x220EFC
+zora_swim_2:
+  type: patch
+  data: 00 F0 20 E3 01 00 50 E3
+  addr: 0x220F2C
+zora_swim_3a:
+  # Change fast swim continue trigger (A+R -> A)
+  type: branch
+  link: true
+  func: rst_trampoline_rst_link_ShouldUseZoraFastSwim
+  addr: 0x1FFD74
+zora_swim_3a:
+  type: patch
+  data: 00 F0 20 E3 00 F0 20 E3 01 00 50 E3
+  addr: 0x1FFD78
+zora_swim_3b:
+  # Change fast swim continue trigger (A+R -> A)
+  type: branch
+  link: true
+  func: rst_trampoline_rst_link_ShouldUseZoraFastSwim
+  addr: 0x1FFA84
+zora_swim_3b:
+  type: patch
+  data: 00 F0 20 E3 00 F0 20 E3 01 00 50 E3
+  addr: 0x1FFA88
+zora_swim_4:
+  type: patch
+  data: EA000009
+  addr: 0x00220F00
+  reverse: true
+zora_in_water_state_start_fast_swim:
+  type: branch
+  link: true
+  func: rst_trampoline_rst_link_SwitchToZoraFastSwim
+  addr: 0x1F0C78

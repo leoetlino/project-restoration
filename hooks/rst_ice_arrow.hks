@@ -1,0 +1,4 @@
+ice_arrows:
+  type: patch
+  data: 00 F0 20 E3 # nop
+  addr: 0x31874C

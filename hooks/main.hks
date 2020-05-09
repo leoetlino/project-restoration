@@ -1,0 +1,85 @@
+# Hooks
+start_hook:
+  type: softbranch
+  opcode: post
+  func: _start
+  addr: 0x103EC8
+pre_calc_hook:
+  type: softbranch
+  opcode: post
+  func: rst::Calc(game::State*)
+  addr: 0x0010676C
+pre_actor_calc_hook:
+  type: softbranch
+  opcode: post
+  addr: 0x174A6C
+  func: rst::PreActorCalcHook()
+post_actor_calc_hook:
+  type: softbranch
+  opcode: post
+  addr: 0x174E08
+  func: rst::PostActorCalcHook()
+
+main_loop_get_next_game_state_info:
+  type: branch
+  link: true
+  addr: 0x1053EC
+  func: rst_trampoline_rst_GameStateGetNextStateInfo
+
+message_get_hook:
+  type: branch
+  link: false
+  addr: 0x1BDE78
+  func: rst_MessageDataGet
+
+# Input
+pad_update_hook:
+  type: softbranch
+  opcode: post
+  func: rst_UpdatePadState
+  addr: 0x116A30
+pad_update_hook:
+  type: softbranch
+  opcode: post
+  func: rst_UpdatePadStateForOcarina
+  addr: 0x116900
+decouple_trigger_btns:
+  type: patch
+  data: 12 00 00 EA # skips over the ZL/ZR checks
+  addr: 0x1166C8
+decouple_start_select:
+  type: patch
+  data: 01
+  addr: 0x006B083C
+
+# Item triggers
+ui_items_fast_assign_item:
+  type: branch
+  link: true
+  func: rst_trampoline_rst_ui_items_IsItemAssignRequested
+  addr: 0x5C14F4
+ui_items_fast_assign_item:
+  type: branch
+  link: true
+  func: rst_trampoline_rst_ui_items_GetItemAssignIndex
+  addr: 0x5C161C
+trigger_item_use_hook:
+  type: softbranch
+  opcode: post
+  addr: 0x1DB744
+  func: rst_TriggerItemUseHook
+
+# UI menu triggers
+ui_schedule_trigger_hook:
+  type: softbranch
+  opcode: post
+  func: rst::UiScheduleTriggerHook()
+  addr: 0x59BA10
+ui_schedule_disable_existing_trigger:
+  type: patch
+  data: 51 00 00 EA
+  addr: 0x59BA14
+ui_item_close_on_select:
+  type: patch
+  data: 06 00 11 E3 # tst r1, (Button::B | Button::Select)
+  addr: 0x5C19E4

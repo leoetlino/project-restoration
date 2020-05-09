@@ -1,0 +1,4 @@
+captain_keeta_speed:
+  type: patch
+  data: 00 00 60 40 # 3.5 (was 2.3333)
+  addr: 0x3052C4

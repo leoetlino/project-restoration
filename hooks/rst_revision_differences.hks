@@ -1,0 +1,18 @@
+ocarina_dive_restore:
+  type: patch
+  addr: 0x1E1F0C
+  data: 00 F0 20 E3
+
+fourth_heart_piece_sound:
+  type: patch
+  addr: 0x231184
+  data: 00 00 50 E3
+
+do_not_lock_swordsman_school_door:
+  type: patch
+  addr: 0x589C4C
+  # nop out this flag check:
+  # if (!swordSchool || !(s_common_data.save.anonymous_130 & 8))
+  #                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  data: 00 F0 20 E3
+

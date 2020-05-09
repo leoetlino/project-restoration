@@ -1,0 +1,12 @@
+player_get_arrow_info:
+  type: branch
+  link: false
+  func: rst_PlayerGetArrowInfo
+  addr: 0x22F7B0
+
+# State handlers
+player_state_spawning_elegy_statue:
+  type: branch
+  link: false
+  addr: 0x1E9FB8
+  func: game::act::PlayerStateSpawningElegyStatue(game::act::Player*, game::GlobalContext*)

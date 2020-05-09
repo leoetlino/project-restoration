@@ -1,0 +1,25 @@
+fix_transformation_mask_equip_checks_1:
+  # prevent forced transform when mask is not equipped
+  type: patch
+  addr: 0x1DB31C
+  data: 00 F0 20 E3
+fix_transformation_mask_equip_checks_1b:
+  type: patch
+  addr: 0x1E770C
+  data: 15 00 00 EA
+fix_transformation_mask_equip_checks_2a:
+  # remove other checks (fix first-person mode, Goron rolling and potentially more)
+  type: patch
+  data: EA00003B
+  addr: 0x001EDFB4
+  reverse: true
+fix_transformation_mask_equip_checks_2b:
+  type: patch
+  data: EA000052
+  reverse: true
+  addr: 0x001F78CC
+fast_transform_cutscene_skip_btns:
+  type: patch
+  addr: 0x1EB660
+  data: 00 00 0c f3
+  reverse: true

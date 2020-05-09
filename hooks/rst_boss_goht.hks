@@ -1,0 +1,22 @@
+boss_goht_collision_check:
+  type: patch
+  addr: 0x4C17F4
+  # mov r0, r4
+  data: 04 00 A0 E1
+boss_goht_collision_check:
+  type: branch
+  link: true
+  addr: 0x4C17F8
+  func: rst_trampoline_rst_IsGohtCollided
+boss_goht_collision_check:
+  type: patch
+  addr: 0x4C17FC
+  data: F0 0F 94 E5
+boss_goht_no_eyeball:
+  type: patch
+  addr: 0x469D60
+  data: 6F 0A 9F ED
+boss_goht_no_eyeball:
+  type: patch
+  addr: 0x469F24
+  data: 00 00 00 00

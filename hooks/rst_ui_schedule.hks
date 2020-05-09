@@ -1,0 +1,34 @@
+ui_schedule_shorter_anim_open_update:
+  type: patch
+  data: 3c 23 d7 0a
+  addr: 0x5B1758
+  reverse: true
+ui_schedule_shorter_anim_new_text_case_1:
+  type: patch
+  data: 3c 23 d7 0a
+  addr: 0x5B1780
+  reverse: true
+ui_schedule_shorter_anim_new_text_case_2:
+  type: patch
+  data: 3c 23 d7 0a
+  addr: 0x5B1A7C
+  reverse: true
+ui_schedule_shorter_anim_unk:
+  type: patch
+  data: 3c 23 d7 0a
+  addr: 0x5B1A80
+  reverse: true
+ui_schedule_shorter_anim_show_main_textbox:
+  type: patch
+  data: 3c 23 d7 0a
+  addr: 0x5B1A8C
+  reverse: true
+ui_schedule_shorter_anim_state_failed:
+  type: patch
+  data: 3c 23 d7 0a
+  addr: 0x5B1A90
+  reverse: true
+ui_schedule_shorter_anim_fail:
+  type: patch
+  data: 0B 00 00 EA
+  addr: 0x5B183C

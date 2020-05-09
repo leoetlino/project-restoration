@@ -1,0 +1,5 @@
+camera_change_mode_hook:
+  type: branch
+  addr: 0x18B320
+  link: true
+  func: rst_CameraChangeModeExHook
