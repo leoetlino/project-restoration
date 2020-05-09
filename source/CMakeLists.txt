@@ -67,6 +67,8 @@ add_executable(newcode
   game/ui/screens/main_screen.h
   game/ui/screens/schedule_screen.h
   game/ui/screens/screen.h
+  rst/camera.cpp
+  rst/camera.h
   rst/fixes/boss.cpp
   rst/fixes/boss.h
   rst/fixes/boss.s

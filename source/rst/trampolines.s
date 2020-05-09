@@ -83,7 +83,7 @@ rst_CameraChangeModeExHook:
   mov r4, r0
   mov r5, r1
   mov r6, r2
-  bl rst_ShouldSwitchToFreeCam
+  bl _ZN3rst21ShouldSwitchToFreeCamEPN4game6CameraENS0_10CameraModeEm
   cmp r0, #1
   moveq r5, #0x1f
   mov r0, r4

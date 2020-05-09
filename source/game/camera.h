@@ -291,6 +291,4 @@ struct CameraStateInfo {
 };
 static_assert(sizeof(CameraStateInfo) == 0xc);
 
-void CalcCamera();
-
 }  // namespace game

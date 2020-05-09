@@ -12,6 +12,7 @@
 #include "game/ui.h"
 #include "game/ui/screens/gear_screen.h"
 #include "game/ui/screens/schedule_screen.h"
+#include "rst/camera.h"
 #include "rst/fixes.h"
 #include "rst/fixes/boss.h"
 #include "rst/fixes/time.h"
@@ -131,7 +132,7 @@ RST_HOOK void Calc(game::State* state) {
     return;
 
   context.gctx = static_cast<game::GlobalContext*>(state);
-  game::CalcCamera();
+  CalcCamera(context.gctx);
   link::Calc();
   FixTime();
   FixIceArrows();
