@@ -86,6 +86,14 @@ add_executable(newcode
   rst/message.cpp
   rst/trampolines.s
 )
+target_sources(newcode PRIVATE
+  lib/imgui/imgui.cpp
+  lib/imgui/imgui.h
+  lib/imgui/imgui_draw.cpp
+  lib/imgui/imgui_widgets.cpp
+  lib/imgui_sw/imgui_sw.cpp
+  lib/imgui_sw/imgui_sw.hpp
+)
 set_target_properties(newcode PROPERTIES SUFFIX ".elf")
 target_compile_options(newcode PRIVATE -fdiagnostics-color=always -Wall -Wextra -std=c++17 -fno-exceptions -fomit-frame-pointer -ffunction-sections)
 target_include_directories(newcode PRIVATE ./)

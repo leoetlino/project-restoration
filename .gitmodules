@@ -1,3 +1,6 @@
 [submodule "source/lib/eigen"]
 	path = source/lib/eigen
 	url = https://gitlab.com/libeigen/eigen
+[submodule "source/lib/imgui"]
+	path = source/lib/imgui
+	url = https://github.com/ocornut/imgui
