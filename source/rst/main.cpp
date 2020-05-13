@@ -5,6 +5,7 @@
 #include "game/camera.h"
 #include "game/common_data.h"
 #include "game/context.h"
+#include "game/memory.h"
 #include "game/pad.h"
 #include "game/player.h"
 #include "game/sound.h"
@@ -145,8 +146,12 @@ RST_HOOK void Calc(game::State* state) {
   UiOcarinaScreenUpdate();
   UiScheduleScreenUpdate();
 
-  if (false)
+  if (false) {
     PrintDebug(context.gctx);
+    if (state->pad_state.input.new_buttons.IsSet(game::pad::Button::ZR)) {
+      game::Allocator::Instance().PrintDebugInfo();
+    }
+  }
 }
 
 RST_HOOK void PreActorCalcHook() {
