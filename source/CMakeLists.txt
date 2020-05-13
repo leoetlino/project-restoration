@@ -32,6 +32,8 @@ add_executable(newcode
   game/context.h
   game/items.cpp
   game/items.h
+  game/memory.cpp
+  game/memory.h
   game/message.cpp
   game/message.h
   game/pad.cpp
