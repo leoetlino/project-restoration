@@ -1,3 +1,6 @@
+#include "lib/imgui/imgui.h"
+#include "lib/imgui_sw/imgui_sw.hpp"
+
 #include "common/context.h"
 #include "common/debug.h"
 #include "common/types.h"
@@ -118,6 +121,124 @@ static void UiScheduleScreenUpdate() {
       handler.UpdateState(btn, ctx, 0, 0);
       handler.OnActivate(btn, false, ctx, 0, 0);
       handler.OnRelease(btn, false, false, ctx, 0, 0);
+    }
+  }
+}
+
+RST_HOOK void DrawMenu() {
+  auto* gstate = GetContext().gctx;
+  if (!gstate)
+    return;
+
+  static bool s_init = false;
+  if (!s_init) {
+    ImGui::CreateContext();
+    auto& io = ImGui::GetIO();
+    io.DisplaySize = {320, 240};
+    imgui_sw::bind_imgui_painting();
+    imgui_sw::make_style_fast();
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.WindowBorderSize = 0.0f;
+    style.WindowMenuButtonPosition = ImGuiDir_None;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+
+    s_init = true;
+  }
+
+  struct FramebufferAddress {
+    u8* a;
+    u8* b;
+  };
+
+  struct Framebuffer {
+    bool initialised;
+    u8 active_buffer_idx;
+    u32 display_buffer_ids[2];
+    u8* display_buffers[2];
+    u32 format;
+    u32 physical_width;
+    u32 physical_height;
+    u32 area;
+    u32 field_24;
+    u32 field_28;
+  };
+  static_assert(sizeof(Framebuffer) == 0x2C);
+
+  struct Graphics {
+    u32 field_0;
+    bool initialised;
+    FramebufferAddress top1_addr;
+    FramebufferAddress bottom_addr;
+    FramebufferAddress top2_addr;
+    u32 field_20;
+    Framebuffer top1;
+    Framebuffer top2;
+    Framebuffer bottom;
+  };
+  static_assert(sizeof(Graphics) == 0xA8);
+  Graphics* graphics = *rst::util::GetPointer<Graphics*>(0x6a3a4c);
+  if (!graphics || !graphics->initialised)
+    return;
+
+  ImGuiIO& io = ImGui::GetIO();
+  io.DeltaTime = 1.0f / 30.0f;
+  io.BackendFlags |= ImGuiBackendFlags_HasGamepad;
+  const auto& pad = gstate->pad_state;
+  const auto set_button = [&](ImGuiNavInput_ input, game::pad::Button button) {
+    io.NavInputs[input] = pad.input.buttons.IsSet(button) ? 1.0 : 0.0;
+  };
+  set_button(ImGuiNavInput_Activate, game::pad::Button::A);
+  set_button(ImGuiNavInput_Cancel, game::pad::Button::B);
+  set_button(ImGuiNavInput_Menu, game::pad::Button::Y);
+  set_button(ImGuiNavInput_Input, game::pad::Button::X);
+  set_button(ImGuiNavInput_DpadLeft, game::pad::Button::Left);
+  set_button(ImGuiNavInput_DpadRight, game::pad::Button::Right);
+  set_button(ImGuiNavInput_DpadUp, game::pad::Button::Up);
+  set_button(ImGuiNavInput_DpadDown, game::pad::Button::Down);
+  set_button(ImGuiNavInput_FocusPrev, game::pad::Button::L);
+  set_button(ImGuiNavInput_FocusNext, game::pad::Button::R);
+  set_button(ImGuiNavInput_TweakSlow, game::pad::Button::L);
+  set_button(ImGuiNavInput_TweakFast, game::pad::Button::R);
+  io.NavInputs[ImGuiNavInput_LStickLeft] = pad.main_stick.x < 0.0 ? -pad.main_stick.x : 0.0;
+  io.NavInputs[ImGuiNavInput_LStickRight] = pad.main_stick.x > 0.0 ? pad.main_stick.x : 0.0;
+  io.NavInputs[ImGuiNavInput_LStickUp] = pad.main_stick.y > 0.0 ? pad.main_stick.y : 0.0;
+  io.NavInputs[ImGuiNavInput_LStickDown] = pad.main_stick.y < 0.0 ? -pad.main_stick.y : 0.0;
+
+  ImGui::NewFrame();
+  ImGui::SetNextWindowSize({320, 240});
+  ImGui::SetNextWindowPos({0, 0});
+  ImGui::SetNextWindowBgAlpha(0.8);
+  ImGui::Begin("Demo window", nullptr,
+               ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
+  ImGui::Button("Hello!");
+  ImGui::End();
+
+  ImGui::Render();
+
+  // FIXME: make this use the buffer directly?
+
+  u8* game_buffer = graphics->bottom.display_buffers[!graphics->bottom.active_buffer_idx];
+  static u32 buffer[320 * 240]{};
+  for (u32 x = 0; x < 320; ++x) {
+    for (u32 y = 0; y < 240; ++y) {
+      u8 b = game_buffer[(240 * x + y) * 3 + 0];
+      u8 g = game_buffer[(240 * x + y) * 3 + 1];
+      u8 r = game_buffer[(240 * x + y) * 3 + 2];
+      buffer[320 * (239 - y) + x] = 0xFF000000 | (b << 16) | (g << 8) | r;
+    }
+  }
+
+  imgui_sw::paint_imgui(buffer, 320, 240);
+
+  for (u32 x = 0; x < 320; ++x) {
+    for (u32 y = 0; y < 240; ++y) {
+      u32 abgr = buffer[320 * (239 - y) + x];
+      u8 b = u8(abgr >> 16);
+      u8 g = u8(abgr >> 8);
+      u8 r = u8(abgr);
+      game_buffer[(240 * x + y) * 3 + 0] = b;
+      game_buffer[(240 * x + y) * 3 + 1] = g;
+      game_buffer[(240 * x + y) * 3 + 2] = r;
     }
   }
 }

@@ -19,6 +19,11 @@ post_actor_calc_hook:
   opcode: post
   addr: 0x174E08
   func: rst::PostActorCalcHook()
+draw_hook:
+  type: softbranch
+  opcode: post
+  addr: 0x107148
+  func: rst::DrawMenu()
 
 main_loop_get_next_game_state_info:
   type: branch
