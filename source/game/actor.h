@@ -154,27 +154,30 @@ struct Actor {
   u16 field_22;
   PosRot pos;
   u8 gap_38[4];
-  PosRot target_pos;
+  PosRot ztarget_pos;
   sound::EffectId sound_effect;
   u8 gap_54[4];
   Vec3 model_scale;
   Vec3 vel;
   float vel_xz;
-  float field_74;
+  // Modifying this value causes link to moonjump/levitate.
+  float vel_y;
   u8 gap_78[8];
   u32 field_80;
   u8 gap_84;
   u8 field_85;
   u8 gap86[3];
   u8 gap_89[3];
-  float field_8C;
+  // Distance to water/submerged? After -30.99 it goes to -32000.00
+  float dist_to_water_maybe;
   u8 gap_90[4];
   rst::Flags<Flag94> flags_94;
   float field_98;
   float distance_to_link;
   float height_diff_to_link;
   DamageTable* damage_table;
-  Vec3 field_A8;
+  // Changing x and z causes link to slide across plane in direction.
+  Vec3 target_pos_maybe;
   u32 field_B4;
   u16 field_B8;
   u8 field_BA;
@@ -195,7 +198,7 @@ struct Actor {
   Vec3 field_F0;
   u32 field_FC;
   Vec3 field_100;
-  Vec3 field_10C;
+  Vec3 actor_coords;
   u8 field_118;
   u8 gap119;
   u16 text_id_maybe;
