@@ -25,7 +25,8 @@ struct FormParam {
   u16 run_accel;
   u16 run_decel;
   u16 field_4;
-  u16 field_6;
+  // Can increase the animation speed of a sidehop shuffle.
+  u16 sidehop_walk_anim_speed;
   u16 field_8;
   u16 field_A;
   u16 field_C;
@@ -172,6 +173,7 @@ struct Player : public Actor {
   char field_201;
   char field_202;
   u8 gap_203[4];
+  // 1=sword, 2= shield, 3=stick/GFS, 4=first person view with item out, 5=chu/bomb but remains 5 until next set.
   u8 field_207;
   u8 gap208[3];
   MaskId active_mask_id;
@@ -186,7 +188,8 @@ struct Player : public Actor {
   u32 field_370;
   float field_374;
   u8 gap_378[4];
-  float field_37C;
+  // Float for time stood still? Moving resets to 0.00.
+  float time_stood_still_maybe;
   float field_380;
   u8 gap_384[4];
   float field_388;
