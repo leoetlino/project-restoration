@@ -142,7 +142,7 @@ RST_HOOK void OdolwaHandleRegularCollision(game::act::BossOdolwa* boss) {
     return;
   case act::DamageType::Type4:
     boss->field_1C35 = 0x14;
-    gctx->SpawnActor(act::Id::ClearTag, 0, 0, 0, 4, boss->target_pos.pos);
+    gctx->SpawnActor(act::Id::ClearTag, 0, 0, 0, 4, boss->ztarget_pos.pos);
     break;
   case act::DamageType::TypeB:
     boss->field_1C35 = 0x28;
@@ -150,7 +150,7 @@ RST_HOOK void OdolwaHandleRegularCollision(game::act::BossOdolwa* boss) {
     return;
   case act::DamageType::TypeC:
     boss->field_1C35 = 0x1E;
-    gctx->SpawnActor(act::Id::ClearTag, 0, 0, 3, 4, boss->target_pos.pos);
+    gctx->SpawnActor(act::Id::ClearTag, 0, 0, 3, 4, boss->ztarget_pos.pos);
     break;
   default:
     break;
