@@ -111,7 +111,7 @@ struct InventoryData {
     // TODO: Lots of different counts in here.
     BitField<28, 4, int> heart_container_pieces;
   };
-  CollectRegister collection_register;
+  CollectRegister collect_register;
   char anonymous_33[1];
   char anonymous_34[3];
   u8 gap200[6];
