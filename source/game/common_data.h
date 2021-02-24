@@ -86,13 +86,13 @@ struct EquipmentData {
   char field_25;
   char field_26;
   char field_27;
-  union swordShield {
+  union SwordShield {
     u16 raw;
 
     BitField<0, 4, SwordType> sword;
     BitField<4, 8, ShieldType> shield;
   };
-  swordShield sword_shield;
+  SwordShield sword_shield;
   //BitField<4, 8, u16> sword;
 };
 
@@ -104,9 +104,8 @@ struct InventoryData {
   u8 field_60[24];
   int non_equip_register;
   union CollectRegister {
-    int raw;
+    u32 raw;
     
-    //BitField<0, 1, int> skulltula_count // This one sends off to a function to update a counter below.;
     BitField<4, 1, int> bombers_notebook;
     // TODO: Lots of different counts in here.
     BitField<28, 4, int> heart_container_pieces;
@@ -192,7 +191,7 @@ struct SaveData {
   int anonymous_58;
   u8 gap11EC[36];
   union SkulltulaRegister {
-    int raw;
+    u32 raw;
 
     BitField<0, 16, int> swamp_count;
     BitField<16, 16, int> ocean_count;
@@ -525,7 +524,9 @@ struct RespawnData {
   u8 btn_i_can_use_item;
   //u32 stored_mask_id_maybe;
   u32 temp_collect_flags_maybe;
-}; //0x20
+};
+static_assert(sizeof(RespawnData) == 0x20);
+
 
 enum class UsableButton : u8 {
   B = 0,
@@ -609,7 +610,7 @@ struct CommonData {
   int setup;
   int setup2;
   int field_13624;
-  RespawnData sub13s[9];
+  RespawnData sub13s[8];
   u32 field_13728;
   int field_1372C;
   char field_13730;
@@ -658,7 +659,7 @@ struct CommonData {
   u16 field_140F2;
   int field_140F4;
 };
-static_assert(sizeof(CommonData) == 0x14118);
+static_assert(sizeof(CommonData) == 0x140F8);
 
 CommonData& GetCommonData();
 
