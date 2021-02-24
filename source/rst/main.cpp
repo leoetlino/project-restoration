@@ -167,7 +167,7 @@ RST_HOOK void UiScheduleTriggerHook() {
   const bool select = gctx->pad_state.input.new_buttons.IsSet(game::pad::Button::Select);
   if (!zr && select)
     game::ui::OpenScreen(game::ui::ScreenType::Items);
-  if (!zr && start && game::GetCommonData().save.inventory.collect_register & 0x40000)
+  if (!zr && start && game::GetCommonData().save.inventory.collection_register.bombers_notebook)
     game::ui::OpenScreen(game::ui::ScreenType::Schedule);
   if (zr && start)
     game::ui::OpenScreen(game::ui::ScreenType::Quest);
