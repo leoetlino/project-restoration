@@ -93,7 +93,6 @@ struct EquipmentData {
     BitField<4, 8, ShieldType> shield;
   };
   SwordShield sword_shield;
-  //BitField<4, 8, u16> sword;
 };
 
 struct InventoryData {
