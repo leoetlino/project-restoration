@@ -235,7 +235,7 @@ struct SaveData {
   int anonymous_58;
   u8 gap11EC[36];
   union SkulltulaRegister {
-    int raw;
+    u32 raw;
 
     BitField<0, 16, int> swamp_count;
     BitField<16, 16, int> ocean_count;
@@ -562,13 +562,15 @@ struct RespawnData {
   s8 data;
   u32 temp_swch_flags_maybe;
   u8 field_1;
+  // Swaps to zero when an item can be used, 255 otherwise.
   u8 btn_y_can_use_item;
   u8 btn_x_can_use_item;
   u8 btn_i_can_use_item;
   //u32 stored_mask_id_maybe;
   u32 temp_collect_flags_maybe;
-}; 
+};
 static_assert(sizeof(RespawnData) == 0x20);
+
 
 enum class UsableButton : u8 {
   B = 0,
