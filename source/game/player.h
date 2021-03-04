@@ -161,7 +161,8 @@ struct Player : public Actor {
 
   bool SetTalkActor(u8 new_fn1_idx, Actor* actor);
 
-  char field_1F8;
+  // If you update this, it will update the model of shield that link is holding.
+  char visible_shield_type;
   FormParamIndex form_param_idx;
   u8 item_btn_slot;
   Action current_action;
@@ -173,7 +174,11 @@ struct Player : public Actor {
   char field_201;
   char field_202;
   u8 gap_203[4];
-  // 1=sword, 2= shield, 3=stick/GFS, 4=first person view with item out, 5=chu/bomb but remains 5 until next set.
+  // 4 is first person view with item out.
+  // 3 is stick/GFS
+  // 5 is chu/bomb stays out after.
+  // 1 is sword.
+  // 2 is shield.
   u8 field_207;
   u8 gap208[3];
   MaskId active_mask_id;
@@ -188,7 +193,7 @@ struct Player : public Actor {
   u32 field_370;
   float field_374;
   u8 gap_378[4];
-  // Float for time stood still? Moving resets to 0.00.
+  // Float for time stood still? Moving resets to 0.
   float time_stood_still_maybe;
   float field_380;
   u8 gap_384[4];
@@ -352,8 +357,10 @@ struct Player : public Actor {
   float lin_vel;
   u16 player_angle;
   u16 field_11E36;
-  u32 field_11E38;
-  u8 gap_11E3C;
+  u16 field_11E38;
+  u8 sword_attack_type;
+  u8 sword_active_timer;
+  u8 sword_active;
   char field_11E3D[1];
   char field_111E3E;
   u8 field_11E3F;
@@ -477,6 +484,7 @@ struct Player : public Actor {
 };
 static_assert(rst::util::OffsetOf(&Player::transform_mask_action) == 0x200);
 static_assert(rst::util::OffsetOf(&Player::field_12CCE) == 0x12CCE);
+static_assert(rst::util::OffsetOf(&Player::sword_active) == 0x11E3C);
 // TODO: complete the struct and add a size assertion.
 
 enum class AllowExistingMagicUsage { No, Yes };
