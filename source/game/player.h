@@ -4,6 +4,7 @@
 #include "common/types.h"
 #include "common/utils.h"
 #include "game/actor.h"
+#include "game/as.h"
 #include "game/context.h"
 #include "game/items.h"
 #include "game/pad.h"
@@ -46,6 +47,11 @@ struct FormParam {
 };
 
 FormParam& GetFormParam(FormParamIndex idx);
+
+struct PlayerUtil : public as::ActorUtil {
+  u8 pad[0xa0 - 0x8c];
+};
+static_assert(sizeof(PlayerUtil) == 0xa0);
 
 // XXX: Very incomplete.
 struct Player : public Actor {
@@ -186,31 +192,10 @@ struct Player : public Actor {
   MaskId previous_mask_id;
   char field_20E;
   u8 gap_20F[293];
-  u32 field_334;
-  u8 gap_338[48];
-  u32 field_368;
-  u8 gap_36C[4];
-  u32 field_370;
-  float field_374;
-  u8 gap_378[4];
-  // Float for time stood still? Moving resets to 0.
-  float time_stood_still_maybe;
-  float field_380;
-  u8 gap_384[4];
-  float field_388;
-  u8 gap_38C[6];
-  __attribute__((packed)) __attribute__((aligned(1))) u32 field_392;
-  u8 gap_396[30];
-  u32 field_3B4;
-  u32 field_3B8;
-  u8 gap_3BC;
-  u8 gap_3BD[19];
-  u32 field_3D0;
-  u8 gap_3D4[128];
-  u32 field_454;
-  u8 gap_458[24];
-  u32 field_470;
-  u8 gap_474[652];
+  PlayerUtil player_util;
+  PlayerUtil player_util2;
+  as::ActorUtil player_util3;
+  u8 gap_500[512];
   u32 field_700;
   u8 gap_704[12];
   u32 field_710;
