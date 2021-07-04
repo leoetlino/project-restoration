@@ -112,7 +112,8 @@ struct EquipmentData {
 struct InventoryData {
   std::array<ItemId, 24> items;
   std::array<ItemId, 24> masks;
-  std::array<u8, 24> item_counts;
+  std::array<ItemId, 7> bottles;
+  std::array<u8, 17> item_counts;
   u8 field_48[24];
   u8 field_60[24];
   union InventoryCountRegister {
@@ -191,7 +192,7 @@ struct SaveData {
   /// 0x0000 is midnight, 0x4000 is 6am, 0x8000 is noon, 0xc000 is 6pm.
   u16 time;
   u16 anonymous_3;
-  u16 anonymous_4;
+  u16 rupeeAccumulator;
   act::Player::Form player_form;
   char anonymous_5;
   char field_20;
