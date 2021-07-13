@@ -1,12 +1,12 @@
-# Since ARMv6 we can just call LDR to the address
-# LDR PC, =0x1D32F8
+# Relative branch to skip past sword flags.
+# b #0x00000c
 patch_in_isg:
   type: patch
   addr: 0x1D32E0
-  data: 04 F0 1F E5 F8 32 1D 00
+  data: 010000EA
 
-# LDR PC, =0x1DBEB8
+# b #0x00000c
 patch_in_isg_2:
   type: patch
   addr: 0x1DBEA4
-  data: 04 F0 1F E5 B8 BE 1D 00
+  data: 010000EA
