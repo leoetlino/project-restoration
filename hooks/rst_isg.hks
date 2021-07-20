@@ -1,0 +1,12 @@
+# Relative branch to skip past sword flags.
+# b #0x00000c
+patch_in_isg:
+  type: patch
+  addr: 0x1D32E0
+  data: 010000EA
+
+# b #0x00000c
+patch_in_isg_2:
+  type: patch
+  addr: 0x1DBEA4
+  data: 010000EA
