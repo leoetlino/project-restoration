@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstddef>
+
 #include "common/types.h"
 #include "common/utils.h"
 #include "game/actor.h"
@@ -175,7 +177,7 @@ struct BossTwinmold : Actor {
   int field_9624;
 };
 static_assert(sizeof(BossTwinmold) == 0x9628);
-static_assert(rst::util::OffsetOf(&BossTwinmold::other_twinmold_actor) == 0x5E28);
-static_assert(rst::util::OffsetOf(&BossTwinmold::gap_93B0) == 0x93B0);
+static_assert(offsetof(BossTwinmold, other_twinmold_actor) == 0x5E28);
+static_assert(offsetof(BossTwinmold, gap_93B0) == 0x93B0);
 
 }  // namespace game::act

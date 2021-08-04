@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <cstddef>
 
 #include "common/bitfield.h"
 #include "common/flags.h"
@@ -244,10 +245,10 @@ struct Actor {
   float field_1F4;
 };
 static_assert(sizeof(Actor) == 0x1F8);
-static_assert(rst::util::OffsetOf(&Actor::field_80) == 0x80);
-static_assert(rst::util::OffsetOf(&Actor::field_B4) == 0xB4);
-static_assert(rst::util::OffsetOf(&Actor::field_F0) == 0xF0);
-static_assert(rst::util::OffsetOf(&Actor::field_11C) == 0x11C);
+static_assert(offsetof(Actor, field_80) == 0x80);
+static_assert(offsetof(Actor, field_B4) == 0xB4);
+static_assert(offsetof(Actor, field_F0) == 0xF0);
+static_assert(offsetof(Actor, field_11C) == 0x11C);
 
 // Name courtesy of the OoT decomp project.
 struct DynaPolyActor : Actor {

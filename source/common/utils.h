@@ -34,14 +34,6 @@ static T& GetInstance(uintptr_t ptr, uintptr_t init_flag, uintptr_t init_fn) {
   return *instance;
 }
 
-/// Returns the offset in bytes of a member.
-/// Unlike offsetof, this works for derived classes as well.
-template <typename T1, typename T2>
-inline size_t constexpr OffsetOf(T1 T2::*member) {
-  constexpr T2 object{};
-  return size_t(&(object.*member)) - size_t(&object);
-}
-
 template <typename Dest, typename T>
 Dest BitCastPtr(const T* ptr, size_t offset = 0) {
   Dest dest;
