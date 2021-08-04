@@ -347,15 +347,15 @@ struct GlobalContext : State {
   act::Actor* some_actor;
   u8 gap_F0F4[7996];
 };
-static_assert(rst::util::OffsetOf(&GlobalContext::main_camera) == 0x408);
-static_assert(rst::util::OffsetOf(&GlobalContext::pause_flags) == 0xAAC);
-static_assert(rst::util::OffsetOf(&GlobalContext::elegy_statues) == 0x2394);
-static_assert(rst::util::OffsetOf(&GlobalContext::field_C000) == 0xc000);
-static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_state) == 0x8366);
-static_assert(rst::util::OffsetOf(&GlobalContext::ocarina_song) == 0x836A);
-static_assert(rst::util::OffsetOf(&GlobalContext::hide_hud) == 0x825E);
-static_assert(rst::util::OffsetOf(&GlobalContext::field_836E) == 0x836E);
-static_assert(rst::util::OffsetOf(&GlobalContext::field_C4C8) == 0xC4C8);
+static_assert(offsetof(GlobalContext, main_camera) == 0x408);
+static_assert(offsetof(GlobalContext, pause_flags) == 0xAAC);
+static_assert(offsetof(GlobalContext, elegy_statues) == 0x2394);
+static_assert(offsetof(GlobalContext, field_C000) == 0xc000);
+static_assert(offsetof(GlobalContext, ocarina_state) == 0x8366);
+static_assert(offsetof(GlobalContext, ocarina_song) == 0x836A);
+static_assert(offsetof(GlobalContext, hide_hud) == 0x825E);
+static_assert(offsetof(GlobalContext, field_836E) == 0x836E);
+static_assert(offsetof(GlobalContext, field_C4C8) == 0xC4C8);
 static_assert(sizeof(GlobalContext) == 0x11030);
 
 }  // namespace game
