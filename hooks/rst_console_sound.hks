@@ -1,0 +1,6 @@
+# Uses the sound setting from the console instead of always forcing Surround.
+# b #0x000020
+use_console_sound_setting:
+  type: patch
+  addr: 0x1404E8
+  data: 060000EA
