@@ -301,9 +301,9 @@ struct Player : public Actor {
   rst::Flags<Flag1> flags1;
   rst::Flags<Flag2> flags2;
   rst::Flags<Flag3> flags3;
-  u32 flags4;
-  int field_11DC0;
-  u32 field_11DC4;
+  Actor* field_11DBC;
+  Actor* field_11DC0;
+  Actor* field_11DC4;
   Actor* tatl;
   u16 tatl_msgid;
   s8 pending_cutscene_id;
