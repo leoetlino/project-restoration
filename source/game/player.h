@@ -306,7 +306,7 @@ struct Player : public Actor {
   u32 field_11DC4;
   Actor* tatl;
   u16 tatl_msgid;
-  char field_11DCE;
+  s8 pending_cutscene_id;
   Action pending_action;
   Actor* talk_actor;
   int field_11DD4;

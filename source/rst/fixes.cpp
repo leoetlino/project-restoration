@@ -137,8 +137,9 @@ void FixOwlStatueActivationTrigger() {
   using namespace game;
   auto& cdata = GetCommonData();
   auto* gctx = GetContext().gctx;
+  auto* player = gctx->GetPlayerActor();
   auto* owl = gctx->FindActorWithId<act::ObjOwlStatue>(act::Id::ObjOwlStatue, act::Type::Item);
-  if (!owl)
+  if (!player || !owl)
     return;
 
   if (owl->activation_timer > 1) {
@@ -154,6 +155,17 @@ void FixOwlStatueActivationTrigger() {
   }
   if (owl->activation_timer == 1) {
     util::Print("%s: activating owl statue (%04x)", __func__, owl->params);
+
+    // Clear player's cutscene ID.
+    // This is normally done by z_player before it calls the talk function,
+    // but we *must* do it manually here because we are calling the talk function directly
+    // without going through z_player. Failure to clear the pending cutscene ID can have
+    // catastrophic results because the owl actor triggers a cutscene; we get a nasty
+    // deadlock if the player code also attempts to trigger a cutscene.
+    // This could happen if the pending ID is not reset after e.g. playing the ocarina.
+    if (player->pending_cutscene_id >= 0)
+      player->pending_cutscene_id = -1;
+
     gctx->Talk(owl);
     owl->activation_timer = -1;
   }
