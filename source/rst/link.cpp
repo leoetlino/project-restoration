@@ -82,6 +82,15 @@ void HandleFastTransform() {
     return;
   }
 
+  // Run some additional action usability checks.
+  // This is necessary to block Goron Mask usage while having Mystery Milk in the inventory.
+  const auto check_can_use_action =
+      util::GetPointer<bool(game::act::Player*, game::GlobalContext*, game::Action)>(0x1e0390);
+  if (!check_can_use_action(player, nullptr, it->action)) {
+    util::Print("%s: check_can_use_action returned false, skipping", __func__);
+    return;
+  }
+
   util::Print("%s: transforming (%s)", __func__, it->name);
 
   player->action = it->action;
