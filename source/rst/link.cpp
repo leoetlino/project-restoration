@@ -136,6 +136,8 @@ bool ShouldEndGoronRoll(game::act::Player* player) {
 
 struct FastArrowState {
   std::optional<game::Action> override_action;
+  /// The item button slot that was used with the override_action.
+  std::optional<u8> item_btn_slot;
   int magic_cost_update_timer = -1;
 };
 
@@ -194,13 +196,21 @@ void HandleFastArrowSwitch(game::act::Player* player) {
   // Reset the override action if the player is not using a bow.
   constexpr u8 first = u8(game::Action::Arrow);
   constexpr u8 last = u8(game::Action::LightArrow);
-  const bool is_using = player->action_type == game::act::Player::ActionType::Type3 ||
-                        player->projectile_actor ||
-                        player->flags1.IsSet(game::act::Player::Flag1::ZTargeting);
+  const bool is_using =
+      player->action_type == game::act::Player::ActionType::Type3 || player->projectile_actor;
   if (first > u8(player->current_action) || u8(player->current_action) > last || !is_using) {
     s_fast_arrow_state = {};
     return;
   }
+
+  if (s_fast_arrow_state.item_btn_slot != player->item_btn_slot) {
+    // The player switched to a different item button slot.
+    // Reset the action override and any other internal state.
+    util::Print("%s: detected item button slot change, resetting", __func__);
+    s_fast_arrow_state = {};
+  }
+
+  s_fast_arrow_state.item_btn_slot = player->item_btn_slot;
 
   if (s_fast_arrow_state.magic_cost_update_timer > 0)
     --s_fast_arrow_state.magic_cost_update_timer;
