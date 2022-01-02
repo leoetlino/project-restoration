@@ -266,6 +266,7 @@ static void HandleFastOcarina(game::GlobalContext* gctx) {
 }
 
 void Calc() {
+  GetContext().is_swimming = false;
   game::GlobalContext* gctx = GetContext().gctx;
   game::act::Player* player = gctx->GetPlayerActor();
   if (!player)
@@ -277,6 +278,11 @@ void Calc() {
     ++GetContext().a_press_duration;
     if (!player->controller_info.state->input.buttons.IsSet(game::pad::Button::A))
       GetContext().a_press_duration = 0;
+  }
+
+  if (player->flags1.IsSet(game::act::Player::Flag1::InWater) &&
+      !player->flags_94.IsSet(game::act::Actor::Flag94::Grounded)) {
+    GetContext().is_swimming = true;
   }
 
   HandleFastArrowSwitch(player);

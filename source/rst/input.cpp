@@ -1,8 +1,6 @@
 #include "common/context.h"
 #include "game/common_data.h"
-#include "game/context.h"
 #include "game/pad.h"
-#include "game/player.h"
 #include "game/ui.h"
 
 namespace rst {
@@ -34,10 +32,9 @@ RST_HOOK void UpdatePadState() {
 
   if (state.input.buttons.IsSet(pad::Button::ZR)) {
     // XXX: This shouldn't be here...
-    auto* gctx = rst::GetContext().gctx;
-    auto* player = gctx ? gctx->GetPlayerActor() : nullptr;
-    if (player && player->flags1.IsSet(game::act::Player::Flag1::InWater) &&
-        !player->flags_94.IsSet(game::act::Actor::Flag94::Grounded)) {
+    // Note that we do *not* access the global context or the player actor here manually,
+    // because neither are guaranteed to still exist in memory when this function is called.
+    if (GetContext().is_swimming) {
       // If Link is swimming (as Zora Link most likely but that doesn't matter),
       // do not unset the A button.
       set_touch_btn_without_clear(pad::Button::A, pad::TouchscreenButton::Ocarina);

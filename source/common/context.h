@@ -14,6 +14,7 @@ struct Context {
 
   bool going_back_in_time = false;
 
+  bool is_swimming = false;
   bool use_fast_swim = true;
   u32 a_press_duration = 0;
 };
