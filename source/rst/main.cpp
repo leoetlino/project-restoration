@@ -46,8 +46,8 @@ void Init(Context& context) {
 
   const auto* player = gctx->GetPlayerActor();
   if (player) {
-    util::Print("%08lx %08lx %08lx %08lx %08x", player->flags1.flags, player->flags2.flags,
-                player->flags3.flags, player->flags4, player->flags_94.flags);
+    util::Print("%08lx %08lx %08lx %08x", player->flags1.flags, player->flags2.flags,
+                player->flags3.flags, player->flags_94.flags);
 
     util::Print("state handler: %p - 92C: %u - 92D: %u", player->state_handler_fn, player->fn1_idx,
                 player->fn2_idx);
