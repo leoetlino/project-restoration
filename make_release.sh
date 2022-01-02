@@ -44,7 +44,18 @@ build () {
     flips -i $RST_ROOT/bak/code.bin $RST_ROOT/source/build/patched_code_faster_aim.bin $RELEASE_DIR/$TARGET_VERSION/code_faster_aim.ips
     flips -b $RST_ROOT/bak/code.bin $RST_ROOT/source/build/patched_code_faster_aim.bin $RELEASE_DIR/$TARGET_VERSION/code_faster_aim.bps
   fi
-  cp $RST_ROOT/exheader*.bin $RELEASE_DIR/$TARGET_VERSION/
+
+  # Citra
+  mkdir $RELEASE_DIR/$TARGET_VERSION/citra
+  cp $RELEASE_DIR/$TARGET_VERSION/*.* $RELEASE_DIR/$TARGET_VERSION/citra/
+  cp $RST_ROOT/exheader.bin $RELEASE_DIR/$TARGET_VERSION/citra/exheader.bin
+
+  # 3DS
+  mkdir $RELEASE_DIR/$TARGET_VERSION/3ds
+  cp $RELEASE_DIR/$TARGET_VERSION/*.* $RELEASE_DIR/$TARGET_VERSION/3ds/
+  cp $RST_ROOT/exheader_legacy.bin $RELEASE_DIR/$TARGET_VERSION/3ds/exheader.bin
+
+  rm $RELEASE_DIR/$TARGET_VERSION/*.*
 
   # Clean up
   rm -r $RST_ROOT/loader/*.bin $RST_ROOT/loader/*.sym || true
@@ -57,10 +68,23 @@ build v100
 make_patch_for_secondary_version () {
   TARGET_VERSION=$1
   mkdir $RELEASE_DIR/$TARGET_VERSION
-  cp $RELEASE_DIR/v100/exheader*.bin $RELEASE_DIR/$TARGET_VERSION/
+
+  # Citra
+  mkdir $RELEASE_DIR/$TARGET_VERSION/citra
+  cp $RELEASE_DIR/v100/citra/*.* $RELEASE_DIR/$TARGET_VERSION/citra/
+
+  # 3DS
+  mkdir $RELEASE_DIR/$TARGET_VERSION/3ds
+  cp $RELEASE_DIR/v100/3ds/*.* $RELEASE_DIR/$TARGET_VERSION/3ds/
+
   flips -b $RST_ROOT/$TARGET_VERSION/code.bin $RST_ROOT/source/build/patched_code.bin $RELEASE_DIR/$TARGET_VERSION/code.bps &
   flips -b $RST_ROOT/$TARGET_VERSION/code.bin $RST_ROOT/source/build/patched_code_faster_aim.bin $RELEASE_DIR/$TARGET_VERSION/code_faster_aim.bps &
+
   wait
+  cp $RELEASE_DIR/$TARGET_VERSION/*.* $RELEASE_DIR/$TARGET_VERSION/citra/
+  cp $RELEASE_DIR/$TARGET_VERSION/*.* $RELEASE_DIR/$TARGET_VERSION/3ds/
+  rm $RELEASE_DIR/$TARGET_VERSION/*.*
+  rm $RELEASE_DIR/$TARGET_VERSION/*/*.ips
 }
 
 if [ -z ${RST_DEV+x} ]; then
