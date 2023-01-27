@@ -1,0 +1,71 @@
+mainscreen_Init:
+  type: softbranch
+  opcode: post
+  addr: 0x599D20
+  func: rst::MainScreen_Init(game::ui::MainScreen&, game::ui::ScreenContext&)
+mainscreen_Open:
+  type: softbranch
+  opcode: post
+  addr: 0x59B4D4
+  func: rst::MainScreen_Open(game::ui::MainScreen&, game::ui::ScreenContext&)
+mainscreen_Calc:
+  type: softbranch
+  opcode: post
+  addr: 0x59B6A0
+  func: rst::MainScreen_Calc(game::ui::MainScreen&, game::ui::ScreenContext&)
+mainscreen_Draw:
+  type: softbranch
+  opcode: post
+  addr: 0x59B27C
+  func: rst::MainScreen_Draw(game::ui::MainScreen&, game::ui::ScreenContext&)
+mainscreen_PrepareClose:
+  type: softbranch
+  opcode: post
+  addr: 0x59BC10
+  func: rst::MainScreen_PrepareClose(game::ui::MainScreen&, game::ui::ScreenContext&)
+mainscreen_CalcClose:
+  type: softbranch
+  opcode: post
+  addr: 0x59B3CC
+  func: rst::MainScreen_CalcClose(game::ui::MainScreen&, game::ui::ScreenContext&)
+mainscreen_UpdateButtonUsability:
+  type: softbranch
+  opcode: post
+  addr: 0x191570
+  func: rst::MainScreen_UpdateButtonUsability(game::ui::MainScreen&, game::HudState&)
+mainscreen_MagicPlayAndHideYellowGauge:
+  type: softbranch
+  opcode: post
+  addr: 0x178850
+  func: rst::MainScreen_MagicPlayAndHideYellowGauge(game::ui::MainScreen&)
+mainscreen_MagicHideYellowGauge:
+  type: softbranch
+  opcode: post
+  addr: 0x223328
+  func: rst::MainScreen_MagicHideYellowGauge(game::ui::MainScreen&)
+mainscreen_MagicStartUseAnim:
+  type: softbranch
+  opcode: post
+  addr: 0x1CFC44
+  func: rst::MainScreen_MagicStartUseAnim(game::ui::MainScreen&)
+mainscreen_MagicUpdateCost:
+  type: softbranch
+  opcode: post
+  addr: 0x1CFC7C
+  func: rst::MainScreen_MagicUpdateCost(game::ui::MainScreen&)
+
+b_action_icon_show_for_human_link:
+  type: patch
+  addr: 0x1955EC
+  data: 00 F0 20 E3
+b_action_icon_update_call:
+  type: branch
+  link: true
+  addr: 0x195680
+  func: rst::BActionIconUpdate(game::ui::PlayBActionIcon&, game::GlobalContext*)
+
+load_packages_hook:
+  type: softbranch
+  opcode: post
+  addr: 0x11EE2C
+  func: rst::LoadPackages()

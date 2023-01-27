@@ -80,6 +80,7 @@ add_executable(newcode
   rst/fixes.cpp
   rst/fixes.h
   rst/input.cpp
+  rst/large_screen.cpp
   rst/link.cpp
   rst/link.h
   rst/main.cpp

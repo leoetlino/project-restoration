@@ -31,15 +31,7 @@ void Init() {
 }
 
 namespace {
-struct TransformAction {
-  game::pad::Button trigger_btn;
-  game::ItemId required_mask;
-  game::Action action;
-  bool usable_in_water;
-  const char* name;
-  bool require_zr = false;
-};
-static constexpr TransformAction s_actions[] = {
+constexpr TransformAction s_actions[] = {
     {game::pad::Button::Left, game::ItemId::ZoraMask, game::Action::ZoraMask, true, "Zora"},
     {game::pad::Button::Up, game::ItemId::GoronMask, game::Action::GoronMask, false, "Goron"},
     {game::pad::Button::Down, game::ItemId::DekuMask, game::Action::DekuMask, false, "Deku"},
@@ -48,6 +40,10 @@ static constexpr TransformAction s_actions[] = {
      "Fierce Deity", true},
 };
 }  // namespace
+
+tcb::span<const TransformAction> GetTransformActions() {
+  return s_actions;
+}
 
 void HandleFastTransform() {
   const game::GlobalContext* gctx = GetContext().gctx;
